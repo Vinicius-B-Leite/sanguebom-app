@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { View } from 'react-native';
+import { FlatList } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as S from './styles'
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -13,16 +13,20 @@ import { ErrorResponse } from '../../types/ErrorResponse';
 import * as Location from 'expo-location';
 import AlertButton from '../../components/AlertButton';
 import ModalCreateAlert from '../../components/ModalCreateAlert';
+import { MarkerType } from '../../types/MarkerType';
 
 
 
 const Search: React.FC = () => {
 
   const { colors, icons } = useTheme()
+  const user = useSelector((state: RootState) => state.user.user)
+
   const [location, setLocation] = useState<Location.LocationObject | null>(null)
   const [searchInput, setSeatchInput] = useState('')
-  const user = useSelector((state: RootState) => state.user.user)
   const [modalVisible, setModalVisible] = useState(false)
+  const [currentBloodCollector, setCurrentBloodCollector] = useState<MarkerType>()
+
   const { data } = useQuery(
     ['bloodCollectors'],
     () => getBloodCollectors({ token: user?.token ?? '', bloodCollectorName: searchInput }),
@@ -30,21 +34,25 @@ const Search: React.FC = () => {
       onError: (err: AxiosError<ErrorResponse>) => console.log(err.response?.data),
     }
   )
-  console.log("🚀 ~ file: index.tsx:27 ~ data:", data)
-  const markers = useMemo(() => (
-    data?.map(bloodCollector => (
+
+  const markers = useMemo(() => {
+    const m: MarkerType[] | undefined = data?.map((bloodCollector) => (
       {
         coordinate: {
           latitude: bloodCollector.lat,
           longitude: bloodCollector.lng
         },
         title: bloodCollector.username,
-        description: 'Este ponto está coletando sangue',
-        pinColor: (bloodCollector?.alert?.status) ? 'red' : 'tan'
+        description: (bloodCollector?.alert?.status) && 'Este ponto está coletando sangue',
+        pinColor: 'red',
+        bloodTypes: bloodCollector.alert?.bloodTypes
       }
-    )
-    )
-  ), [data])
+    ))
+
+    return m
+  }, [data])
+  console.log("🚀 ~ file: index.tsx:54 ~ data:", data)
+
 
 
   const getLocation = async () => {
@@ -76,6 +84,7 @@ const Search: React.FC = () => {
         />
       </S.Header>
       <MapView
+        onPress={() => setCurrentBloodCollector(undefined)}
         style={{ flex: 1 }}
         initialRegion={{
           latitude: location?.coords.latitude || -23.1184444,
@@ -93,8 +102,9 @@ const Search: React.FC = () => {
                 longitude: mark.coordinate.longitude,
               }}
               title={mark.title}
-              description={mark.description}
               pinColor={mark.pinColor}
+              {...mark.description && { description: mark.description }}
+              onPress={() => mark?.description && setCurrentBloodCollector(mark)}
             />
           ))
         }
@@ -112,7 +122,7 @@ const Search: React.FC = () => {
       </MapView>
 
       {
-        user?.type === 'blood collectors' &&
+        user?.type === 'blood collectors' && !currentBloodCollector &&
         <AlertButton onClick={() => setModalVisible(true)} />
       }
 
@@ -124,9 +134,29 @@ const Search: React.FC = () => {
           animationType: 'fade',
           transparent: true
         }}
+          bTypesSelecteds={data && user && data[data?.findIndex(v => v.uid === user.uid)].alert?.bloodTypes}
           isAlertOn={!!(data && data[data?.findIndex(v => v.username === user?.username)].alert?.status)}
         />
+      }
+      {
+        currentBloodCollector &&
+        <S.AlertInfoContainer>
+          <S.Left>
+            <S.BloodCollectorName numberOfLines={2}>{currentBloodCollector.title}</S.BloodCollectorName>
+          </S.Left>
 
+          <S.Right>
+            <FlatList
+              horizontal
+              contentContainerStyle={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}
+              showsHorizontalScrollIndicator={false}
+              data={currentBloodCollector.bloodTypes?.map((b, i, a) => i === a.length - 1 ? b : b + ', ')}
+              renderItem={({ item }) => (
+                <S.BloodTypeItem>{item}</S.BloodTypeItem>
+              )}
+            />
+          </S.Right>
+        </S.AlertInfoContainer>
       }
     </S.Container >
   )

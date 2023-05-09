@@ -17,12 +17,13 @@ import { ErrorResponse } from '../../types/ErrorResponse';
 
 type Props = {
     modalProps: ModalProps,
-    isAlertOn: boolean
+    isAlertOn: boolean,
+    bTypesSelecteds: string[] | undefined
 }
-const ModalCreateAlert: React.FC<Props> = ({ modalProps, isAlertOn = false }) => {
+const ModalCreateAlert: React.FC<Props> = ({ modalProps, isAlertOn = false, bTypesSelecteds }) => {
     const theme = useTheme()
     const [switchEnable, setSwitchEnable] = useState(isAlertOn)
-    const [bloodTypesSelecteds, setBloodTypesSelecteds] = useState<string[]>([])
+    const [bloodTypesSelecteds, setBloodTypesSelecteds] = useState<string[]>(bTypesSelecteds || [])
     const [message, setMessage] = useState('')
     const user = useSelector((state: RootState) => state.user.user)
     const client = useQueryClient()
@@ -47,7 +48,7 @@ const ModalCreateAlert: React.FC<Props> = ({ modalProps, isAlertOn = false }) =>
         }),
         onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data),
         onSuccess: async () => {
-            await client.invalidateQueries({ queryKey: ['bloodCollectors'] })
+            await client.invalidateQueries()
         }
     })
 
