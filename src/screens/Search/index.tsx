@@ -12,16 +12,17 @@ import { AxiosError } from 'axios';
 import { ErrorResponse } from '../../types/ErrorResponse';
 import * as Location from 'expo-location';
 import AlertButton from '../../components/AlertButton';
-import { StackScreenProps } from '@react-navigation/stack';
-import { SearchScreenParamsList } from '../../routes/models';
+import ModalCreateAlert from '../../components/ModalCreateAlert';
 
-type NavProps = StackScreenProps<SearchScreenParamsList, 'Search'>
-const Search: React.FC<NavProps> = ({ navigation }) => {
+
+
+const Search: React.FC = () => {
 
   const { colors, icons } = useTheme()
   const [location, setLocation] = useState<Location.LocationObject | null>(null)
   const [searchInput, setSeatchInput] = useState('')
   const user = useSelector((state: RootState) => state.user.user)
+  const [modalVisible, setModalVisible] = useState(false)
   const { data } = useQuery(
     ['bloodCollectors'],
     () => getBloodCollectors({ token: user?.token ?? '', bloodCollectorName: searchInput }),
@@ -29,7 +30,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
       onError: (err: AxiosError<ErrorResponse>) => console.log(err.response?.data),
     }
   )
-
+  console.log("🚀 ~ file: index.tsx:27 ~ data:", data)
   const markers = useMemo(() => (
     data?.map(bloodCollector => (
       {
@@ -39,7 +40,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
         },
         title: bloodCollector.username,
         description: 'Este ponto está coletando sangue',
-        pinColor: (bloodCollector.alert && bloodCollector.alert.status == true) ? colors.backgroundColor : colors.text
+        pinColor: (bloodCollector?.alert?.status) ? 'red' : 'tan'
       }
     )
     )
@@ -55,6 +56,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
     let locationResponse = await Location.getCurrentPositionAsync({});
     setLocation(locationResponse);
   }
+
 
   useEffect(() => {
     getLocation()
@@ -104,12 +106,28 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
           }}
           title='Você'
           description='Você está localizado aqui'
-          pinColor='#45e45e'
+          pinColor='green'
         />
 
       </MapView>
 
-      <AlertButton onClick={() => navigation.navigate('CreateAlert')} />
+      {
+        user?.type === 'blood collectors' &&
+        <AlertButton onClick={() => setModalVisible(true)} />
+      }
+
+      {
+        user?.type === 'blood collectors' && modalVisible &&
+        <ModalCreateAlert modalProps={{
+          visible: modalVisible,
+          onRequestClose: () => setModalVisible(false),
+          animationType: 'fade',
+          transparent: true
+        }}
+          isAlertOn={!!(data && data[data?.findIndex(v => v.username === user?.username)].alert?.status)}
+        />
+
+      }
     </S.Container >
   )
 }

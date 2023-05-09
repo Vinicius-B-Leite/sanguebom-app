@@ -20,7 +20,6 @@ const Routes: React.FC = () => {
         AsyncStorage.getItem('@user')
             .then((userStorage) => {
                 if (userStorage) {
-                    console.log("🚀 ~ file: index.tsx:23 ~ .then ~ userStorage:", userStorage)
                     dispatch(setUser(JSON.parse(userStorage)))
                 }
             })

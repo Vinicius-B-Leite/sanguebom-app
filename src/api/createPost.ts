@@ -16,7 +16,6 @@ export async function createPost({ adress, banner, bloodCollectorsID, descriptio
     const form = new FormData();
 
     form.append('adress', adress);
-    console.log("🚀 ~ file: createPost.ts:19 ~ createPost ~ adress:", adress)
     form.append('bloodCollectorsID', bloodCollectorsID);
     form.append('description', description);
     form.append('linkRedirect', linkRedirect);

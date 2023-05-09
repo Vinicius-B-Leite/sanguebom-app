@@ -7,7 +7,7 @@ export type StackRootParamsList = {
     Login: undefined
 }
 
-export type SearchScreenParamsList = {
-    Search: undefined,
-    CreateAlert: undefined
+export type StackHomeParamsList = {
+    Home: undefined,
+    Notification: undefined
 }

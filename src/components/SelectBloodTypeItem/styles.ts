@@ -2,19 +2,24 @@ import styled from 'styled-components/native';
 
 
 type Props = {
-    selected: boolean
+    selected: boolean,
+    w?: number,
+    h?: number
 }
 export const Container = styled.TouchableOpacity<Props>`
-    background-color: ${({theme, selected}) => selected ? theme.colors.contrast : theme.colors.lightContrast};
-    width: ${({theme}) => theme.vw * 0.4}px;
-    height: ${({theme}) => theme.vw * 0.2}px;
-    margin: ${({theme}) => theme.vw * 0.02}px ${({theme}) => theme.vw * 0.02}px;
+    background-color: ${({ theme, selected }) => selected ? theme.colors.contrast : theme.colors.lightContrast};
+    width: ${({ theme, w }) => w ? w : theme.vw * 0.4}px;
+    height: ${({ theme, h }) => h ? h : theme.vw * 0.2}px;
+    margin: ${({ theme }) => theme.vw * 0.02}px ${({ theme }) => theme.vw * 0.02}px;
     justify-content: center;
     align-items: center;
-    border-radius: ${({theme}) => theme.borderRadius.xsm}px;
+    border-radius: ${({ theme }) => theme.borderRadius.xsm}px;
 `;
 
-export const Name = styled.Text<Props>`
-    font-size: ${({theme}) => theme.fontSize.md}px;
-    color: ${({theme, selected}) => selected ? theme.colors.backgroundColor : theme.colors.text};
+interface P extends Props {
+    fs?: number
+}
+export const Name = styled.Text<P>`
+    font-size: ${({ theme, fs }) => fs ? fs : theme.fontSize.md}px;
+    color: ${({ theme, selected }) => selected ? theme.colors.backgroundColor : theme.colors.text};
 `

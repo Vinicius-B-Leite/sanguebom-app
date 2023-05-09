@@ -9,8 +9,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
 import { getPosts } from '../../api/getPosts';
 import { useTheme } from 'styled-components/native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { StackHomeParamsList } from '../../routes/models';
 
-const Home: React.FC = () => {
+
+
+type Nav = StackScreenProps<StackHomeParamsList, 'Home'>
+const Home: React.FC<Nav> = ({ navigation }) => {
   const user = useSelector((state: RootState) => state.user.user)
   const theme = useTheme()
 
@@ -18,13 +23,12 @@ const Home: React.FC = () => {
     queryKey: ['posts'],
     queryFn: ({ pageParam = 1 }) => getPosts({ page: pageParam, tokenJWT: user?.token ?? '' }),
     getNextPageParam: (lastPage, allPages) => lastPage.maxPage >= allPages.length + 1 ? allPages.length + 1 : undefined
-
   })
 
 
   return (
     <S.Container>
-      <Header />
+      <Header onClickBell={() => navigation.navigate('Notification')}/>
       {
         isLoading ?
           <ActivityIndicator size={theme.icons.md} color={theme.colors.contrast} />

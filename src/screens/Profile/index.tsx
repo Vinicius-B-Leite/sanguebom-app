@@ -19,7 +19,7 @@ import { ErrorResponse } from '../../types/ErrorResponse';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { baseURL } from '../../api';
 import ModalUpdateUser from '../../components/ModalUpdateUser';
-
+import { Fontisto } from '@expo/vector-icons';
 
 
 const Profile: React.FC = () => {
@@ -112,6 +112,28 @@ const Profile: React.FC = () => {
         <S.ItemLabel>Endereço de email</S.ItemLabel>
       </S.ItemContainer>
 
+      <S.ItemContainer onPress={() => openModal((txt) => setEmail(txt), 'senha')}>
+        <S.ItemBackgroundIcon>
+          <MaterialIcons name="lock" size={icons.vsm} color={colors.contrast} />
+
+        </S.ItemBackgroundIcon>
+
+        <S.ItemLabel>Senha</S.ItemLabel>
+      </S.ItemContainer>
+
+
+      {
+        user?.type === 'normal user' &&
+        <S.ItemContainer >
+          <S.ItemBackgroundIcon>
+            <Fontisto name="blood-drop" size={icons.vsm} color={colors.contrast} />
+          </S.ItemBackgroundIcon>
+
+          <S.ItemLabel>Tipo sanguíneo</S.ItemLabel>
+        </S.ItemContainer>
+      }
+
+
       <S.ItemContainer >
         <S.ItemBackgroundIcon>
           <Ionicons name="sunny-outline" size={icons.vsm} color={colors.contrast} />
@@ -120,21 +142,24 @@ const Profile: React.FC = () => {
         <S.ItemLabel>Trocar de tema</S.ItemLabel>
       </S.ItemContainer>
 
-      <S.ItemContainer onPress={() => { }}>
-        <S.ItemBackgroundIcon>
-          <Feather name="phone-call" size={icons.vsm} color={colors.contrast} />
-        </S.ItemBackgroundIcon>
 
-        <S.ItemLabel>Número de telefone</S.ItemLabel>
-      </S.ItemContainer>
+      {
+        user?.type === 'blood collectors' &&
+        <S.ItemContainer onPress={() => { }}>
+          <S.ItemBackgroundIcon>
+            <Feather name="home" size={icons.vsm} color={colors.contrast} />
+          </S.ItemBackgroundIcon>
 
-      <S.ItemContainer onPress={() => { }}>
-        <S.ItemBackgroundIcon>
-          <Feather name="home" size={icons.vsm} color={colors.contrast} />
-        </S.ItemBackgroundIcon>
+          <S.ItemLabel>Endereço</S.ItemLabel>
+        </S.ItemContainer> &&
+        <S.ItemContainer onPress={() => { }}>
+          <S.ItemBackgroundIcon>
+            <Feather name="phone-call" size={icons.vsm} color={colors.contrast} />
+          </S.ItemBackgroundIcon>
 
-        <S.ItemLabel>Endereço</S.ItemLabel>
-      </S.ItemContainer>
+          <S.ItemLabel>Número de telefone</S.ItemLabel>
+        </S.ItemContainer>
+      }
 
       <S.ItemContainer onPress={() => dispatch(logout())}>
         <S.ItemBackgroundIcon>

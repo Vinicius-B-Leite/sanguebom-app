@@ -5,14 +5,17 @@ import * as S from './styles'
 type Props = {
     bloodType: string,
     selected: boolean,
-    onClick: (bloodType: string) => void
+    onClick: (bloodType: string) => void,
+    w?: number,
+    h?: number
+    fs?: number
 }
 
-const SelectBloodTypeItem: React.FC<Props> = ({ bloodType, selected, onClick }) => {
+const SelectBloodTypeItem: React.FC<Props> = ({ bloodType, selected, onClick, h, w , fs}) => {
 
     return (
-        <S.Container selected={selected} onPress={() => onClick(bloodType)}>
-            <S.Name selected={selected}>{bloodType}</S.Name>
+        <S.Container selected={selected} onPress={() => onClick(bloodType)} w={w} h={h} >
+            <S.Name fs={fs} selected={selected}>{bloodType}</S.Name>
         </S.Container>
     )
 }
@@ -20,4 +23,4 @@ const SelectBloodTypeItem: React.FC<Props> = ({ bloodType, selected, onClick }) 
 
 //true == no render
 //false == render
-export default memo(SelectBloodTypeItem, (prv, nxt) => prv.selected === nxt.selected);
+export default memo(SelectBloodTypeItem, (prv, nxt) => prv.selected === nxt.selected );

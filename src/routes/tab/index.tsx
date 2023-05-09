@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { useContext } from 'react';
-import { View } from 'react-native';
-import { ThemeContext, useTheme } from 'styled-components/native';
+import { ThemeContext } from 'styled-components/native';
 import CreatePost from '../../screens/CreatePost';
 import Home from '../../screens/Home';
 import Profile from '../../screens/Profile';
@@ -11,7 +10,7 @@ import Feather from '@expo/vector-icons/Feather';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
-import SearchRoutes from '../searchRoutes';
+import HomeStack from '../homeStack';
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -31,8 +30,8 @@ const Tab = () => {
             }}
         >
             <Screen
-                name='Home'
-                component={Home}
+                name='HomeStack'
+                component={HomeStack}
                 options={{
                     tabBarIcon: ({ focused, color }) => (
                         <Feather
@@ -44,8 +43,8 @@ const Tab = () => {
                 }}
             />
             <Screen
-                name='SearchStack'
-                component={SearchRoutes}
+                name='Search'
+                component={Search}
                 options={{
                     tabBarIcon: ({ focused, color }) => (
                         <Feather
