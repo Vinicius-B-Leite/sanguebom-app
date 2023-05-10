@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '../../types/ErrorResponse';
+import NotificationItem from '../../components/NotificationItem';
 
 
 
@@ -41,8 +42,9 @@ const Notification: React.FC<Nav> = ({ navigation }) => {
             </S.Header>
 
             <FlatList
+                contentContainerStyle={{padding: '5%'}}
                 data={data}
-                renderItem={({ item }) => <Text>{item.title}</Text>}
+                renderItem={({ item }) => <NotificationItem notification={item} />}
             />
         </S.Container>
     )

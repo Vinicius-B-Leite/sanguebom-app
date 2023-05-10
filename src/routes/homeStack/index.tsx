@@ -3,10 +3,12 @@ import React from 'react';
 import { View } from 'react-native';
 import Home from '../../screens/Home';
 import Notification from '../../screens/Notification';
+import { StackHomeParamsList } from '../models';
+import Post from '../../screens/Post';
 
 
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator<StackHomeParamsList>()
 
 
 const HomeStack: React.FC = () => {
@@ -14,6 +16,7 @@ const HomeStack: React.FC = () => {
         <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name='Home' component={Home} />
             <Stack.Screen name='Notification' component={Notification} />
+            <Stack.Screen name='Post' component={Post} />
         </Stack.Navigator>
     )
 }

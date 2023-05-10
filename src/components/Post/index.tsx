@@ -7,11 +7,12 @@ import AutoHeightImage from 'react-native-auto-height-image';
 
 
 type PostProps = {
-    info: PostType
+    info: PostType,
+    numberOfLines?: number
 }
 
 
-const Post: React.FC<PostProps> = ({ info }) => {
+const PostDetails: React.FC<PostProps> = ({ info, numberOfLines  }) => {
 
     return (
         <S.Container>
@@ -32,10 +33,10 @@ const Post: React.FC<PostProps> = ({ info }) => {
                     <S.ComunText>1 dia atrás</S.ComunText>
                 </S.Deatils>
 
-                <S.Description numberOfLines={4}>{info?.description}</S.Description>
+                <S.Description numberOfLines={numberOfLines}>{info?.description}</S.Description>
             </S.Footer>
         </S.Container>
     )
 }
 
-export default Post;
+export default PostDetails;

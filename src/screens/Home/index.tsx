@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { FlatList, ActivityIndicator } from 'react-native';
 import Header from '../../components/Header';
-import Post from '../../components/Post';
 import { PostType } from '../../types/PostType';
 import * as S from './styles'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
@@ -11,6 +10,7 @@ import { getPosts } from '../../api/getPosts';
 import { useTheme } from 'styled-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { StackHomeParamsList } from '../../routes/models';
+import PostDetails from '../../components/Post';
 
 
 
@@ -35,7 +35,7 @@ const Home: React.FC<Nav> = ({ navigation }) => {
           :
           <FlatList
             data={data?.pages.map(p => p.data).flat()}
-            renderItem={({ item }) => <Post info={item} />}
+            renderItem={({ item }) => <PostDetails numberOfLines={4} info={item} />}
             ListFooterComponent={() => hasNextPage ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.contrast} /> : <></>}
             onEndReached={async () => {
               await fetchNextPage()

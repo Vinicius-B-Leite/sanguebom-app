@@ -9,5 +9,8 @@ export type StackRootParamsList = {
 
 export type StackHomeParamsList = {
     Home: undefined,
-    Notification: undefined
+    Notification: undefined,
+    Post: {
+        postID: string
+    }
 }

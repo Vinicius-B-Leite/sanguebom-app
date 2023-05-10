@@ -30,6 +30,7 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                         'Erro',
                         'Ocorreu um erro inesperado. Volte mais tarde'
                     )
+                    console.log(error.response.data)
                 }
             },
             onSuccess: async ({ data }) => {
