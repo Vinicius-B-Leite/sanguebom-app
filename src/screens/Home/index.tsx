@@ -35,7 +35,7 @@ const Home: React.FC<Nav> = ({ navigation }) => {
           :
           <FlatList
             data={data?.pages.map(p => p.data).flat()}
-            renderItem={({ item }) => <PostDetails numberOfLines={4} info={item} />}
+            renderItem={({ item }) => <PostDetails enableMaxLenght={true} info={item} />}
             ListFooterComponent={() => hasNextPage ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.contrast} /> : <></>}
             onEndReached={async () => {
               await fetchNextPage()

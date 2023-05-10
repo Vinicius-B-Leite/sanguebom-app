@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 
+
 export const Container = styled.View`
     width: ${({ theme }) => theme.vw}px;
     margin: ${({theme}) => theme.vh * 0.03}px 0px;
@@ -35,3 +36,10 @@ export const ComunText = styled.Text`
     font-size: ${({ theme }) => theme.fontSize.sm}px;
 `
 export const Description = styled(ComunText)``
+
+export  const ReadMoreBTN = styled.TouchableOpacity`
+    
+`
+export const ReadMore = styled(ComunText)`
+    text-decoration-line: underline;
+`
