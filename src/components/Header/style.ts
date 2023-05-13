@@ -20,4 +20,23 @@ export const Notifications = styled.TouchableOpacity`
     width: 13%;
     height: 100%;
     border-radius: ${({ theme }) => theme.borderRadius.full}px;
+    position: relative;
+`
+
+export const NotificationNumberArea = styled.View`
+    position: absolute;
+    width: ${({ theme }) => theme.vw * 0.06}px;
+    height: ${({ theme }) => theme.vw * 0.06}px;
+    background-color: green;
+    top: -${({ theme }) => theme.vw * 0.02}px;
+    border-radius: ${({ theme }) => theme.borderRadius.full}px;
+    left: -${({ theme }) => theme.vw * 0.02}px;
+    background-color: ${({ theme }) => theme.colors.backgroundColor};
+    justify-content: center;
+    align-items: center;
+`
+
+export const NotificationLabel = styled.Text`
+    font-size: ${({ theme }) => theme.fontSize.sm}px;
+    color: ${({ theme }) => theme.colors.contrast};
 `

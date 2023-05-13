@@ -4,4 +4,5 @@ export type NotificationType = {
     type: 'alert' | 'post',
     userUID: string,
     postID?: string,
+    id: string
 }

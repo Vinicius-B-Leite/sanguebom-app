@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList, ActivityIndicator } from 'react-native';
 import Header from '../../components/Header';
 import { PostType } from '../../types/PostType';
 import * as S from './styles'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
 import { getPosts } from '../../api/getPosts';
 import { useTheme } from 'styled-components/native';
@@ -13,6 +13,9 @@ import { StackHomeParamsList } from '../../routes/models';
 import PostDetails from '../../components/Post';
 import Skeleton from '../../components/Skeleton';
 import SkeletonContainer from '../../components/SkeletonContainer';
+import { getNotificationLength } from '../../api/getNotificationLength';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setNotificationLength } from '../../feature/notification/notificationSlice';
 
 
 
@@ -21,6 +24,16 @@ const Home: React.FC<Nav> = ({ navigation }) => {
   const user = useSelector((state: RootState) => state.user.user)
   const theme = useTheme()
   const [refreshFlatList, setRefreshFlatList] = useState(false)
+  const dispatch = useDispatch()
+
+
+  useQuery({
+    queryKey: ['notificationLength'],
+    queryFn: () => getNotificationLength({ token: user?.token ?? '', uid: user?.uid ?? '' }),
+    onSuccess: (res) => {
+      dispatch(setNotificationLength(res))
+    }
+  })
 
   const { data, fetchNextPage, isLoading, hasNextPage, refetch } = useInfiniteQuery({
     queryKey: ['posts'],
