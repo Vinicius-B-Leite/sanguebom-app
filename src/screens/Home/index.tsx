@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { FlatList, ActivityIndicator } from 'react-native';
 import Header from '../../components/Header';
 import { PostType } from '../../types/PostType';
@@ -20,13 +20,20 @@ type Nav = StackScreenProps<StackHomeParamsList, 'Home'>
 const Home: React.FC<Nav> = ({ navigation }) => {
   const user = useSelector((state: RootState) => state.user.user)
   const theme = useTheme()
+  const [refreshFlatList, setRefreshFlatList] = useState(false)
 
-  const { data, fetchNextPage, isLoading, hasNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, isLoading, hasNextPage, refetch } = useInfiniteQuery({
     queryKey: ['posts'],
     queryFn: ({ pageParam = 1 }) => getPosts({ page: pageParam, tokenJWT: user?.token ?? '' }),
     getNextPageParam: (lastPage, allPages) => lastPage.maxPage >= allPages.length + 1 ? allPages.length + 1 : undefined
   })
 
+
+  const onRefreshFlatList = async () => {
+    setRefreshFlatList(true)
+    await refetch()
+    setRefreshFlatList(false)
+  }
 
   return (
     <S.Container>
@@ -39,7 +46,7 @@ const Home: React.FC<Nav> = ({ navigation }) => {
                 <SkeletonContainer w={theme.vw * 0.1} h={theme.vw * 0.1} isCircle={true} />
                 <SkeletonContainer w={theme.vw * 0.7} h={theme.vw * 0.1} />
               </S.SkeletonRow>
-              <SkeletonContainer w={theme.vw * 0.8} h={theme.vw * 0.4}/>
+              <SkeletonContainer w={theme.vw * 0.8} h={theme.vw * 0.4} />
             </S.SkeletonArea>
           ))
           :
@@ -50,6 +57,8 @@ const Home: React.FC<Nav> = ({ navigation }) => {
             onEndReached={async () => {
               await fetchNextPage()
             }}
+            refreshing={refreshFlatList}
+            onRefresh={onRefreshFlatList}
           />
       }
 

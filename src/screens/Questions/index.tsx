@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
 import Header from '../../components/Header';
 import Question from '../../components/Question';
@@ -20,7 +20,8 @@ type Nav = QuestionsScreenProps
 const Questions: React.FC<Nav> = ({ navigation, route }) => {
   const user = useSelector((state: RootState) => state.user.user)
   const theme = useTheme()
-  const { data, isLoading , } = useQuery(
+  const [refreshList, setRefreshList] = useState(false)
+  const { data, isLoading, refetch } = useQuery(
     ['questions'],
     () => getQuestions(user?.token ?? ''),
     {
@@ -28,12 +29,18 @@ const Questions: React.FC<Nav> = ({ navigation, route }) => {
     }
   )
 
+  const handleRefresh = async () => {
+    setRefreshList(true)
+    await refetch()
+    setRefreshList(false)
+  }
+
   return (
     <S.Container>
       <Header onClickBell={() => navigation.navigate('Notification')} />
       {
         isLoading ?
-          <View style={{padding: '5%'}}>
+          <View style={{ padding: '5%' }}>
             <SkeletonContainer w={theme.vw * 9} h={theme.vh * 0.1} />
           </View>
           :
@@ -41,6 +48,8 @@ const Questions: React.FC<Nav> = ({ navigation, route }) => {
             contentContainerStyle={{ padding: '5%' }}
             data={data}
             renderItem={({ item }) => <Question item={item} />}
+            refreshing={refreshList}
+            onRefresh={handleRefresh}
           />
       }
     </S.Container>
