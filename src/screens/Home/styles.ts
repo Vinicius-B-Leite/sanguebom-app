@@ -4,3 +4,12 @@ export const Container = styled.SafeAreaView`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.backgroundColor};
 `
+
+export const SkeletonRow = styled.View`
+  flex-direction: row;
+  margin: 5% 0%;
+`
+
+export const SkeletonArea = styled.View`
+  padding: 5% 10%;
+`

@@ -11,6 +11,8 @@ import { useTheme } from 'styled-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { StackHomeParamsList } from '../../routes/models';
 import PostDetails from '../../components/Post';
+import Skeleton from '../../components/Skeleton';
+import SkeletonContainer from '../../components/SkeletonContainer';
 
 
 
@@ -28,10 +30,18 @@ const Home: React.FC<Nav> = ({ navigation }) => {
 
   return (
     <S.Container>
-      <Header onClickBell={() => navigation.navigate('Notification')}/>
+      <Header onClickBell={() => navigation.navigate('Notification')} />
       {
         isLoading ?
-          <ActivityIndicator size={theme.icons.md} color={theme.colors.contrast} />
+          [1, 2, 3, 4].map(i => (
+            <S.SkeletonArea key={i}>
+              <S.SkeletonRow >
+                <SkeletonContainer w={theme.vw * 0.1} h={theme.vw * 0.1} isCircle={true} />
+                <SkeletonContainer w={theme.vw * 0.7} h={theme.vw * 0.1} />
+              </S.SkeletonRow>
+              <SkeletonContainer w={theme.vw * 0.8} h={theme.vw * 0.4}/>
+            </S.SkeletonArea>
+          ))
           :
           <FlatList
             data={data?.pages.map(p => p.data).flat()}
@@ -42,6 +52,8 @@ const Home: React.FC<Nav> = ({ navigation }) => {
             }}
           />
       }
+
+
     </S.Container>
   )
 }

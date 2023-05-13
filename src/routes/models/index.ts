@@ -1,3 +1,7 @@
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
+import { CompositeScreenProps } from '@react-navigation/native'
+import type { StackScreenProps } from '@react-navigation/stack'
+
 export type StackRootParamsList = {
     LoginOptions: undefined,
     SelectBloodType: undefined,
@@ -7,6 +11,14 @@ export type StackRootParamsList = {
     Login: undefined
 }
 
+export type BottomTabParamsList = {
+    HomeStack: StackScreenProps<StackHomeParamsList>,
+    Search: undefined,
+    CreatePost?: undefined,
+    Questions: undefined,
+    Profile: undefined
+}
+
 export type StackHomeParamsList = {
     Home: undefined,
     Notification: undefined,
@@ -14,3 +26,13 @@ export type StackHomeParamsList = {
         postID: string
     }
 }
+
+
+export type QuestionsScreenProps = CompositeScreenProps<
+    BottomTabScreenProps<BottomTabParamsList, 'Questions'>,
+    StackScreenProps<StackHomeParamsList>
+>
+export type ProfileScreenProps = CompositeScreenProps<
+    BottomTabScreenProps<BottomTabParamsList, 'Profile'>,
+    StackScreenProps<StackHomeParamsList>
+>

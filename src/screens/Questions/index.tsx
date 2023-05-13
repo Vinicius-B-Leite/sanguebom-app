@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import { FlatList, View } from 'react-native';
 import Header from '../../components/Header';
 import Question from '../../components/Question';
 import * as S from './styles'
@@ -10,12 +10,17 @@ import { RootState } from '../../feature/store';
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '../../types/ErrorResponse';
 import { useTheme } from 'styled-components/native';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { BottomTabParamsList, QuestionsScreenProps } from '../../routes/models';
+import SkeletonContainer from '../../components/SkeletonContainer';
 
 
-const Questions: React.FC = () => {
+
+type Nav = QuestionsScreenProps
+const Questions: React.FC<Nav> = ({ navigation, route }) => {
   const user = useSelector((state: RootState) => state.user.user)
   const theme = useTheme()
-  const { data, isLoading } = useQuery(
+  const { data, isLoading , } = useQuery(
     ['questions'],
     () => getQuestions(user?.token ?? ''),
     {
@@ -25,13 +30,18 @@ const Questions: React.FC = () => {
 
   return (
     <S.Container>
-      <Header />
+      <Header onClickBell={() => navigation.navigate('Notification')} />
       {
-        isLoading ? <ActivityIndicator size={theme.icons.md} color={theme.colors.contrast} /> : <FlatList
-          contentContainerStyle={{ padding: '5%' }}
-          data={data}
-          renderItem={({ item }) => <Question item={item} />}
-        />
+        isLoading ?
+          <View style={{padding: '5%'}}>
+            <SkeletonContainer w={theme.vw * 9} h={theme.vh * 0.1} />
+          </View>
+          :
+          <FlatList
+            contentContainerStyle={{ padding: '5%' }}
+            data={data}
+            renderItem={({ item }) => <Question item={item} />}
+          />
       }
     </S.Container>
   )
