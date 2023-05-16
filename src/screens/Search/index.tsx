@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { FlatList } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import React, { useLayoutEffect, useState, useMemo, useRef, createRef } from 'react';
+import { FlatList, View } from 'react-native';
+import MapView, { MapMarker, Marker } from 'react-native-maps';
 import * as S from './styles'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useTheme } from 'styled-components/native';
@@ -14,6 +14,8 @@ import * as Location from 'expo-location';
 import AlertButton from '../../components/AlertButton';
 import ModalCreateAlert from '../../components/ModalCreateAlert';
 import { MarkerType } from '../../types/MarkerType';
+import { baseURL } from '../../api';
+import { HospitalType } from '../../types/HospitalType';
 
 
 
@@ -22,7 +24,8 @@ const Search: React.FC = () => {
   const { colors, icons } = useTheme()
   const user = useSelector((state: RootState) => state.user.user)
 
-  const [location, setLocation] = useState<Location.LocationObject | null>(null)
+  const [location, setLocation] = useState<{ lat: number, lng: number } | null>(null)
+  const [userLocation, setUserLocation] = useState<{ lat: number, lng: number } | null>(null)
   const [searchInput, setSeatchInput] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const [currentBloodCollector, setCurrentBloodCollector] = useState<MarkerType>()
@@ -34,9 +37,10 @@ const Search: React.FC = () => {
       onError: (err: AxiosError<ErrorResponse>) => console.log(err.response?.data),
     }
   )
+  const refs = useRef(Array.from({ length: data?.length || 999 }).map(() => createRef<MapMarker>()))
 
   const markers = useMemo(() => {
-    const m: MarkerType[] | undefined = data?.map((bloodCollector) => (
+    return data?.map((bloodCollector) => (
       {
         coordinate: {
           latitude: bloodCollector.lat,
@@ -47,13 +51,12 @@ const Search: React.FC = () => {
         pinColor: 'red',
         bloodTypes: bloodCollector.alert?.bloodTypes
       }
-    ))
+    )) as MarkerType[] | undefined
 
-    return m
   }, [data])
-  console.log("🚀 ~ file: index.tsx:54 ~ data:", data)
 
-
+  const suggestBloodCollectors = useMemo(() => searchInput.length > 0 && data?.filter((v) =>
+    v.username.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())), [searchInput])
 
   const getLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -61,14 +64,24 @@ const Search: React.FC = () => {
       return;
     }
 
-    let locationResponse = await Location.getCurrentPositionAsync({});
-    setLocation(locationResponse);
+    let { coords } = await Location.getCurrentPositionAsync({});
+    setUserLocation({ lat: coords.latitude, lng: coords.longitude });
   }
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getLocation()
   }, [])
+
+
+  const handleClickSuggest = (suggestItem: HospitalType) => {
+    setLocation({ lat: suggestItem.lat, lng: suggestItem.lng })
+    setSeatchInput(suggestItem.username)
+
+    if (!data) return
+
+    refs?.current[data.findIndex(v => v.username === suggestItem.username)]?.current?.showCallout()
+  }
 
   return (
     <S.Container>
@@ -77,25 +90,41 @@ const Search: React.FC = () => {
           <AntDesign name="arrowleft" size={icons.sm} color={colors.backgroundColor} />
         </S.GoBack>
         <S.Input
-          placeholder='Pesquise um bairro'
+          placeholder={'Pesquise por um ponto de coleta'}
           placeholderTextColor={colors.backgroundColorSecond}
           value={searchInput}
           onChangeText={setSeatchInput}
         />
       </S.Header>
+      {
+        suggestBloodCollectors && suggestBloodCollectors?.length > 0 &&
+        <View>
+          <FlatList
+            data={suggestBloodCollectors}
+            renderItem={({ item, index }) => index < 3 ?
+              <S.SuggestContainer onPress={() => handleClickSuggest(item)}>
+                <S.SuggestItemAvatar source={{ uri: `${baseURL}${item.imageURL}` }} />
+                <S.SuggestItemName>{item.username}</S.SuggestItemName>
+              </S.SuggestContainer> : <></>
+            }
+          />
+        </View>
+      }
       <MapView
         onPress={() => setCurrentBloodCollector(undefined)}
         style={{ flex: 1 }}
-        initialRegion={{
-          latitude: location?.coords.latitude || -23.1184444,
-          longitude: location?.coords.longitude || -46.5811119,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05
-        }}>
+        region={{
+          latitude: location?.lat ?? -23.1184444,
+          longitude: location?.lng ?? -46.5811119,
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1
+        }}
+      >
 
         {
-          markers?.map(mark => (
+          markers?.map((mark, i) => (
             <Marker
+              ref={refs.current[i]}
               key={mark.title}
               coordinate={{
                 latitude: mark.coordinate.latitude,
@@ -109,15 +138,18 @@ const Search: React.FC = () => {
           ))
         }
 
-        <Marker
-          coordinate={{
-            latitude: location?.coords.latitude || -23.1184444,
-            longitude: location?.coords.longitude || -46.5811119,
-          }}
-          title='Você'
-          description='Você está localizado aqui'
-          pinColor='green'
-        />
+        {
+          userLocation?.lat &&
+          <Marker
+            coordinate={{
+              latitude: userLocation?.lat,
+              longitude: userLocation?.lng,
+            }}
+            title='Você'
+            description='Você está localizado aqui'
+            pinColor='green'
+          />
+        }
 
       </MapView>
 

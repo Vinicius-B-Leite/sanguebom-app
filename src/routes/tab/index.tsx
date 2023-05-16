@@ -26,7 +26,7 @@ const Tab = () => {
                 tabBarShowLabel: false,
                 tabBarActiveTintColor: theme.colors.contrast,
                 tabBarInactiveTintColor: theme.colors.darkText,
-
+                tabBarHideOnKeyboard: false
             }}
         >
             <Screen
