@@ -16,14 +16,14 @@ import SkeletonContainer from '../../components/SkeletonContainer';
 import { getNotificationLength } from '../../api/getNotificationLength';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setNotificationLength } from '../../feature/notification/notificationSlice';
+import SkeletonPost from './components/SkeletonPost';
+import PostList from './components/PostList';
 
 
 
 type Nav = StackScreenProps<StackHomeParamsList, 'Home'>
 const Home: React.FC<Nav> = ({ navigation }) => {
   const user = useSelector((state: RootState) => state.user.user)
-  const theme = useTheme()
-  const [refreshFlatList, setRefreshFlatList] = useState(false)
   const dispatch = useDispatch()
 
 
@@ -42,36 +42,25 @@ const Home: React.FC<Nav> = ({ navigation }) => {
   })
 
 
-  const onRefreshFlatList = async () => {
-    setRefreshFlatList(true)
-    await refetch()
-    setRefreshFlatList(false)
-  }
 
   return (
     <S.Container>
       <Header onClickBell={() => navigation.navigate('Notification')} />
       {
         isLoading ?
-          [1, 2, 3, 4].map(i => (
-            <S.SkeletonArea key={i}>
-              <S.SkeletonRow >
-                <SkeletonContainer w={theme.vw * 0.1} h={theme.vw * 0.1} isCircle={true} />
-                <SkeletonContainer w={theme.vw * 0.7} h={theme.vw * 0.1} />
-              </S.SkeletonRow>
-              <SkeletonContainer w={theme.vw * 0.8} h={theme.vw * 0.4} />
-            </S.SkeletonArea>
-          ))
+          [1, 2, 3, 4, 5].map(i => <SkeletonPost key={i} />)
           :
-          <FlatList
-            data={data?.pages.map(p => p.data).flat()}
-            renderItem={({ item }) => <PostDetails enableMaxLenght={true} info={item} />}
-            ListFooterComponent={() => hasNextPage ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.contrast} /> : <></>}
-            onEndReached={async () => {
+          <PostList
+
+            fetchNextPage={async () => {
               await fetchNextPage()
             }}
-            refreshing={refreshFlatList}
-            onRefresh={onRefreshFlatList}
+            hasNextPage={hasNextPage || false}
+            posts={data}
+
+            refetch={async () => {
+              await refetch()
+            }}
           />
       }
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, ToastAndroid, Dimensions } from 'react-native';
+import { ActivityIndicator, Image, ToastAndroid, Dimensions } from 'react-native';
 import * as S from './styles'
 import Entypo from '@expo/vector-icons/Entypo'
 import { useTheme } from 'styled-components/native';
@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '../../types/ErrorResponse';
-import AutoHeightImage from 'react-native-auto-height-image';
 
 
 
@@ -78,11 +77,9 @@ const CreatePost: React.FC = () => {
       <S.Form>
         <S.PickImageBtn onPress={handlePickImage}>
           {
-            file.uri.length > 0 ? <AutoHeightImage
-              width={Dimensions.get('screen').width}
+            file.uri.length > 0 ? <Image
+              style={{ width: Dimensions.get('screen').width, maxHeight: Dimensions.get('screen').height * 0.7 }}
               source={{ uri: file.uri }}
-              maxHeight={Dimensions.get('screen').height * 0.7}
-
             /> :
               <Entypo name="image" size={icons.big} color={colors.darkText} style={{ paddingVertical: '10%' }} />
           }

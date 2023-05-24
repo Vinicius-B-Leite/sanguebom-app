@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity, FlatList, Text } from 'react-native';
 import * as S from './styles'
-import { AntDesign } from '@expo/vector-icons';
 import { useTheme } from 'styled-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { StackHomeParamsList } from '../../routes/models';
@@ -14,6 +13,7 @@ import { ErrorResponse } from '../../types/ErrorResponse';
 import NotificationItem from '../../components/NotificationItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setNotificationLength } from '../../feature/notification/notificationSlice';
+import HeaderGoBack from '../../components/HeaderGoBack';
 
 
 
@@ -41,13 +41,10 @@ const Notification: React.FC<Nav> = ({ navigation }) => {
 
     return (
         <S.Container>
-            <S.Header>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <AntDesign name="left" size={theme.icons.sm} color={theme.colors.backgroundColor} />
-                </TouchableOpacity>
-                <S.Title>Notificações</S.Title>
-            </S.Header>
+            
+            <HeaderGoBack goBack={() => navigation.goBack()} theme='contrast' title='Notificações'/>
 
+            
             <FlatList
                 contentContainerStyle={{ padding: '5%' }}
                 data={data}

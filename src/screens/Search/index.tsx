@@ -16,6 +16,8 @@ import ModalCreateAlert from '../../components/ModalCreateAlert';
 import { MarkerType } from '../../types/MarkerType';
 import { baseURL } from '../../api';
 import { HospitalType } from '../../types/HospitalType';
+import Alert from './components/Alert';
+import { getLocation } from '../../utlis/getLocation';
 
 
 
@@ -58,19 +60,10 @@ const Search: React.FC = () => {
   const suggestBloodCollectors = useMemo(() => searchInput.length > 0 && data?.filter((v) =>
     v.username.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())), [searchInput])
 
-  const getLocation = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      return;
-    }
-
-    let { coords } = await Location.getCurrentPositionAsync({});
-    setUserLocation({ lat: coords.latitude, lng: coords.longitude });
-  }
-
+  
 
   useLayoutEffect(() => {
-    getLocation()
+    getLocation().then(res => res && setUserLocation(res))
   }, [])
 
 
@@ -170,26 +163,10 @@ const Search: React.FC = () => {
           isAlertOn={!!(data && data[data?.findIndex(v => v.username === user?.username)].alert?.status)}
         />
       }
-      {
-        currentBloodCollector &&
-        <S.AlertInfoContainer>
-          <S.Left>
-            <S.BloodCollectorName numberOfLines={2}>{currentBloodCollector.title}</S.BloodCollectorName>
-          </S.Left>
 
-          <S.Right>
-            <FlatList
-              horizontal
-              contentContainerStyle={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}
-              showsHorizontalScrollIndicator={false}
-              data={currentBloodCollector.bloodTypes?.map((b, i, a) => i === a.length - 1 ? b : b + ', ')}
-              renderItem={({ item }) => (
-                <S.BloodTypeItem>{item}</S.BloodTypeItem>
-              )}
-            />
-          </S.Right>
-        </S.AlertInfoContainer>
-      }
+
+      <Alert visible={!!currentBloodCollector} bloodTypes={currentBloodCollector?.bloodTypes || []} username={currentBloodCollector?.title || ''} />
+
     </S.Container >
   )
 }

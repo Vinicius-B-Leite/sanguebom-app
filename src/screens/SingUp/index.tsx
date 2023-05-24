@@ -14,6 +14,7 @@ import { setUser } from '../../feature/user/userSlicer';
 import { UserType } from '../../types/UserType';
 import { ErrorResponse } from '../../types/ErrorResponse';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import HeaderGoBack from '../../components/HeaderGoBack';
 
 
 type Nav = StackScreenProps<StackRootParamsList, 'SingUp'>
@@ -26,6 +27,20 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const dispatch = useDispatch()
 
+    const onSuccess = async (res: AxiosResponse<UserType, any>) => {
+        const data = { ...res.data, type: 'normal user' }
+        await AsyncStorage.setItem('@user', JSON.stringify(data))
+        dispatch(setUser(data as UserType))
+    }
+
+    const onError = async (error: AxiosError<ErrorResponse>) => {
+        if (error.response && !(['02', '03', '13'].includes(error.response?.data.code))) {
+            Alert.alert(
+                'Ops',
+                'Ocorreu um erro. Volte mais tarde'
+            )
+        }
+    }
 
     const { isLoading, mutate, error } = useMutation({
         mutationFn: () => createAccount({
@@ -34,36 +49,14 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
             password,
             username
         }),
-        onSuccess: async (res) => {
-            const data = { ...res.data, type: 'normal user' }
-            await AsyncStorage.setItem('@user', JSON.stringify(data))
-            dispatch(setUser(data as UserType))
-
-        },
-        onError: (error: AxiosError<ErrorResponse>) => {
-            if (error.response && !(['02', '03', '13'].includes(error.response?.data.code))) {
-                Alert.alert(
-                    'Ops',
-                    'Ocorreu um erro. Volte mais tarde'
-                )
-            }
-        }
+        onSuccess,
+        onError
     })
 
-    const handleSubmit = () => {
-        if (username.length > 0 &&
-            email.length > 0 &&
-            password.length > 0 &&
-            confirmPassword.length > 0 &&
-            confirmPassword == password) {
-            mutate()
-        }
-    }
+
     return (
         <S.Container>
-            <S.GoBack onPress={() => navigation.goBack()}>
-                <AntDesign name="left" size={theme.icons.sm} color={theme.colors.contrast} />
-            </S.GoBack>
+            <HeaderGoBack goBack={() => navigation.goBack()} theme='transparent' />
 
             <S.Title>Criar conta</S.Title>
 
@@ -129,7 +122,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                         password.length > 0 &&
                         confirmPassword.length > 0 &&
                         confirmPassword == password}
-                    onPress={handleSubmit}
+                    onPress={() => mutate()}
                 >
                     <S.SubmitLabel>{isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.backgroundColor} /> : 'Concluir'}</S.SubmitLabel>
                 </S.SubmitButton>

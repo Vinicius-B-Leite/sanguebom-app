@@ -20,9 +20,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { baseURL } from '../../api';
 import ModalUpdateUser from '../../components/ModalUpdateUser';
 import { Fontisto } from '@expo/vector-icons';
+import { ProfileScreenProps } from '../../routes/models/index'
 
-
-const Profile: React.FC = () => {
+type Nav = ProfileScreenProps
+const Profile: React.FC<Nav> = ({ navigation }) => {
   const { colors, icons } = useTheme()
 
   const dispatch = useDispatch()
@@ -86,7 +87,7 @@ const Profile: React.FC = () => {
   return (
     <S.Container>
 
-      <Header />
+      <Header onClickBell={() => navigation.navigate('Notification')} />
       <TouchableOpacity onPress={handleImagePicker}>
         <S.Avatar
           source={{ uri: typeof avatar === 'string' ? avatar : avatar.uri }}
@@ -112,7 +113,7 @@ const Profile: React.FC = () => {
         <S.ItemLabel>Endereço de email</S.ItemLabel>
       </S.ItemContainer>
 
-      <S.ItemContainer onPress={() => openModal((txt) => setEmail(txt), 'senha')}>
+      <S.ItemContainer onPress={() => openModal((txt) => setPassword(txt), 'senha')}>
         <S.ItemBackgroundIcon>
           <MaterialIcons name="lock" size={icons.vsm} color={colors.contrast} />
 

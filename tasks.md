@@ -1,10 +1,8 @@
 
 task atual: 
-    
-    fazer pesquisa pelo nome do ponto de coleta
+    splash screenrr
 
 
 
-
+    melhorar o UI do alerta no mapa
 terminar as funções da tela profille
-melhorar o UI do alerta no mapa

@@ -13,6 +13,7 @@ import { useTheme } from 'styled-components/native';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { BottomTabParamsList, QuestionsScreenProps } from '../../routes/models';
 import SkeletonContainer from '../../components/SkeletonContainer';
+import QuestionList from './components/QuestionList';
 
 
 
@@ -20,7 +21,6 @@ type Nav = QuestionsScreenProps
 const Questions: React.FC<Nav> = ({ navigation, route }) => {
   const user = useSelector((state: RootState) => state.user.user)
   const theme = useTheme()
-  const [refreshList, setRefreshList] = useState(false)
   const { data, isLoading, refetch } = useQuery(
     ['questions'],
     () => getQuestions(user?.token ?? ''),
@@ -29,10 +29,9 @@ const Questions: React.FC<Nav> = ({ navigation, route }) => {
     }
   )
 
-  const handleRefresh = async () => {
-    setRefreshList(true)
+
+  const handleRefetch = async () => {
     await refetch()
-    setRefreshList(false)
   }
 
   return (
@@ -44,13 +43,7 @@ const Questions: React.FC<Nav> = ({ navigation, route }) => {
             <SkeletonContainer w={theme.vw * 9} h={theme.vh * 0.1} />
           </View>
           :
-          <FlatList
-            contentContainerStyle={{ padding: '5%' }}
-            data={data}
-            renderItem={({ item }) => <Question item={item} />}
-            refreshing={refreshList}
-            onRefresh={handleRefresh}
-          />
+          <QuestionList questions={data} refetch={handleRefetch} />
       }
     </S.Container>
   )

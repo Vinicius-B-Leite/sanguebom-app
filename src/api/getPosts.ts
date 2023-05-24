@@ -8,11 +8,11 @@ type Props = {
     tokenJWT: string
 }
 
-type APIResponse = {
+export type InfinetePosts = {
     data: PostType[],
     maxPage: number
 }
 
 export async function getPosts({ page, tokenJWT }: Props) {
-    return (await api.get<APIResponse>(`posts?page=${page}`, { headers: { Authorization: 'Bearer ' + tokenJWT } })).data
+    return (await api.get<InfinetePosts>(`posts?page=${page}`, { headers: { Authorization: 'Bearer ' + tokenJWT } })).data
 }

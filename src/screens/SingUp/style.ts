@@ -5,16 +5,6 @@ export const Container = styled.View`
     background-color: ${({ theme }) => theme.colors.backgroundColor};
 `;
 
-
-export const GoBack = styled.TouchableOpacity`
-    margin: 5%;
-    width: 10%;
-    height: 5%;
-    justify-content: center;
-    align-items: center;
-`
-
-
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.contrast};
     font-size: ${({ theme }) => theme.fontSize.lg}px;
