@@ -23,7 +23,7 @@ import { getLocation } from '../../utlis/getLocation';
 
 const Search: React.FC = () => {
 
-  const { colors, icons } = useTheme()
+  const { colors, icons, type } = useTheme()
   const user = useSelector((state: RootState) => state.user.user)
 
   const [location, setLocation] = useState<{ lat: number, lng: number } | null>(null)
@@ -60,7 +60,7 @@ const Search: React.FC = () => {
   const suggestBloodCollectors = useMemo(() => searchInput.length > 0 && data?.filter((v) =>
     v.username.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())), [searchInput])
 
-  
+
 
   useLayoutEffect(() => {
     getLocation().then(res => res && setUserLocation(res))
@@ -80,7 +80,7 @@ const Search: React.FC = () => {
     <S.Container>
       <S.Header>
         <S.GoBack>
-          <AntDesign name="arrowleft" size={icons.sm} color={colors.backgroundColor} />
+          <AntDesign name="arrowleft" size={icons.sm} color={type === 'dark' ? colors.text : colors.backgroundColor} />
         </S.GoBack>
         <S.Input
           placeholder={'Pesquise por um ponto de coleta'}

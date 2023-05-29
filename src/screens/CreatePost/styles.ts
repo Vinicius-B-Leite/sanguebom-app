@@ -7,18 +7,18 @@ export const Container = styled.View`
 
 
 export const Header = styled.View`
-    background-color: ${({ theme }) => theme.colors.contrast};
+    background-color: ${({ theme }) => theme.type === 'dark' ? theme.colors.backgroundColor : theme.colors.contrast};
     padding: 5%;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 `
 export const Title = styled.Text`
-    color: ${({ theme }) => theme.colors.backgroundColor};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.backgroundColor};
     font-size: ${({ theme }) => theme.fontSize.md}px;
 `
 export const DoneBtn = styled.TouchableOpacity`
-    background-color: ${({ theme }) => theme.colors.backgroundColor};
+    background-color: ${({ theme }) => theme.type === 'dark' ? theme.colors.contrast : theme.colors.backgroundColor};
     flex-direction: row;
     width: 20%;
     justify-content: center;
@@ -27,7 +27,7 @@ export const DoneBtn = styled.TouchableOpacity`
     border-radius: ${({ theme }) => theme.borderRadius.sm}px;
 `
 export const DoneTxt = styled.Text`
-    color: ${({ theme }) => theme.colors.contrast};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.contrast};
     font-size: ${({ theme }) => theme.fontSize.sm}px;
 `
 
@@ -35,9 +35,9 @@ export const DoneTxt = styled.Text`
 export const PickImageBtn = styled.TouchableOpacity`
     align-self: center;
     width: 100%;
-    border-radius: ${({theme}) => theme.borderRadius.xxsm}px;
+    border-radius: ${({ theme }) => theme.borderRadius.xxsm}px;
     align-items: center;
-    background-color: ${({theme}) => theme.colors.formInputBg};
+    background-color: ${({ theme }) => theme.colors.formInputBg};
     justify-content: center;
     margin-bottom: 5%;
 `
@@ -52,17 +52,17 @@ export const Form = styled.ScrollView`
 `
 
 export const InputTitle = styled.Text`
-    color: ${({theme}) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.text};
     font-weight: 600;
-    font-size: ${({theme}) => theme.fontSize.xxsm}px;
+    font-size: ${({ theme }) => theme.fontSize.xxsm}px;
 
 `
 export const InputArea = styled.View`
     width: 100%;
-    height: ${({theme}) => theme.vw * 0.1}px;
+    height: ${({ theme }) => theme.vw * 0.1}px;
     margin: 3% 0%;
 `
 export const DescriptionArea = styled(InputArea)`
-    height: ${({theme}) => theme.vw * 0.5}px;
+    height: ${({ theme }) => theme.vw * 0.5}px;
     margin-bottom: 10%;
 `

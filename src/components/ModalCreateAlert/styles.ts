@@ -25,7 +25,7 @@ export const Main = styled.View`
     `
 
 export const Title = styled.Text`
-    color: ${({ theme }) => theme.colors.contrast};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.contrast};
     font-size: ${({ theme }) => theme.fontSize.md}px;
     font-weight: 700;
     `
@@ -38,7 +38,7 @@ export const Row = styled.View`
 
 export const SectionTitle = styled.Text`
     margin: 2% 0%;
-    color: ${({ theme }) => theme.colors.contrast};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.contrast};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
 `
 
@@ -61,7 +61,7 @@ export const SubmitButton = styled.TouchableOpacity`
 `
 
 export const SubmitLabel = styled.Text`
-    color: ${({ theme }) => theme.colors.backgroundColor};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.backgroundColor};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
     font-weight: 700;
 `

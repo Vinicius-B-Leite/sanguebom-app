@@ -1,22 +1,25 @@
 import { Dimensions } from "react-native"
+import { ThemeType } from "../types/ThemeType"
 
 const { height, width } = Dimensions.get('screen')
 
-export const darkMode = {
+
+
+export const darkMode: ThemeType = {
     colors: {
-        backgroundColor: '#fff',
-        backgroundOpacity: 'rgba(0, 0, 0, 0.4)',
+        backgroundColor: '#060606',
+        backgroundOpacity: 'rgba(0, 0, 0, 0.8)',
         backgroundColorSecond: '#D4BFBF',
         contrast: '#F65353',
         disabledContrast: '#7a3b3b',
-        darkContrast: '#BB1B1B',
+        darkContrast: 'rgba(248, 1, 1, 0.4)',
         lightContrast: '#FBEAEA',
         darkText: '#959595',
-        text: '#000',
-        inputBackgroundColor: '#DC7878',
-        questionBackgroundColor: '#FFF6F6',
+        text: '#fff',
+        inputBackgroundColor: '#3E0606',
+        questionBackgroundColor: '#3E0606',
         optionsBg: '#FBB1B1',
-        formInputBg: '#F1F1F1',
+        formInputBg: '#111111',
         alert: '#f00'
     },
     icons: {
@@ -42,5 +45,6 @@ export const darkMode = {
         xxsm: width * 0.02
     },
     vw: width,
-    vh: height
+    vh: height,
+    type: 'dark'
 }

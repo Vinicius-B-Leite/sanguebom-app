@@ -7,7 +7,7 @@ type Props = {
     h?: number
 }
 export const Container = styled.TouchableOpacity<Props>`
-    background-color: ${({ theme, selected }) => selected ? theme.colors.contrast : theme.colors.lightContrast};
+    background-color: ${({ theme, selected }) => selected ? theme.colors.contrast : theme.type === 'dark' ? theme.colors.darkContrast : theme.colors.lightContrast};
     width: ${({ theme, w }) => w ? w : theme.vw * 0.4}px;
     height: ${({ theme, h }) => h ? h : theme.vw * 0.2}px;
     margin: ${({ theme }) => theme.vw * 0.02}px ${({ theme }) => theme.vw * 0.02}px;

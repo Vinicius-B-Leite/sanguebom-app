@@ -13,7 +13,7 @@ import Loading from '../screens/Loading';
 
 
 const Routes: React.FC = () => {
-    const { colors } = useTheme()
+    const { colors, type } = useTheme()
     const dispatch = useDispatch()
     const user = useSelector((state: RootState) => state.user.user)
     const [isLoading, setIsLoading] = useState(true)
@@ -37,7 +37,7 @@ const Routes: React.FC = () => {
 
     return (
         <NavigationContainer>
-            <StatusBar backgroundColor={colors.contrast} barStyle='light-content' />
+            <StatusBar backgroundColor={type === 'dark' ? colors.backgroundColor : colors.contrast} barStyle='light-content' />
             {user && !isLoading ? <Tab /> : <LoginRoutes />}
         </NavigationContainer>
     )

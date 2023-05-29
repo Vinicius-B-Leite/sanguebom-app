@@ -13,8 +13,9 @@ type Props = {
 }
 const Header: React.FC<Props> = ({ onClickBell }) => {
 
-    const { colors, icons } = useTheme()
+    const { colors, icons, type } = useTheme()
     const notificationsLength = useSelector((state: RootState) => state.notification.length)
+
 
     return (
         <S.Container>
@@ -26,7 +27,7 @@ const Header: React.FC<Props> = ({ onClickBell }) => {
                         <S.NotificationLabel>{notificationsLength < 99 ? notificationsLength : '99+'}</S.NotificationLabel>
                     </S.NotificationNumberArea>
                 }
-                <EvilIcons name='bell' color={colors.backgroundColor} size={icons.sm} />
+                <EvilIcons name='bell' color={type === 'dark' ? colors.text : colors.backgroundColor} size={icons.sm} />
             </S.Notifications>
         </S.Container>
     )

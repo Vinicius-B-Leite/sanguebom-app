@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './user/userSlicer'
 import { notificationReducer } from './notification/notificationSlice'
+import { themeReducer } from './theme/themeSlicer'
 
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
-        notification: notificationReducer
+        notification: notificationReducer,
+        theme: themeReducer
     }
 })
 

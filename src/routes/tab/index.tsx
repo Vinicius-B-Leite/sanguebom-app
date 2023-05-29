@@ -11,8 +11,9 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
 import HomeStack from '../homeStack';
+import { BottomTabParamsList } from '../models';
 
-const { Navigator, Screen } = createBottomTabNavigator()
+const { Navigator, Screen } = createBottomTabNavigator<BottomTabParamsList>()
 
 const Tab = () => {
 
@@ -26,7 +27,11 @@ const Tab = () => {
                 tabBarShowLabel: false,
                 tabBarActiveTintColor: theme.colors.contrast,
                 tabBarInactiveTintColor: theme.colors.darkText,
-                tabBarHideOnKeyboard: false
+                tabBarHideOnKeyboard: false,
+                tabBarStyle: {
+                    backgroundColor: theme.colors.backgroundColor,
+                    borderTopWidth: 0
+                }
             }}
         >
             <Screen

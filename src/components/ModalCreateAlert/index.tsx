@@ -92,6 +92,7 @@ const ModalCreateAlert: React.FC<Props> = ({ modalProps, isAlertOn = false, bTyp
                     <S.InputArea>
                         <Input inputProps={{
                             placeholder: 'Mensagem',
+                            placeholderTextColor: theme.colors.darkText,
                             value: message,
                             onChangeText: (v) => setMessage(v)
                         }} />

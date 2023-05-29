@@ -7,7 +7,9 @@ type Props = {
 }
 export const Container = styled.View<Props>`
     flex: 1;
-    background-color: ${({ theme, isFocused }) => isFocused ? theme.colors.lightContrast : theme.colors.formInputBg};
+    background-color: ${({ theme, isFocused }) => isFocused ?
+     theme.type === 'dark' ? theme.colors.darkContrast : theme.colors.formInputBg 
+     : theme.colors.formInputBg};
     border-radius: ${({ theme }) => theme.borderRadius.xxsm}px;
     flex-direction: row;
     padding: 1% 2%;
@@ -19,6 +21,6 @@ export const Container = styled.View<Props>`
 export const TxtInput = styled.TextInput`
     flex: 1;
     padding: 0% 2%;
-    font-size: ${({theme}) => theme.fontSize.xxxsm}px;
-    color: ${({theme}) => theme.colors.text};
+    font-size: ${({ theme }) => theme.fontSize.xxxsm}px;
+    color: ${({ theme }) => theme.colors.text};
 `

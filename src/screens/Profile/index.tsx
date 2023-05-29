@@ -21,6 +21,7 @@ import { baseURL } from '../../api';
 import ModalUpdateUser from '../../components/ModalUpdateUser';
 import { Fontisto } from '@expo/vector-icons';
 import { ProfileScreenProps } from '../../routes/models/index'
+import { changeTheme } from '../../feature/theme/themeSlicer';
 
 type Nav = ProfileScreenProps
 const Profile: React.FC<Nav> = ({ navigation }) => {
@@ -28,6 +29,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
 
   const dispatch = useDispatch()
   const user = useSelector((state: RootState) => state.user.user)
+  const themeIsDark = useSelector((state: RootState) => state.theme.isDark)
 
   const [avatar, setAvatar] = useState<string | ImagePickerAsset>(user?.imageURL ? baseURL + user?.imageURL : 'https://w7.pngwing.com/pngs/419/473/png-transparent-computer-icons-user-profile-login-user-heroes-sphere-black-thumbnail.png')
   const [username, setUsername] = useState(user?.username || '')
@@ -84,6 +86,10 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
     setIsModalVisible(true)
   }
 
+  const handleChangeTheme = async () => {
+    dispatch(changeTheme(!themeIsDark))
+    await AsyncStorage.setItem('@theme', JSON.stringify(!themeIsDark))
+  }
   return (
     <S.Container>
 
@@ -135,9 +141,9 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
       }
 
 
-      <S.ItemContainer >
+      <S.ItemContainer onPress={handleChangeTheme}>
         <S.ItemBackgroundIcon>
-          <Ionicons name="sunny-outline" size={icons.vsm} color={colors.contrast} />
+          <Ionicons name={themeIsDark ? 'moon' : "sunny-outline"} size={icons.vsm} color={colors.contrast} />
         </S.ItemBackgroundIcon>
 
         <S.ItemLabel>Trocar de tema</S.ItemLabel>
