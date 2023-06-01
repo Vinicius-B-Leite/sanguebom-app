@@ -12,15 +12,17 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '../../types/ErrorResponse';
+import ModalBase from '../ModalBase';
 
 
 
 type Props = {
-    modalProps: ModalProps,
     isAlertOn: boolean,
-    bTypesSelecteds: string[] | undefined
+    bTypesSelecteds: string[] | undefined,
+    visible: boolean,
+    onRequestClose: () => void
 }
-const ModalCreateAlert: React.FC<Props> = ({ modalProps, isAlertOn = false, bTypesSelecteds }) => {
+const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds, visible, onRequestClose }) => {
     const theme = useTheme()
     const [switchEnable, setSwitchEnable] = useState(isAlertOn)
     const [bloodTypesSelecteds, setBloodTypesSelecteds] = useState<string[]>(bTypesSelecteds || [])
@@ -53,57 +55,58 @@ const ModalCreateAlert: React.FC<Props> = ({ modalProps, isAlertOn = false, bTyp
     })
 
     return (
-        <Modal {...modalProps}>
-            <S.Container>
-                <S.CloseModal onPress={modalProps?.onRequestClose} />
+        <ModalBase modalProps={{
+            visible,
+            onRequestClose,
+            animationType: 'fade',
+            transparent: true
+        }}>
+            <S.Main>
+                <S.Title>Alerta</S.Title>
 
-                <S.Main>
-                    <S.Title>Alerta</S.Title>
+                <S.Row>
+                    <S.SectionTitle>Ativado</S.SectionTitle>
+                    <Switch
+                        trackColor={{ false: theme.colors.backgroundColorSecond, true: theme.colors.contrast }}
+                        thumbColor={'#f4f3f4'}
+                        onValueChange={() => setSwitchEnable(old => !old)}
+                        value={switchEnable}
+                    />
+                </S.Row>
 
-                    <S.Row>
-                        <S.SectionTitle>Ativado</S.SectionTitle>
-                        <Switch
-                            trackColor={{ false: theme.colors.backgroundColorSecond, true: theme.colors.contrast }}
-                            thumbColor={'#f4f3f4'}
-                            onValueChange={() => setSwitchEnable(old => !old)}
-                            value={switchEnable}
-                        />
-                    </S.Row>
+                <S.SectionTitle>Selecione o(s) tipo(s) sanguíneo</S.SectionTitle>
+                <S.BloodTypesContainer>
+                    <FlatList
+                        data={bloodTypes}
+                        numColumns={4}
+                        renderItem={({ item }) =>
+                            <SelectBloodTypeItem
+                                fs={theme.fontSize.xsm}
+                                h={theme.vw * 0.15}
+                                w={theme.vw * 0.15}
+                                bloodType={item}
+                                onClick={(b) => selectBloogType(b)}
+                                selected={bloodTypesSelecteds.includes(item)}
+                            />
+                        }
+                    />
+                </S.BloodTypesContainer>
 
-                    <S.SectionTitle>Selecione o(s) tipo(s) sanguíneo</S.SectionTitle>
-                    <S.BloodTypesContainer>
-                        <FlatList
-                            data={bloodTypes}
-                            numColumns={4}
-                            renderItem={({ item }) =>
-                                <SelectBloodTypeItem
-                                    fs={theme.fontSize.xsm}
-                                    h={theme.vw * 0.15}
-                                    w={theme.vw * 0.15}
-                                    bloodType={item}
-                                    onClick={(b) => selectBloogType(b)}
-                                    selected={bloodTypesSelecteds.includes(item)}
-                                />
-                            }
-                        />
-                    </S.BloodTypesContainer>
+                <S.SectionTitle>Mensagem personalizada</S.SectionTitle>
+                <S.InputArea>
+                    <Input inputProps={{
+                        placeholder: 'Mensagem',
+                        placeholderTextColor: theme.colors.darkText,
+                        value: message,
+                        onChangeText: (v) => setMessage(v)
+                    }} />
+                </S.InputArea>
 
-                    <S.SectionTitle>Mensagem personalizada</S.SectionTitle>
-                    <S.InputArea>
-                        <Input inputProps={{
-                            placeholder: 'Mensagem',
-                            placeholderTextColor: theme.colors.darkText,
-                            value: message,
-                            onChangeText: (v) => setMessage(v)
-                        }} />
-                    </S.InputArea>
-
-                    <S.SubmitButton onPress={() => mutate()}>
-                        <S.SubmitLabel>Criar</S.SubmitLabel>
-                    </S.SubmitButton>
-                </S.Main>
-            </S.Container>
-        </Modal>
+                <S.SubmitButton onPress={() => mutate()}>
+                    <S.SubmitLabel>Criar</S.SubmitLabel>
+                </S.SubmitButton>
+            </S.Main>
+        </ModalBase>
     )
 }
 

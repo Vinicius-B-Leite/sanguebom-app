@@ -5,6 +5,7 @@ import Input from '../Input';
 import ComunButton from '../ComunButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
+import ModalBase from '../ModalBase';
 
 
 type Props = {
@@ -20,37 +21,35 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
 
 
     return (
-        <Modal transparent visible={visible} animationType='slide'>
-            <S.Container onPress={closeModal}>
-                <S.Main>
-                    <S.Title>Atualizar {title}</S.Title>
+        <ModalBase modalProps={{ transparent: true, visible, animationType: 'slide', onRequestClose: closeModal }}>
+            <S.Main>
+                <S.Title>Atualizar {title}</S.Title>
 
-                    <S.InputArea>
-                        <Input
-                            inputProps={{
-                                placeholder: 'Novo ' + title,
-                                value,
-                                onChangeText: txt => setValue(txt)
-                            }}
-                        />
-                    </S.InputArea>
+                <S.InputArea>
+                    <Input
+                        inputProps={{
+                            placeholder: 'Novo ' + title,
+                            value,
+                            onChangeText: txt => setValue(txt)
+                        }}
+                    />
+                </S.InputArea>
 
-                    <S.InputArea>
-                        <Input
-                            inputProps={{
-                                placeholder: 'Digite sua senha atual para confirmar',
-                                value: confirmPassword,
-                                onChangeText: setConfirmPassword
-                            }}
-                        />
-                    </S.InputArea>
+                <S.InputArea>
+                    <Input
+                        inputProps={{
+                            placeholder: 'Digite sua senha atual para confirmar',
+                            value: confirmPassword,
+                            onChangeText: setConfirmPassword
+                        }}
+                    />
+                </S.InputArea>
 
-                    <S.InputArea>
-                        <ComunButton bg={confirmPassword === user?.password ? 'darkContrast' : 'white'} onClick={() => confirmPassword === user?.password && submit(value)} >Salvar</ComunButton>
-                    </S.InputArea>
-                </S.Main>
-            </S.Container>
-        </Modal>
+                <S.InputArea>
+                    <ComunButton bg={confirmPassword === user?.password ? 'darkContrast' : 'white'} onClick={() => confirmPassword === user?.password && submit(value)} >Salvar</ComunButton>
+                </S.InputArea>
+            </S.Main>
+        </ModalBase>
     )
 }
 
