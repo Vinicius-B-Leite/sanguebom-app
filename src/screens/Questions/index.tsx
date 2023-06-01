@@ -36,7 +36,7 @@ const Questions: React.FC<Nav> = ({ navigation, route }) => {
 
   return (
     <S.Container>
-      <Header onClickBell={() => navigation.navigate('Notification')} />
+      <Header onClickBell={() => navigation.navigate('Notification')} onClickBloodDonate={() => navigation.navigate('MyDonates')} />
       {
         isLoading ?
           <View style={{ padding: '5%' }}>

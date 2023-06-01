@@ -9,5 +9,5 @@ type Props = {
 
 
 export async function login({ email, password }: Props) {
-    return await api.post<UserType>('auth/login', { email, password })
+    return await api.post<UserType>('auth/login', { email: email.toLocaleLowerCase(), password })
 }

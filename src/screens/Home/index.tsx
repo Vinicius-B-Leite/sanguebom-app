@@ -38,14 +38,14 @@ const Home: React.FC<Nav> = ({ navigation }) => {
   const { data, fetchNextPage, isLoading, hasNextPage, refetch } = useInfiniteQuery({
     queryKey: ['posts'],
     queryFn: ({ pageParam = 1 }) => getPosts({ page: pageParam, tokenJWT: user?.token ?? '' }),
-    getNextPageParam: (lastPage, allPages) => lastPage.maxPage >= allPages.length + 1 ? allPages.length + 1 : undefined
+    getNextPageParam: (lastPage, allPages) => lastPage.maxPage >= allPages.length + 1 ? allPages.length + 1 : undefined,
   })
 
 
 
   return (
     <S.Container>
-      <Header onClickBell={() => navigation.navigate('Notification')} />
+      <Header onClickBell={() => navigation.navigate('Notification')} onClickBloodDonate={() => navigation.navigate('MyDonates')} />
       {
         isLoading ?
           [1, 2, 3, 4, 5].map(i => <SkeletonPost key={i} />)

@@ -15,11 +15,17 @@ export const Logo = styled.Text`
     font-weight: 800;
     color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.backgroundColor};
 `
+
+export const Right = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    width: 25%;
+    height: 100%;
+`
 export const Notifications = styled.TouchableOpacity`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 13%;
     height: 100%;
     border-radius: ${({ theme }) => theme.borderRadius.full}px;
     position: relative;

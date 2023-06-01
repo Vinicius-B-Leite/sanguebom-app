@@ -24,7 +24,8 @@ export type StackHomeParamsList = {
     Notification: undefined,
     Post: {
         postID: string
-    }
+    },
+    MyDonates: undefined
 }
 
 

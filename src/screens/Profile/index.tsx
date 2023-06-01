@@ -93,7 +93,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
   return (
     <S.Container>
 
-      <Header onClickBell={() => navigation.navigate('Notification')} />
+      <Header onClickBell={() => navigation.navigate('Notification')} onClickBloodDonate={() => navigation.navigate('MyDonates')} />
       <TouchableOpacity onPress={handleImagePicker}>
         <S.Avatar
           source={{ uri: typeof avatar === 'string' ? avatar : avatar.uri }}

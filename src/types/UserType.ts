@@ -7,5 +7,6 @@ export type UserType = {
     username: string,
     type: 'normal user' | 'blood collectors',
     imageURL: string | null,
-    adress?: string
+    adress?: string,
+    gender: 'female' | 'male'
 }

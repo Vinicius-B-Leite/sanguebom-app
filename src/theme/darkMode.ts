@@ -33,9 +33,9 @@ export const darkMode: ThemeType = {
     fontSize: {
         lg: width * 0.08,
         md: width * 0.06,
-        xxxsm: width * 0.043,
-        xxsm: width * 0.045,
         xsm: width * 0.05,
+        xxsm: width * 0.045,
+        xxxsm: width * 0.043,
         sm: width * 0.035
     },
     borderRadius: {

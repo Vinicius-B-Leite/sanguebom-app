@@ -19,11 +19,8 @@ const Index: React.FC = () => {
 
     const getTheme = async () => {
         const themeStorage = JSON.parse(await AsyncStorage.getItem('@theme') || '{}')
-        console.log("🚀 ~ file: index.tsx:21 ~ getTheme ~ themeStorage:", themeStorage)
-
+        
         if (!themeStorage) {
-            console.log('ewre');
-
             dispatch(changeTheme(false))
             return
         }
