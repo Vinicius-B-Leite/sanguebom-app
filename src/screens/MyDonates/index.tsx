@@ -27,24 +27,31 @@ const MyDonates: React.FC<Nav> = ({ navigation }) => {
         () => getMyDonates({ token: user?.token ?? '', uid: user?.uid ?? '' }),
     )
 
+    console.log("🚀 ~ file: index.tsx:26 ~ data:", data)
 
     return (
         <S.Container>
             <HeaderGoBack title='Minhas doações' goBack={() => navigation.goBack()} theme={type === 'dark' ? 'transparent' : 'contrast'} />
-            {/* {
-                data?.waitDaysToDonate && data.waitDaysToDonate > 0 &&
+            {
+                data  && data.waitDaysToDonate > 0 &&
                 <BlockDonate daysWaitToDonate={data.waitDaysToDonate} />
-            } */}
+            }
             <S.Main>
                 <DonatesList
                     donates={data}
                 />
 
-                <S.OpenModalBtn onPress={() => setIsModalVisible(true)}>
-                    <S.OpenModalTxt>Cadastrar doação</S.OpenModalTxt>
-                </S.OpenModalBtn>
+                {
+                    (data && data.waitDaysToDonate <= 0) &&
+
+                    <S.OpenModalBtn onPress={() => setIsModalVisible(true)}>
+                        <S.OpenModalTxt>Cadastrar doação</S.OpenModalTxt>
+                    </S.OpenModalBtn>
+                }
+
 
                 <ModalRegisterDonate visible={isModalVisible} closeModal={() => setIsModalVisible(false)} />
+
             </S.Main>
         </S.Container>
     )
