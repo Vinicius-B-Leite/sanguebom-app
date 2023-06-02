@@ -40,11 +40,11 @@ const MyDonates: React.FC<Nav> = ({ navigation }) => {
                     donates={data}
                 />
 
-                <S.OpenModalBtn>
+                <S.OpenModalBtn onPress={() => setIsModalVisible(true)}>
                     <S.OpenModalTxt>Cadastrar doação</S.OpenModalTxt>
                 </S.OpenModalBtn>
 
-                <ModalRegisterDonate />
+                <ModalRegisterDonate visible={isModalVisible} closeModal={() => setIsModalVisible(false)} />
             </S.Main>
         </S.Container>
     )

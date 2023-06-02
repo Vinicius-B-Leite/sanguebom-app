@@ -3,9 +3,10 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
     background-color: ${({ theme }) => theme.colors.backgroundColor};
     width: 90%;
-    height: 40%;
+    height: 45%;
     padding: 5%;
     border-radius: ${({ theme }) => theme.borderRadius.xsm}px;
+    overflow: hidden;
 `;
 
 export const Title = styled.Text`
