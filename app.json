@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "sanguebom-app",
+    "scheme": "sanguebom",
     "slug": "sanguebom-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,13 +11,13 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+          "locationAlwaysAndWhenInUsePermission": "O aplicativo precisa da sua localização para mostrar o ponto de coleta de sangue mais próximo."
         }
       ],
       [
         "expo-image-picker",
         {
-          "photosPermission": "O aplicativo precisa gerenciar sua galeria"
+          "photosPermission": "O aplicativo precisa ter acesso a sua galeria"
         }
       ]
     ],

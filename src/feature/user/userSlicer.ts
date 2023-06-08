@@ -13,7 +13,7 @@ const userSlicer = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setUser: (state, action: PayloadAction<UserType>) => {
+        setUser: (state, action: PayloadAction<UserType | undefined>) => {
             state.user = action.payload
 
         },

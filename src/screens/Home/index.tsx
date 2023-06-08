@@ -26,13 +26,15 @@ const Home: React.FC<Nav> = ({ navigation }) => {
   const user = useSelector((state: RootState) => state.user.user)
   const dispatch = useDispatch()
 
+  
 
   useQuery({
     queryKey: ['notificationLength'],
-    queryFn: () => getNotificationLength({ token: user?.token ?? '', uid: user?.uid ?? '' }),
+    queryFn: () => getNotificationLength({ uid: user?.uid ?? '' }),
     onSuccess: (res) => {
       dispatch(setNotificationLength(res))
-    }
+    },
+    onError: (err) => console.log(err?.response?.data)
   })
 
   const { data, fetchNextPage, isLoading, hasNextPage, refetch } = useInfiniteQuery({

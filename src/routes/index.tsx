@@ -10,6 +10,7 @@ import { setUser } from '../feature/user/userSlicer';
 import { UserType } from '../types/UserType';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loading from '../screens/Loading';
+import { api } from '../api';
 
 
 const Routes: React.FC = () => {
@@ -20,11 +21,16 @@ const Routes: React.FC = () => {
 
     useEffect(() => {
         getUser()
+        api.registerInterceptorTokenMenager(async () => {
+            dispatch(setUser(undefined))
+            await AsyncStorage.removeItem('@user')
+        })
     }, [])
 
     const getUser = async () => {
         const userStorage = await AsyncStorage.getItem('@user')
         if (userStorage) {
+            api.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(userStorage).token
             dispatch(setUser(JSON.parse(userStorage)))
         }
         setIsLoading(false)
