@@ -3,11 +3,10 @@ import { api } from "."
 
 
 type Props = {
-    token: string,
     uid: string,
 }
 
-export async function getNotificationLength({ token, uid }: Props) {
+export async function getNotificationLength({ uid }: Props) {
     const lastedNotificationReadID = await AsyncStorage.getItem('@lastedNotificationReadID')
-    return (await api.get<number>(`notificationlength?uid=${uid}&lastedread=${lastedNotificationReadID || ''}`, { headers: { Authorization: 'Bearer ' + token } })).data
+    return (await api.get<number>(`notificationlength?uid=${uid}&lastedread=${lastedNotificationReadID || ''}`)).data
 }

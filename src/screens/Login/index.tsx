@@ -13,6 +13,7 @@ import { ErrorResponse } from '../../types/ErrorResponse';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../feature/user/userSlicer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { api } from '../../api';
 
 
 type Nav = StackScreenProps<StackRootParamsList, 'Login'>
@@ -34,8 +35,9 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                 }
             },
             onSuccess: async ({ data }) => {
-                await AsyncStorage.setItem('@user', JSON.stringify(data))
+                api.defaults.headers.common['Authorization'] = 'Bearer ' + data.token
                 dispatch(setUser(data))
+                await AsyncStorage.setItem('@user', JSON.stringify(data))
             }
 
         }

@@ -14,5 +14,5 @@ export type InfinetePosts = {
 }
 
 export async function getPosts({ page, tokenJWT }: Props) {
-    return (await api.get<InfinetePosts>(`posts?page=${page}`, { headers: { Authorization: 'Bearer ' + tokenJWT } })).data
+    return (await api.get<InfinetePosts>(`posts?page=${page}`)).data
 }

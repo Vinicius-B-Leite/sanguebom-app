@@ -15,6 +15,7 @@ import { UserType } from '../../types/UserType';
 import { ErrorResponse } from '../../types/ErrorResponse';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderGoBack from '../../components/HeaderGoBack';
+import { api } from '../../api';
 
 
 type Nav = StackScreenProps<StackRootParamsList, 'SingUp'>
@@ -30,6 +31,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
     const onSuccess = async (res: AxiosResponse<UserType, any>) => {
         const data = { ...res.data, type: 'normal user' }
         await AsyncStorage.setItem('@user', JSON.stringify(data))
+        api.defaults.headers.common['Authorization'] = 'Bearer ' + data.token
         dispatch(setUser(data as UserType))
     }
 

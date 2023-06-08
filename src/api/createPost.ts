@@ -2,7 +2,6 @@ import axios from "axios";
 import { api } from "./index";
 
 type Props = {
-    userJWT: string,
     linkRedirect: string,
     adress: string,
     description: string,
@@ -10,7 +9,7 @@ type Props = {
     banner: { uri: string, name: string, type: string }
 }
 
-export async function createPost({ adress, banner, bloodCollectorsID, description, userJWT, linkRedirect }: Props) {
+export async function createPost({ adress, banner, bloodCollectorsID, description, linkRedirect }: Props) {
 
 
     const form = new FormData();
@@ -20,21 +19,13 @@ export async function createPost({ adress, banner, bloodCollectorsID, descriptio
     form.append('description', description);
     form.append('linkRedirect', linkRedirect);
     const ext = banner.uri.substring(banner.uri.lastIndexOf('.') + 1)
-    form.append('banner', {
+    const formFile = {
         name: banner.name + '.' + ext,
         uri: banner.uri,
         type: banner.type + '/' + ext,
+    } as any
+    form.append('banner', formFile);
 
-    });
 
-
-    return await api.post(
-        'posts',
-        form,
-        {
-            headers: {
-                Authorization: 'Bearer ' + userJWT,
-                "Content-Type": "multipart/form-data"
-            }
-        })
+    return await api.postForm('posts')
 }

@@ -9,11 +9,10 @@ export type UpdateUserCredencialsProps = {
     username: string,
     adress?: string,
     uid: string,
-    token: string,
-    avatar?: { name: string, uri: string, type: string } ,
+    avatar?: { name: string, uri: string, type: string },
 }
 
-export async function updateUserCredencials({ adress, avatar, bloodType, email, password, phoneNumber, uid, username , token}: UpdateUserCredencialsProps) {
+export async function updateUserCredencials({ adress, avatar, bloodType, email, password, phoneNumber, uid, username }: UpdateUserCredencialsProps) {
 
     const form = new FormData()
 
@@ -33,13 +32,14 @@ export async function updateUserCredencials({ adress, avatar, bloodType, email, 
     }
     if (avatar) {
         const ext = avatar.uri.substring(avatar.uri.lastIndexOf('.') + 1)
-        form.append('avatar', {
+        const formFile = {
             name: avatar.name + '.' + ext,
             uri: avatar.uri,
             type: avatar.type + '/' + ext,
-        })
+        } as any
+        form.append('avatar', formFile)
     }
-    
+
 
 
 
@@ -50,7 +50,6 @@ export async function updateUserCredencials({ adress, avatar, bloodType, email, 
         form,
         {
             headers: {
-                Authorization: 'Bearer ' + token,
                 "Content-Type": "multipart/form-data"
             }
         })).data

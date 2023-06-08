@@ -4,14 +4,13 @@ import { HospitalType } from "../types/HospitalType";
 
 type Props = {
     bloodCollectorName?: string,
-    token: string
 }
-export async function getBloodCollectors({ token, bloodCollectorName }: Props) {
+export async function getBloodCollectors({ bloodCollectorName }: Props) {
     let url = 'bloodcollectors/'
 
     if (bloodCollectorName && bloodCollectorName?.length > 0) {
         url += `?name=${bloodCollectorName} `
     }
 
-    return (await api.get<HospitalType[]>(url, { headers: { Authorization: 'Bearer ' + token } })).data
+    return (await api.get<HospitalType[]>(url)).data
 }

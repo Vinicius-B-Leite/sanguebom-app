@@ -7,10 +7,9 @@ type Props = {
     bloodCollectorsID: string,
     status: boolean,
     description: string,
-    token: string
 }
 
-export async function createAlert({ bloodCollectorsID, bloodTypes, description, status, token }: Props) {
+export async function createAlert({ bloodCollectorsID, bloodTypes, description, status }: Props) {
     return await api.post(
         'alert',
         {
@@ -18,10 +17,5 @@ export async function createAlert({ bloodCollectorsID, bloodTypes, description, 
             bloodCollectorsID,
             status,
             description
-        },
-        {
-            headers: {
-                Authorization: 'Bearer ' + token
-            }
         })
 }
