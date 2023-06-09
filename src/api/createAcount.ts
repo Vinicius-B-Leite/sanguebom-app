@@ -6,10 +6,11 @@ type Props = {
     email: string,
     bloodType: string,
     username: string,
-    password: string
+    password: string,
+    gender: string
 }
 
 
-export async function createAccount({ bloodType, email, password, username }: Props) {
-    return await api.post<UserType>('auth/create', { bloodType, email: email.toLocaleLowerCase(), password, username })
+export async function createAccount({ bloodType, email, password, username, gender }: Props) {
+    return await api.post<UserType>('auth/create', { bloodType, email: email.toLocaleLowerCase(), password, username, gender })
 }

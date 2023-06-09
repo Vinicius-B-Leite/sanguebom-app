@@ -35,5 +35,4 @@ export const ListContainer = styled.View`
     padding:  4%;
     width: 100%;
     max-height: ${({theme}) => theme.vh * 0.17}px;
-    
 `

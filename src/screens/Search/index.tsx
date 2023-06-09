@@ -34,7 +34,7 @@ const Search: React.FC = () => {
 
   const { data } = useQuery(
     ['bloodCollectors'],
-    () => getBloodCollectors({ token: user?.token ?? '', bloodCollectorName: searchInput }),
+    () => getBloodCollectors({  bloodCollectorName: searchInput }),
     {
       onError: (err: AxiosError<ErrorResponse>) => console.log(err.response?.data),
     }
@@ -118,7 +118,7 @@ const Search: React.FC = () => {
           markers?.map((mark, i) => (
             <Marker
               ref={refs.current[i]}
-              key={mark.title}
+              key={i}
               coordinate={{
                 latitude: mark.coordinate.latitude,
                 longitude: mark.coordinate.longitude,

@@ -13,10 +13,10 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../feature/user/userSlicer';
 import { UserType } from '../../types/UserType';
 import { ErrorResponse } from '../../types/ErrorResponse';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderGoBack from '../../components/HeaderGoBack';
 import { api } from '../../api';
 import { updateStorageUser } from '../../storage/userStorage';
+import DropDown from '../../components/DropDown';
 
 
 type Nav = StackScreenProps<StackRootParamsList, 'SingUp'>
@@ -27,6 +27,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [gender, setGender] = useState('')
     const dispatch = useDispatch()
 
     const onSuccess = async (res: AxiosResponse<UserType, any>) => {
@@ -36,7 +37,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
     }
 
     const onError = async (error: AxiosError<ErrorResponse>) => {
-        if (error.response && !(['02', '03', '13'].includes(error.response?.data.code))) {
+        if (error.response && !(['02', '03', '13', '20'].includes(error.response?.data.code))) {
             Alert.alert(
                 'Ops',
                 'Ocorreu um erro. Volte mais tarde'
@@ -49,7 +50,8 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
             bloodType: route.params.bloodtype,
             email,
             password,
-            username
+            username,
+            gender
         }),
         onSuccess,
         onError
@@ -109,6 +111,14 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                     />
                 </S.InputArea>
 
+                <DropDown
+                    data={['female', 'male']}
+                    renderItem={({ item }) => <S.DropdownItem>{item === 'female' ? 'Feminino' : 'Masculino'}</S.DropdownItem>}
+                    placeholder='Selecione seu sexo biológico'
+                    value={gender === 'female' ? 'Feminino' : 'Masculino'}
+                    onSelect={(item) => setGender(item)}
+                />
+
                 <S.SubmitButton
                     isEnable={
                         username.length > 0 &&
@@ -123,7 +133,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
             </S.Form>
 
 
-        </S.Container>
+        </S.Container >
     )
 }
 

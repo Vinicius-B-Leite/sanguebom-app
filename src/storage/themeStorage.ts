@@ -7,7 +7,7 @@ type Theme = 'dark' | 'light'
 
 export const getStorageTheme = async () => {
     const res = await AsyncStorage.getItem(THEME_KEY)
-    const theme = res ? JSON.parse(res) as Theme : null
+    const theme = res ? res as Theme : null
     return theme
 }
 

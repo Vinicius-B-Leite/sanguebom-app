@@ -18,6 +18,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setNotificationLength } from '../../feature/notification/notificationSlice';
 import SkeletonPost from './components/SkeletonPost';
 import PostList from './components/PostList';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '../../types/ErrorResponse';
 
 
 
@@ -26,7 +28,7 @@ const Home: React.FC<Nav> = ({ navigation }) => {
   const user = useSelector((state: RootState) => state.user.user)
   const dispatch = useDispatch()
 
-  
+
 
   useQuery({
     queryKey: ['notificationLength'],
@@ -34,7 +36,7 @@ const Home: React.FC<Nav> = ({ navigation }) => {
     onSuccess: (res) => {
       dispatch(setNotificationLength(res))
     },
-    onError: (err) => console.log(err?.response?.data)
+    onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data)
   })
 
   const { data, fetchNextPage, isLoading, hasNextPage, refetch } = useInfiniteQuery({
