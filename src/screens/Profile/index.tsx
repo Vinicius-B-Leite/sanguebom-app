@@ -8,8 +8,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Feather from '@expo/vector-icons/Feather';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout, setUser } from '../../feature/user/userSlicer';
-import { RootState } from '../../feature/store';
+import { logoutUser, setUser } from '../../feature/user/userSlicer';
+import { AppDispatch, RootState } from '../../feature/store';
 import { pickImage } from '../../utlis/pickImage';
 import { useMutation } from '@tanstack/react-query';
 import { UpdateUserCredencialsProps, updateUserCredencials } from '../../api/updateUserCredencials';
@@ -29,7 +29,7 @@ type Nav = ProfileScreenProps
 const Profile: React.FC<Nav> = ({ navigation }) => {
   const { colors, icons } = useTheme()
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const user = useSelector((state: RootState) => state.user.user)
   const themeIsDark = useSelector((state: RootState) => state.theme.isDark)
 
@@ -168,7 +168,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
         </S.ItemContainer>
       }
 
-      <S.ItemContainer onPress={() => dispatch(logout())}>
+      <S.ItemContainer onPress={() => dispatch(logoutUser())}>
         <S.ItemBackgroundIcon>
           <MaterialIcons name="logout" size={icons.vsm} color={colors.contrast} />
         </S.ItemBackgroundIcon>

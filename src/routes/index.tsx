@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Tab from './tab';
 import { useTheme } from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../feature/store';
+import { AppDispatch, RootState } from '../feature/store';
 import LoginRoutes from './loginRoutes';
-import { setUser } from '../feature/user/userSlicer';
-import { UserType } from '../types/UserType';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { logoutUser, setUser } from '../feature/user/userSlicer';
+
 import Loading from '../screens/Loading';
 import { api } from '../api';
 import { getStorageUser, removeStorageUser } from '../storage/userStorage';
@@ -16,16 +15,13 @@ import { getStorageUser, removeStorageUser } from '../storage/userStorage';
 
 const Routes: React.FC = () => {
     const { colors, type } = useTheme()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const user = useSelector((state: RootState) => state.user.user)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         getUser()
-        api.registerInterceptorTokenMenager(async () => {
-            dispatch(setUser(undefined))
-            await removeStorageUser()
-        })
+        api.registerInterceptorTokenMenager(() => dispatch(logoutUser()))
     }, [])
 
     const getUser = async () => {
