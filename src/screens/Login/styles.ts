@@ -24,7 +24,6 @@ export const Title = styled.Text`
 
 export const InputArea = styled.View`
     width: 85%;
-    height: ${({ theme }) => theme.vh * 0.07}px;
     margin: 2% 0%;
     align-self: center;
 `
@@ -49,10 +48,3 @@ export const SubmitLabel = styled.Text`
     font-weight: 700;
 `
 
-
-export const ErrorMessage = styled.Text`
-    color: ${({ theme }) => theme.colors.alert};
-    align-self: flex-start;
-    margin-left: 10%;
-    font-size: ${({theme}) => theme.fontSize.xxxsm}px;
-`

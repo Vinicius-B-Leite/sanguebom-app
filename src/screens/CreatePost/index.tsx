@@ -31,7 +31,6 @@ const CreatePost: React.FC = () => {
       description,
       linkRedirect: link,
       bloodCollectorsID: user?.uid || '',
-      userJWT: user?.token || ''
     }),
     {
       onError: (err: AxiosError<ErrorResponse>) => {
@@ -88,50 +87,49 @@ const CreatePost: React.FC = () => {
         <S.InputTitle>Endereço</S.InputTitle>
         <S.InputArea>
           <Input
-            inputProps={{
-              placeholder: 'Rua Pernambuco Bairro Flores de Jardim',
-              placeholderTextColor: theme.colors.darkText,
-              value: adress,
-              onChangeText: setAdress
-            }}
+
+            placeholder={'Rua Pernambuco Bairro Flores de Jardim'}
+            placeholderTextColor={theme.colors.darkText}
+            value={adress}
+            onChangeText={setAdress}
+
           />
         </S.InputArea>
 
         <S.InputTitle>Horário de atendimento</S.InputTitle>
         <S.InputArea>
           <Input
-            inputProps={{
-              placeholder: '10hrs ~ 17hrs',
-              placeholderTextColor: theme.colors.darkText,
-              value: hours,
-              onChangeText: setHours
-            }}
+
+            placeholder={'10hrs ~ 17hrs'}
+            placeholderTextColor={theme.colors.darkText}
+            value={hours}
+            onChangeText={setHours}
+
           />
         </S.InputArea>
 
         <S.InputTitle>Link para agendar a doação (opcinal) </S.InputTitle>
         <S.InputArea>
           <Input
-            inputProps={{
-              placeholder: 'Https:...',
-              placeholderTextColor: theme.colors.darkText,
-              value: link,
-              onChangeText: setLink
-            }}
+
+            placeholder={'Https={...'}
+            placeholderTextColor={theme.colors.darkText}
+            value={link}
+            onChangeText={setLink}
+
           />
         </S.InputArea>
 
         <S.InputTitle>Descrição</S.InputTitle>
         <S.DescriptionArea>
           <Input
-            inputProps={{
-              placeholder: 'Descrição',
-              placeholderTextColor: theme.colors.darkText,
-              textAlignVertical: 'top',
-              value: description,
-              onChangeText: setDescription,
-              multiline: true
-            }}
+
+            placeholder={'Descrição'}
+            placeholderTextColor={theme.colors.darkText}
+            textAlignVertical={'top'}
+            value={description}
+            onChangeText={setDescription}
+            multiline={true}
           />
         </S.DescriptionArea>
       </S.Form>

@@ -22,6 +22,8 @@ import ModalUpdateUser from '../../components/ModalUpdateUser';
 import { Fontisto } from '@expo/vector-icons';
 import { ProfileScreenProps } from '../../routes/models/index'
 import { changeTheme } from '../../feature/theme/themeSlicer';
+import { updateStorageUser } from '../../storage/userStorage';
+import { changeStorageTheme } from '../../storage/themeStorage';
 
 type Nav = ProfileScreenProps
 const Profile: React.FC<Nav> = ({ navigation }) => {
@@ -46,8 +48,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
 
         const token = user.token
         dispatch(setUser({ ...res, type: user.type, token }))
-
-        await AsyncStorage.setItem('@user', JSON.stringify({ ...res, type: user.type, token }))
+        await updateStorageUser({ ...res, type: user.type, token })
       },
 
       onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data)
@@ -70,7 +71,6 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
       email,
       password,
       uid: user?.uid || '',
-      token: user?.token || '',
     }
 
     if (typeof avatar !== 'string') {
@@ -88,7 +88,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
 
   const handleChangeTheme = async () => {
     dispatch(changeTheme(!themeIsDark))
-    await AsyncStorage.setItem('@theme', JSON.stringify(!themeIsDark))
+    await changeStorageTheme(themeIsDark ? 'light' : 'dark')
   }
   return (
     <S.Container>

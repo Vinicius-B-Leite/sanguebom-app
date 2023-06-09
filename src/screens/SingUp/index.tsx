@@ -16,6 +16,7 @@ import { ErrorResponse } from '../../types/ErrorResponse';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderGoBack from '../../components/HeaderGoBack';
 import { api } from '../../api';
+import { updateStorageUser } from '../../storage/userStorage';
 
 
 type Nav = StackScreenProps<StackRootParamsList, 'SingUp'>
@@ -29,10 +30,9 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
     const dispatch = useDispatch()
 
     const onSuccess = async (res: AxiosResponse<UserType, any>) => {
-        const data = { ...res.data, type: 'normal user' }
-        await AsyncStorage.setItem('@user', JSON.stringify(data))
-        api.defaults.headers.common['Authorization'] = 'Bearer ' + data.token
-        dispatch(setUser(data as UserType))
+        await updateStorageUser(res.data)
+        api.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
+        dispatch(setUser(res.data as UserType))
     }
 
     const onError = async (error: AxiosError<ErrorResponse>) => {
@@ -66,55 +66,47 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                 <S.InputArea>
                     <Input
                         leftIcon='user'
-                        inputProps={{
-                            value: username,
-                            onChangeText: setUsername,
-                            placeholder: 'Nome de usuário',
-                            placeholderTextColor: theme.colors.darkText
-                        }} />
+
+                        value={username}
+                        onChangeText={setUsername}
+                        placeholder={'Nome de usuário'}
+                        placeholderTextColor={theme.colors.darkText}
+                    />
                 </S.InputArea>
 
                 <S.InputArea>
                     <Input
                         leftIcon='mail'
-                        inputProps={{
-                            value: email,
-                            onChangeText: setEmail,
-                            placeholder: 'Email',
-                            placeholderTextColor: theme.colors.darkText
-                        }} />
+
+                        value={email}
+                        onChangeText={setEmail}
+                        placeholder={'Email'}
+                        placeholderTextColor={theme.colors.darkText}
+                        errorMessage={['02', '13'].includes(error?.response?.data.code || '') ? error?.response?.data.message : undefined}
+                    />
                 </S.InputArea>
-                {
-                    error?.response
-                    && ['02', '13'].includes(error.response?.data.code)
-                    && <S.ErrorMessage>{error?.response?.data.message}</S.ErrorMessage>
-                }
+
 
                 <S.InputArea>
                     <Input
                         leftIcon='lock'
-                        inputProps={{
-                            value: password,
-                            onChangeText: setPassword,
-                            placeholder: 'Senha',
-                            placeholderTextColor: theme.colors.darkText
-                        }} />
+
+                        value={password}
+                        onChangeText={setPassword}
+                        placeholder={'Senha'}
+                        placeholderTextColor={theme.colors.darkText}
+                        errorMessage={['03'].includes(error?.response?.data.code || '') ? error?.response?.data.message : undefined}
+                    />
                 </S.InputArea>
-                {
-                    error?.response
-                    && ['03'].includes(error.response?.data.code)
-                    && <S.ErrorMessage>{error?.response?.data.message}</S.ErrorMessage>
-                }
 
                 <S.InputArea>
                     <Input
                         leftIcon='lock'
-                        inputProps={{
-                            value: confirmPassword,
-                            onChangeText: setConfirmPassword,
-                            placeholder: 'Confirme a senha',
-                            placeholderTextColor: theme.colors.darkText
-                        }} />
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}
+                        placeholder={'Confirme a senha'}
+                        placeholderTextColor={theme.colors.darkText}
+                    />
                 </S.InputArea>
 
                 <S.SubmitButton

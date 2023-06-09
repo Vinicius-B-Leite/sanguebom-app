@@ -27,21 +27,21 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
 
                 <S.InputArea>
                     <Input
-                        inputProps={{
-                            placeholder: 'Novo ' + title,
-                            value,
-                            onChangeText: txt => setValue(txt)
-                        }}
+
+                        placeholder={'Novo ' + title}
+                        value={value}
+                        onChangeText={txt => setValue(txt)}
+
                     />
                 </S.InputArea>
 
                 <S.InputArea>
                     <Input
-                        inputProps={{
-                            placeholder: 'Digite sua senha atual para confirmar',
-                            value: confirmPassword,
-                            onChangeText: setConfirmPassword
-                        }}
+
+                        placeholder={'Digite sua senha atual para confirmar'}
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}
+
                     />
                 </S.InputArea>
 

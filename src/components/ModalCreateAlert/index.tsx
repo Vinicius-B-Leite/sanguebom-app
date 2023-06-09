@@ -46,7 +46,6 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
             bloodTypes: bloodTypesSelecteds,
             description: message,
             status: switchEnable,
-            token: user?.token || ''
         }),
         onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data),
         onSuccess: async () => {
@@ -94,12 +93,12 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
 
                 <S.SectionTitle>Mensagem personalizada</S.SectionTitle>
                 <S.InputArea>
-                    <Input inputProps={{
-                        placeholder: 'Mensagem',
-                        placeholderTextColor: theme.colors.darkText,
-                        value: message,
-                        onChangeText: (v) => setMessage(v)
-                    }} />
+                    <Input
+                        placeholder={'Mensagem'}
+                        placeholderTextColor={theme.colors.darkText}
+                        value={message}
+                        onChangeText={(v) => setMessage(v)}
+                    />
                 </S.InputArea>
 
                 <S.SubmitButton onPress={() => mutate()}>

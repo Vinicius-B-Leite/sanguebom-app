@@ -10,6 +10,7 @@ import { ThemeProvider } from 'styled-components';
 import Routes from './routes';
 import { RootState } from './feature/store';
 import Loading from './screens/Loading';
+import { getStorageTheme } from './storage/themeStorage';
 
 // import { Container } from './styles';
 
@@ -18,21 +19,21 @@ const Index: React.FC = () => {
     const theme = useSelector((state: RootState) => state.theme.isDark)
 
     const getTheme = async () => {
-        const themeStorage = JSON.parse(await AsyncStorage.getItem('@theme') || '{}')
-        
-        if (!themeStorage) {
-            dispatch(changeTheme(false))
+        const themeStorage = await getStorageTheme()
+
+        if (themeStorage === 'dark'){
+            dispatch(changeTheme(true))
             return
         }
 
-        dispatch(changeTheme(true))
+        dispatch(changeTheme(false))
     }
 
     useLayoutEffect(() => {
         getTheme()
     }, [])
 
-    
+
 
     return (
         <QueryClientProvider client={new QueryClient()}>

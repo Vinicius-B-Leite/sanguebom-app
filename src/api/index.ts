@@ -12,12 +12,16 @@ const api = axios.create({
 }) as ApiAddIntecptorType
 
 api.registerInterceptorTokenMenager = (logout) => {
-    api.interceptors.response.use((config) => config, (errorRquest) => {
+    const interceptors = api.interceptors.response.use((config) => config, (errorRquest) => {
         if (errorRquest.response && ['11', '14'].includes(errorRquest.response.data.code)) {
             logout()
-            return Promise.reject(errorRquest)
         }
+        return Promise.reject(errorRquest)
     })
+
+    return () => {
+        api.interceptors.response.eject(interceptors)
+    }
 }
 
 

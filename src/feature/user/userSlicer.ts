@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UserType } from "../../types/UserType";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { removeStorageUser } from "../../storage/userStorage";
 
 
 type InitalState = {
@@ -19,7 +20,7 @@ const userSlicer = createSlice({
         },
         logout: (state) => {
             state.user = undefined
-            AsyncStorage.removeItem('@user')
+            removeStorageUser()
         }
     }
 })

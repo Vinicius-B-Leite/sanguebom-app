@@ -4,9 +4,16 @@ import styled from 'styled-components/native';
 type Props = {
     isFocused: boolean,
     hasLeftIcon: boolean
+    h?: number
 }
-export const Container = styled.View<Props>`
+
+
+export const InputArea = styled.View`
     flex: 1;
+`
+export const Container = styled.View<Props>`
+    width: 100%;
+    height: ${({ theme, h }) => h || theme.vh * 0.07}px;
     background-color: ${({ theme, isFocused }) => isFocused ?
      theme.type === 'dark' ? theme.colors.darkContrast : theme.colors.formInputBg 
      : theme.colors.formInputBg};
@@ -23,4 +30,11 @@ export const TxtInput = styled.TextInput`
     padding: 0% 2%;
     font-size: ${({ theme }) => theme.fontSize.xxxsm}px;
     color: ${({ theme }) => theme.colors.text};
+`
+
+
+export const ErrorMessage = styled.Text`
+    color: ${({ theme }) => theme.colors.alert};
+    align-self: flex-start;
+    font-size: ${({theme}) => theme.fontSize.xxxsm}px;
 `

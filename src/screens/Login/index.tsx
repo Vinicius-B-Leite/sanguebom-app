@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../feature/user/userSlicer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from '../../api';
+import { updateStorageUser } from '../../storage/userStorage';
 
 
 type Nav = StackScreenProps<StackRootParamsList, 'Login'>
@@ -31,13 +32,12 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                         'Erro',
                         'Ocorreu um erro inesperado. Volte mais tarde'
                     )
-                    console.log(error.response.data)
                 }
             },
             onSuccess: async ({ data }) => {
                 api.defaults.headers.common['Authorization'] = 'Bearer ' + data.token
                 dispatch(setUser(data))
-                await AsyncStorage.setItem('@user', JSON.stringify(data))
+                await updateStorageUser(data)
             }
 
         }
@@ -58,35 +58,25 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
             <S.InputArea>
                 <Input
                     leftIcon='mail'
-                    inputProps={{
-                        placeholder: 'Seu email',
-                        placeholderTextColor: theme.colors.darkText,
-                        value: email,
-                        onChangeText: setEmail
-                    }}
+                    placeholder='Seu email'
+                    placeholderTextColor={theme.colors.darkText}
+                    value={email}
+                    onChangeText={setEmail}
+                    errorMessage={['05', '13'].includes(error?.response?.data.code || '') ? error?.response?.data.message : ''}
                 />
             </S.InputArea>
-            {
-                error?.response && ['05', '13'].includes(error.response.data.code) && (
-                    <S.ErrorMessage>{error.response.data.message}</S.ErrorMessage>
-                )
-            }
+
             <S.InputArea>
                 <Input
+                    h={theme.vh * 0.07}
                     leftIcon='lock'
-                    inputProps={{
-                        placeholder: 'Sua senha',
-                        placeholderTextColor: theme.colors.darkText,
-                        value: password,
-                        onChangeText: setPassword
-                    }}
+                    placeholder='Sua senha'
+                    placeholderTextColor={theme.colors.darkText}
+                    value={password}
+                    onChangeText={setPassword}
+                    errorMessage={['03', '06'].includes(error?.response?.data?.code || '') ? error?.response?.data.message : undefined}
                 />
             </S.InputArea>
-            {
-                error?.response && ['03', '06'].includes(error.response.data.code) && (
-                    <S.ErrorMessage>{error.response.data.message}</S.ErrorMessage>
-                )
-            }
 
             <S.SubmitButton
                 isEnable={email.length > 0 && password.length > 7 && email.includes('@')}

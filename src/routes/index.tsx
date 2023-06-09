@@ -11,6 +11,7 @@ import { UserType } from '../types/UserType';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loading from '../screens/Loading';
 import { api } from '../api';
+import { getStorageUser, removeStorageUser } from '../storage/userStorage';
 
 
 const Routes: React.FC = () => {
@@ -23,15 +24,15 @@ const Routes: React.FC = () => {
         getUser()
         api.registerInterceptorTokenMenager(async () => {
             dispatch(setUser(undefined))
-            await AsyncStorage.removeItem('@user')
+            await removeStorageUser()
         })
     }, [])
 
     const getUser = async () => {
-        const userStorage = await AsyncStorage.getItem('@user')
+        const userStorage = await getStorageUser()
         if (userStorage) {
-            api.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(userStorage).token
-            dispatch(setUser(JSON.parse(userStorage)))
+            api.defaults.headers.common['Authorization'] = 'Bearer ' + userStorage.token
+            dispatch(setUser(userStorage))
         }
         setIsLoading(false)
     }
