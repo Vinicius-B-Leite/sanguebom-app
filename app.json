@@ -19,6 +19,13 @@
         {
           "photosPermission": "O aplicativo precisa ter acesso a sua galeria"
         }
+      ],
+      [
+        "onesignal-expo-plugin",
+        {
+          "mode": "development",
+          "smallIcons": ["./assets/ic_stat_onesignal_default.png"]
+        }
       ]
     ],
     "splash": {
@@ -30,7 +37,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.viniciusbl21.sanguebom"
+
     },
     "android": {
       "adaptiveIcon": {
