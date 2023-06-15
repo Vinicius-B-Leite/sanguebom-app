@@ -80,11 +80,11 @@ const Search: React.FC = () => {
     <S.Container>
       <S.Header>
         <S.GoBack>
-          <AntDesign name="arrowleft" size={icons.sm} color={type === 'dark' ? colors.text : colors.backgroundColor} />
+          <AntDesign name="arrowleft" size={icons.sm} color={type === 'dark' ? colors.text : colors.background_100} />
         </S.GoBack>
         <S.Input
           placeholder={'Pesquise por um ponto de coleta'}
-          placeholderTextColor={colors.backgroundColorSecond}
+          placeholderTextColor={colors.background_100Second}
           value={searchInput}
           onChangeText={setSeatchInput}
         />

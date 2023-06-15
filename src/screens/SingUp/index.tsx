@@ -131,7 +131,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                         confirmPassword == password}
                     onPress={() => mutate()}
                 >
-                    <S.SubmitLabel>{isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.backgroundColor} /> : 'Concluir'}</S.SubmitLabel>
+                    <S.SubmitLabel>{isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.background_100} /> : 'Concluir'}</S.SubmitLabel>
                 </S.SubmitButton>
             </S.Form>
 

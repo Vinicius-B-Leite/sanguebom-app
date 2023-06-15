@@ -8,7 +8,7 @@ export const Container = styled.TouchableOpacity`
     z-index: 1;
 `
 export const Main = styled.View`
-    background-color:${({theme}) => theme.colors.backgroundColor};
+    background-color:${({theme}) => theme.colors.background_100};
     height: ${({theme}) => theme.vh * 0.4}px;
     border-top-left-radius: ${({theme}) => theme.borderRadius.sm}px;
     border-top-right-radius: ${({theme}) => theme.borderRadius.sm}px;

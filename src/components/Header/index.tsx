@@ -29,7 +29,7 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
                             <S.NotificationLabel>{notificationsLength < 99 ? notificationsLength : '99+'}</S.NotificationLabel>
                         </S.NotificationNumberArea>
                     }
-                    <EvilIcons name='bell' color={type === 'dark' ? colors.text : colors.backgroundColor} size={icons.sm} />
+                    <EvilIcons name='bell' color={type === 'dark' ? colors.text_200 : colors.background_100} size={icons.sm} />
                 </S.Notifications>
 
                 <TouchableOpacity onPress={onClickBloodDonate}>

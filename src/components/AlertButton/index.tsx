@@ -15,7 +15,7 @@ const AlertButton: React.FC<Props> = ({ onClick }) => {
 
     return (
         <S.Container onPress={onClick}>
-            <Feather name="alert-triangle" size={theme.icons.vmd} color={theme.type === 'dark' ? theme.colors.text : theme.colors.backgroundColor} />
+            <Feather name="alert-triangle" size={theme.icons.vmd} color={theme.type === 'dark' ? theme.colors.text : theme.colors.background_100} />
         </S.Container>
     )
 }

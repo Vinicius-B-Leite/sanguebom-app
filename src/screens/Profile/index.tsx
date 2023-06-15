@@ -104,7 +104,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
 
       <S.ItemContainer onPress={() => openModal((txt) => setUsername(txt), 'nome')}>
         <S.ItemBackgroundIcon>
-          <AntDesign name="user" size={icons.vsm} color={colors.contrast} />
+          <AntDesign name="user" size={icons.vsm} color={colors.contrast_100} />
         </S.ItemBackgroundIcon>
 
         <S.ItemLabel>Nome de usuário</S.ItemLabel>
@@ -112,7 +112,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
 
       <S.ItemContainer onPress={() => openModal((txt) => setEmail(txt), 'email')}>
         <S.ItemBackgroundIcon>
-          <MaterialIcons name="email" size={icons.vsm} color={colors.contrast} />
+          <MaterialIcons name="email" size={icons.vsm} color={colors.contrast_100} />
 
         </S.ItemBackgroundIcon>
 
@@ -121,7 +121,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
 
       <S.ItemContainer onPress={() => openModal((txt) => setPassword(txt), 'senha')}>
         <S.ItemBackgroundIcon>
-          <MaterialIcons name="lock" size={icons.vsm} color={colors.contrast} />
+          <MaterialIcons name="lock" size={icons.vsm} color={colors.contrast_100} />
 
         </S.ItemBackgroundIcon>
 
@@ -133,7 +133,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
         user?.type === 'normal user' &&
         <S.ItemContainer >
           <S.ItemBackgroundIcon>
-            <Fontisto name="blood-drop" size={icons.vsm} color={colors.contrast} />
+            <Fontisto name="blood-drop" size={icons.vsm} color={colors.contrast_100} />
           </S.ItemBackgroundIcon>
 
           <S.ItemLabel>Tipo sanguíneo</S.ItemLabel>
@@ -143,7 +143,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
 
       <S.ItemContainer onPress={handleChangeTheme}>
         <S.ItemBackgroundIcon>
-          <Ionicons name={themeIsDark ? 'moon' : "sunny-outline"} size={icons.vsm} color={colors.contrast} />
+          <Ionicons name={themeIsDark ? 'moon' : "sunny-outline"} size={icons.vsm} color={colors.contrast_100} />
         </S.ItemBackgroundIcon>
 
         <S.ItemLabel>Trocar de tema</S.ItemLabel>
@@ -154,14 +154,14 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
         user?.type === 'blood collectors' &&
         <S.ItemContainer onPress={() => { }}>
           <S.ItemBackgroundIcon>
-            <Feather name="home" size={icons.vsm} color={colors.contrast} />
+            <Feather name="home" size={icons.vsm} color={colors.contrast_100} />
           </S.ItemBackgroundIcon>
 
           <S.ItemLabel>Endereço</S.ItemLabel>
         </S.ItemContainer> &&
         <S.ItemContainer onPress={() => { }}>
           <S.ItemBackgroundIcon>
-            <Feather name="phone-call" size={icons.vsm} color={colors.contrast} />
+            <Feather name="phone-call" size={icons.vsm} color={colors.contrast_100} />
           </S.ItemBackgroundIcon>
 
           <S.ItemLabel>Número de telefone</S.ItemLabel>
@@ -170,7 +170,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
 
       <S.ItemContainer onPress={() => dispatch(logoutUser())}>
         <S.ItemBackgroundIcon>
-          <MaterialIcons name="logout" size={icons.vsm} color={colors.contrast} />
+          <MaterialIcons name="logout" size={icons.vsm} color={colors.contrast_100} />
         </S.ItemBackgroundIcon>
 
         <S.ItemLabel>Sair da conta</S.ItemLabel>

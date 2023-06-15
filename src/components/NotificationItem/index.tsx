@@ -41,8 +41,8 @@ const NotificationItem: React.FC<Props> = ({ notification }) => {
             <S.Circle>
                 {
                     notification.type === 'alert' ?
-                        <Ionicons name="ios-water-outline" size={theme.icons.sm} color={theme.colors.backgroundColor} /> :
-                        <Feather name="smartphone" size={theme.icons.sm} color={theme.colors.backgroundColor} />
+                        <Ionicons name="ios-water-outline" size={theme.icons.sm} color={theme.colors.background_100} /> :
+                        <Feather name="smartphone" size={theme.icons.sm} color={theme.colors.background_100} />
 
                 }
             </S.Circle>

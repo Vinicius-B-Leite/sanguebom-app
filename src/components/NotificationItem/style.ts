@@ -16,7 +16,7 @@ export const Circle = styled.View`
     justify-content: center;
     align-items: center;
     border-radius: ${({ theme }) => theme.borderRadius.full}px;
-    background-color: ${({theme}) => theme.colors.contrast};
+    background-color: ${({theme}) => theme.colors.contrast_100};
 `
 
 export const Right = styled.View`

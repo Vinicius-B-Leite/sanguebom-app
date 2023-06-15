@@ -17,7 +17,7 @@ const HeaderGoBack: React.FC<Props> = ({ goBack, theme, title }) => {
     return (
         <S.Header themeBg={theme}>
             <TouchableOpacity onPress={goBack}>
-                <AntDesign name="left" size={icons.sm} color={theme === 'transparent' ? colors.contrast : type === 'dark' ? colors.text : colors.backgroundColor} />
+                <AntDesign name="left" size={icons.sm} color={theme === 'transparent' ? colors.contrast_100 : type === 'dark' ? colors.text : colors.background_100} />
             </TouchableOpacity>
             {
                 title && <S.Title>{title}</S.Title>

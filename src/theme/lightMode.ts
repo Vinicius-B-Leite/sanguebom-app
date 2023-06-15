@@ -7,20 +7,17 @@ import { defaultTheme } from "./defaultConfig"
 
 export const lightMode: ThemeType = {
     colors: {
-        backgroundColor: '#fff',
-        backgroundOpacity: 'rgba(0, 0, 0, 0.4)',
-        backgroundColorSecond: '#D4BFBF',
-        contrast: '#F65353',
-        disabledContrast: '#7a3b3b',
-        darkContrast: '#BB1B1B',
-        lightContrast: '#FBEAEA',
-        darkText: '#959595',
-        text: '#000',
-        inputBackgroundColor: '#DC7878',
-        questionBackgroundColor: '#FFF6F6',
-        optionsBg: '#FBB1B1',
-        formInputBg: '#F1F1F1',
-        alert: '#f00'
+        background_200: 'rgba(0, 0, 0, 0.50)',
+        background_100: '#ffffff',
+
+        contrast_200: '#A81212',
+        contrast_100: '#BB1B1B',
+        contrast_20: '#FA9F9F',
+        contrast_10: 'rgba(187, 27, 27, 0.10)',
+
+        text_200: '#000000',
+        text_100: '#6A6A6A',
+        text_50: '#A7A7A7',
     },
     icons: defaultTheme.icons,
     fontSize: defaultTheme.fontSize,

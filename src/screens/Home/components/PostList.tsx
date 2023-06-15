@@ -4,11 +4,12 @@ import PostDetails from '../../../components/Post';
 import { InfiniteData } from '@tanstack/react-query';
 import { InfinetePosts } from '../../../api/getPosts';
 import { useTheme } from 'styled-components/native';
+import { PostType } from 'src/types/PostType';
 
 
 
 type Props = {
-    posts: InfiniteData<InfinetePosts> | undefined,
+    posts: InfiniteData<InfinetePosts> | PostType[] | undefined,
     hasNextPage: boolean,
     fetchNextPage: () => Promise<void>
     refetch: () => Promise<void>
@@ -26,12 +27,22 @@ const PostList: React.FC<Props> = ({ posts, hasNextPage, fetchNextPage, refetch 
         setRefreshFlatList(false)
     }
 
+    if (Array.isArray(posts)) {
+        return <FlatList
+            data={posts}
+            renderItem={({ item }) => <PostDetails enableMaxLenght={true} info={item} />}
+            ListFooterComponent={() => hasNextPage ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.contrast_100} /> : <></>}
+            refreshing={refreshFlatList}
+            onRefresh={onRefreshFlatList}
+        />
+    }
+
 
     return (
         <FlatList
             data={posts?.pages.map(p => p.data).flat()}
             renderItem={({ item }) => <PostDetails enableMaxLenght={true} info={item} />}
-            ListFooterComponent={() => hasNextPage ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.contrast} /> : <></>}
+            ListFooterComponent={() => hasNextPage ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.contrast_100} /> : <></>}
             onEndReached={async () => {
                 await fetchNextPage()
             }}

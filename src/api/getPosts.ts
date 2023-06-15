@@ -5,7 +5,6 @@ import { PostType } from "../types/PostType"
 
 type Props = {
     page: number,
-    tokenJWT: string
 }
 
 export type InfinetePosts = {
@@ -13,6 +12,6 @@ export type InfinetePosts = {
     maxPage: number
 }
 
-export async function getPosts({ page, tokenJWT }: Props) {
+export async function getPosts({ page }: Props) {
     return (await api.get<InfinetePosts>(`posts?page=${page}`)).data
 }

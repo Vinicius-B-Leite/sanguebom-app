@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
     flex: 1;
-    background-color: ${({ theme }) => theme.colors.backgroundColor};
+    background-color: ${({ theme }) => theme.colors.background_100};
 `;
 
 export const GoBack = styled.TouchableOpacity`
@@ -14,7 +14,7 @@ export const GoBack = styled.TouchableOpacity`
 `
 
 export const Title = styled.Text`
-    color: ${({ theme }) => theme.colors.contrast};
+    color: ${({ theme }) => theme.colors.contrast_100};
     font-weight: 700;
     font-size: ${({ theme }) => theme.fontSize.lg}px;
     text-align: center;
@@ -33,7 +33,7 @@ type Props = {
     isEnable: boolean
 }
 export const SubmitButton = styled.TouchableOpacity<Props>`
-    background-color: ${({ theme, isEnable }) => isEnable ? theme.colors.contrast : theme.colors.disabledContrast};
+    background-color: ${({ theme, isEnable }) => isEnable ? theme.colors.contrast_100 : theme.colors.disabledContrast};
     width: 85%;
     justify-content: center;
     align-items: center;
@@ -44,7 +44,7 @@ export const SubmitButton = styled.TouchableOpacity<Props>`
 `
 export const SubmitLabel = styled.Text`
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
-    color: ${({ theme }) => theme.colors.backgroundColor};
+    color: ${({ theme }) => theme.colors.background_100};
     font-weight: 700;
 `
 

@@ -66,7 +66,7 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
                 <S.Row>
                     <S.SectionTitle>Ativado</S.SectionTitle>
                     <Switch
-                        trackColor={{ false: theme.colors.backgroundColorSecond, true: theme.colors.contrast }}
+                        trackColor={{ false: theme.colors.background_100Second, true: theme.colors.contrast_100 }}
                         thumbColor={'#f4f3f4'}
                         onValueChange={() => setSwitchEnable(old => !old)}
                         value={switchEnable}

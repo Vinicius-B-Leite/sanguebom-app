@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.backgroundColor};
+    background-color: ${({ theme }) => theme.colors.background_100};
 `;
 
 
@@ -11,8 +11,8 @@ type SelectBtnProps = {
 }
 export const SelectBtn = styled.TouchableOpacity<SelectBtnProps>`
     width: 100%;
-    background-color: ${({ theme, isSelecting }) => isSelecting ? theme.colors.lightContrast : theme.colors.backgroundColor};
-    border-color: ${({ theme, isSelecting }) => isSelecting ? theme.colors.contrast : theme.colors.darkText};
+    background-color: ${({ theme, isSelecting }) => isSelecting ? theme.colors.lightContrast : theme.colors.background_100};
+    border-color: ${({ theme, isSelecting }) => isSelecting ? theme.colors.contrast_100 : theme.colors.darkText};
     border-width: 0.5px;
     flex-direction: row;
     justify-content: space-between;
@@ -28,7 +28,7 @@ export const SelectTxt = styled.Text`
 `
 
 export const ListContainer = styled.View`
-    background-color: ${({ theme }) => theme.colors.backgroundColor};
+    background-color: ${({ theme }) => theme.colors.background_100};
     border-color: ${({ theme }) => theme.colors.darkText};
     border-width: 0.5px;
     margin: 5% 0%;

@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
     flex: 1;
-    background-color: ${({ theme }) => theme.colors.backgroundColor};
+    background-color: ${({ theme }) => theme.colors.background_100};
 `;
 
 export const Main = styled.View`
@@ -12,14 +12,14 @@ export const Main = styled.View`
 
 export const OpenModalBtn = styled.TouchableOpacity`
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.contrast};
+    background-color: ${({ theme }) => theme.colors.contrast_100};
     padding: 5%;
     align-items: center;
     justify-content: center;
     border-radius: ${({theme}) => theme.borderRadius.xxsm}px;
 `
 export const OpenModalTxt = styled.Text`
-    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.backgroundColor};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.background_100};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
     font-weight: 600;
 `

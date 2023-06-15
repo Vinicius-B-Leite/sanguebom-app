@@ -69,7 +69,7 @@ const CreatePost: React.FC = () => {
       <S.Header>
         <S.Title>{'<   '} Criar post</S.Title>
         <S.DoneBtn onPress={handleSubmit}>
-          <S.DoneTxt>{isLoading ? <ActivityIndicator size={theme.icons.vvsm} color={theme.colors.contrast} /> : 'concluir'}</S.DoneTxt>
+          <S.DoneTxt>{isLoading ? <ActivityIndicator size={theme.icons.vvsm} color={theme.colors.contrast_100} /> : 'concluir'}</S.DoneTxt>
         </S.DoneBtn>
       </S.Header>
 

@@ -12,7 +12,7 @@ export const ItemContainer = styled.TouchableOpacity<ItemContainerProps>`
     margin: 0px ${({ theme }) => theme.vw * 0.01}px;
 `
 export const ItemLabel = styled.Text`
-    color: ${({ theme }) => theme.colors.backgroundColor};
+    color: ${({ theme }) => theme.colors.background_100};
     font-size: ${({ theme }) => theme.fontSize.sm}px;
     font-weight: 700    ;
 `

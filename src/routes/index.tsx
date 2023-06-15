@@ -7,11 +7,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../feature/store';
 import LoginRoutes from './loginRoutes';
 import { logoutUser, setUser } from '../feature/user/userSlicer';
+import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
 
 import Loading from '../screens/Loading';
 import { api } from '../api';
 import { getStorageUser } from '../storage/userStorage';
-//    sanguebom://post/684dfa16-9414-4291-bb1d-09231716c42d
+import NetFeedback from '../components/NetFeedback';
 
 type LinkingType = LinkingOptions<{ HomeStack: { screens: any } }> | undefined
 
@@ -38,7 +39,8 @@ const Routes: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>()
     const user = useSelector((state: RootState) => state.user.user)
     const [isLoading, setIsLoading] = useState(true)
-
+    const netInfo = useNetInfo()
+    
     useEffect(() => {
         getUser()
         api.registerInterceptorTokenMenager(() => dispatch(logoutUser()))
@@ -60,7 +62,8 @@ const Routes: React.FC = () => {
 
     return (
         <NavigationContainer linking={linking}>
-            <StatusBar backgroundColor={type === 'dark' ? colors.backgroundColor : colors.contrast} barStyle='light-content' />
+            <StatusBar backgroundColor={netInfo.isConnected ?  type === 'dark' ? colors.background_100 : colors.contrast_100 : colors.text_50 } barStyle='light-content'  />
+            <NetFeedback isConnected={netInfo.isConnected} />
             {user && !isLoading ? <Tab /> : <LoginRoutes />}
         </NavigationContainer>
     )

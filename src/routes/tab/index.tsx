@@ -25,11 +25,11 @@ const Tab = () => {
             screenOptions={{
                 headerShown: false,
                 tabBarShowLabel: false,
-                tabBarActiveTintColor: theme.colors.contrast,
+                tabBarActiveTintColor: theme.colors.contrast_100,
                 tabBarInactiveTintColor: theme.colors.darkText,
                 tabBarHideOnKeyboard: false,
                 tabBarStyle: {
-                    backgroundColor: theme.colors.backgroundColor,
+                    backgroundColor: theme.colors.background_100,
                     borderTopWidth: 0
                 }
             }}

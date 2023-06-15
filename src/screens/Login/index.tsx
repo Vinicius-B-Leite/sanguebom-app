@@ -52,7 +52,7 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
     return (
         <S.Container>
             <S.GoBack onPress={() => navigation.goBack()}>
-                <AntDesign name="left" size={theme.icons.sm} color={theme.colors.contrast} />
+                <AntDesign name="left" size={theme.icons.sm} color={theme.colors.contrast_100} />
             </S.GoBack>
 
             <S.Title>Fazer Login</S.Title>
@@ -83,7 +83,7 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                 isEnable={email.length > 0 && password.length > 7 && email.includes('@')}
                 onPress={handleSubmit}
             >
-                <S.SubmitLabel>{isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.backgroundColor} /> : 'Concluir'}</S.SubmitLabel>
+                <S.SubmitLabel>{isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.background_100} /> : 'Concluir'}</S.SubmitLabel>
             </S.SubmitButton>
 
         </S.Container>

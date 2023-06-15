@@ -15,6 +15,9 @@ import PostList from './components/PostList';
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '../../types/ErrorResponse';
 import { registerAppOneSignal } from '../../onesignal/registerAppOneSignal';
+import { getPostsStorage, setPostsStorage } from '../../storage/postsStorage';
+import { PostType } from 'src/types/PostType';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 
 registerAppOneSignal()
@@ -23,8 +26,7 @@ type Nav = StackScreenProps<StackHomeParamsList, 'Home'>
 const Home: React.FC<Nav> = ({ navigation }) => {
   const user = useSelector((state: RootState) => state.user.user)
   const dispatch = useDispatch()
-
-
+  const [offlineData, setOfflineData] = useState<PostType[]>([])
 
   useQuery({
     queryKey: ['notificationLength'],
@@ -37,8 +39,17 @@ const Home: React.FC<Nav> = ({ navigation }) => {
 
   const { data, fetchNextPage, isLoading, hasNextPage, refetch } = useInfiniteQuery({
     queryKey: ['posts'],
-    queryFn: ({ pageParam = 1 }) => getPosts({ page: pageParam, tokenJWT: user?.token ?? '' }),
+    queryFn: ({ pageParam = 1 }) => getPosts({ page: pageParam }),
     getNextPageParam: (lastPage, allPages) => lastPage.maxPage >= allPages.length + 1 ? allPages.length + 1 : undefined,
+    onSuccess: (data) => {
+      setPostsStorage(data.pages[0].data)
+    },
+    onError: (error: AxiosError) => {
+      if (error.message === 'Network Error') {
+        const postsStorage = getPostsStorage()
+        setOfflineData(postsStorage || [])
+      }
+    }
   })
 
 
@@ -55,7 +66,7 @@ const Home: React.FC<Nav> = ({ navigation }) => {
               await fetchNextPage()
             }}
             hasNextPage={hasNextPage || false}
-            posts={data}
+            posts={data || offlineData}
 
             refetch={async () => {
               await refetch()

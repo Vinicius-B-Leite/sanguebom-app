@@ -22,7 +22,7 @@ export const Container = styled.View<Props>`
     padding: 1% 2%;
     align-items: center;
     border-width: ${({ isFocused }) => isFocused ? '1px' : '0px'};
-    border-color: ${({ isFocused, theme }) => isFocused ? theme.colors.contrast : 'none'};
+    border-color: ${({ isFocused, theme }) => isFocused ? theme.colors.contrast_100 : 'none'};
 `;
 
 export const TxtInput = styled.TextInput`

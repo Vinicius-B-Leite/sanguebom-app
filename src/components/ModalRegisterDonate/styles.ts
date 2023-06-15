@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { css } from 'styled-components/native';
 
 export const Container = styled.View`
-    background-color: ${({ theme }) => theme.colors.backgroundColor};
+    background-color: ${({ theme }) => theme.colors.background_100};
     width: 90%;
     height: 50%;
     padding: 5%;
@@ -11,7 +11,7 @@ export const Container = styled.View`
 `;
 
 export const Title = styled.Text`
-    color: ${({ theme }) => theme.colors.contrast};
+    color: ${({ theme }) => theme.colors.contrast_100};
     font-size: ${({ theme }) => theme.fontSize.md}px;
     font-weight: 600;
 `

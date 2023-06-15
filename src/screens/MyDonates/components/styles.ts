@@ -31,7 +31,7 @@ export const BlockDonateContainer = styled.View`
 `
 
 export const BlockDonateText = styled.Text`
-    color: ${({ theme }) => theme.colors.contrast};
+    color: ${({ theme }) => theme.colors.contrast_100};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
     font-weight: 700;
 `

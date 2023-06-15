@@ -7,20 +7,17 @@ const { height, width } = Dimensions.get('screen')
 
 export const darkMode: ThemeType = {
     colors: {
-        backgroundColor: '#060606',
-        backgroundOpacity: 'rgba(0, 0, 0, 0.8)',
-        backgroundColorSecond: '#D4BFBF',
-        contrast: '#F65353',
-        disabledContrast: '#7a3b3b',
-        darkContrast: 'rgba(248, 1, 1, 0.4)',
-        lightContrast: '#FBEAEA',
-        darkText: '#959595',
-        text: '#fff',
-        inputBackgroundColor: '#3E0606',
-        questionBackgroundColor: '#3E0606',
-        optionsBg: '#FBB1B1',
-        formInputBg: '#111111',
-        alert: '#f00'
+        background_200: '#0D0D0D',
+        background_100: '#1F1F1F',
+
+        contrast_200: '#A81212',
+        contrast_100: '#FF0000',
+        contrast_20: 'rgba(255, 0, 0, 0.40)',
+        contrast_10: 'rgba(255, 0, 0, 0.10)',
+
+        text_200: '#ffffff',
+        text_100: '#6A6A6A',
+        text_50: '#A7A7A7',
     },
     icons: {
         big: width * 0.3,

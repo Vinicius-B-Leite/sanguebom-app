@@ -1,20 +1,18 @@
 
 export type ThemeType = {
     colors: {
-        backgroundColor: string,
-        backgroundOpacity: string,
-        backgroundColorSecond: string,
-        contrast: string,
-        disabledContrast: string,
-        darkContrast: string,
-        lightContrast: string,
-        darkText: string,
-        text: string,
-        inputBackgroundColor: string,
-        questionBackgroundColor: string,
-        optionsBg: string,
-        formInputBg: string,
-        alert: string,
+        contrast_200: string,
+        contrast_100: string,
+        contrast_20: string,
+        contrast_10: string,
+
+        text_200: string,
+        text_100: string,
+        text_50: string,
+
+        background_200: string,
+        background_100: string,
+
     },
     icons: {
         big: number,
