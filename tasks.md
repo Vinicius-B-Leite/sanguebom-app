@@ -1,8 +1,8 @@
 
 task atual: 
-    dropdown
-6df54534-d625-4068-a0bb-efa0e5917998
+    trocar async storage para mmkv
 
-
-    melhorar o UI do alerta no mapa
+trocar tipo sanguineo
 terminar as funções da tela profille
+adicionar funções offlines
+refatorar os temas 

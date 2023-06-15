@@ -15,6 +15,7 @@ import { setUser } from '../../feature/user/userSlicer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from '../../api';
 import { updateStorageUser } from '../../storage/userStorage';
+import { updateBloodTypeTag } from 'src/onesignal/updateBloodTypeTag';
 
 
 type Nav = StackScreenProps<StackRootParamsList, 'Login'>

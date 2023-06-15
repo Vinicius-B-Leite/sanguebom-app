@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import Tab from './tab';
 import { useTheme } from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,7 +10,27 @@ import { logoutUser, setUser } from '../feature/user/userSlicer';
 
 import Loading from '../screens/Loading';
 import { api } from '../api';
-import { getStorageUser, removeStorageUser } from '../storage/userStorage';
+import { getStorageUser } from '../storage/userStorage';
+//    sanguebom://post/684dfa16-9414-4291-bb1d-09231716c42d
+
+type LinkingType = LinkingOptions<{ HomeStack: { screens: any } }> | undefined
+
+const linking = {
+    prefixes: ['sanguebom://', 'com.viniciusbl21.sanguebom://', 'exp+sanguebom-app://'],
+    config: {
+        screens: {
+            HomeStack: {
+                path: '',
+                screens: {
+                    Post: {
+                        path: 'post/:postID',
+                        parse: (postID: string) => postID
+                    }
+                }
+            }
+        }
+    },
+} as LinkingType
 
 
 const Routes: React.FC = () => {
@@ -39,7 +59,7 @@ const Routes: React.FC = () => {
 
 
     return (
-        <NavigationContainer>
+        <NavigationContainer linking={linking}>
             <StatusBar backgroundColor={type === 'dark' ? colors.backgroundColor : colors.contrast} barStyle='light-content' />
             {user && !isLoading ? <Tab /> : <LoginRoutes />}
         </NavigationContainer>

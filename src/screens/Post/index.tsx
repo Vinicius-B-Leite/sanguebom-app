@@ -16,10 +16,9 @@ type NavProp = StackScreenProps<StackHomeParamsList, 'Post'>
 
 const Post: React.FC<NavProp> = ({ navigation, route }) => {
 
-    const user = useSelector((state: RootState) => state.user.user)
     const { data } = useQuery({
         queryKey: ['singlePost'],
-        queryFn: () => getOnePost({ postID: route.params.postID, token: user?.token ?? '' })
+        queryFn: () => getOnePost({ postID: route.params.postID })
     })
 
 

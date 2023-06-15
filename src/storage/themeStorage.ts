@@ -1,16 +1,16 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { THEME_KEY } from "./storageConfig"
+import { THEME_KEY, storage } from "./storageConfig"
 
 
 
 type Theme = 'dark' | 'light'
 
-export const getStorageTheme = async () => {
-    const res = await AsyncStorage.getItem(THEME_KEY)
+export const getStorageTheme = () => {
+    const res = storage.getString(THEME_KEY)
     const theme = res ? res as Theme : null
     return theme
 }
 
-export const changeStorageTheme = async (theme: Theme) => {
-    await AsyncStorage.setItem(THEME_KEY, theme)
+export const changeStorageTheme = (theme: Theme) => {
+    storage.set(THEME_KEY, theme)
 }

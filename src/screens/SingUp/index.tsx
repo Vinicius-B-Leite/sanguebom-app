@@ -17,6 +17,8 @@ import HeaderGoBack from '../../components/HeaderGoBack';
 import { api } from '../../api';
 import { updateStorageUser } from '../../storage/userStorage';
 import DropDown from '../../components/DropDown';
+import OneSignal from 'react-native-onesignal';
+import { updateBloodTypeTag } from '../../onesignal/updateBloodTypeTag';
 
 
 type Nav = StackScreenProps<StackRootParamsList, 'SingUp'>
@@ -33,6 +35,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
     const onSuccess = async (res: AxiosResponse<UserType, any>) => {
         await updateStorageUser(res.data)
         api.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
+        updateBloodTypeTag(res.data.bloodType)
         dispatch(setUser(res.data as UserType))
     }
 

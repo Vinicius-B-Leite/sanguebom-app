@@ -1,18 +1,17 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { USER_KEY } from "./storageConfig"
+import { USER_KEY, storage } from "./storageConfig"
 import { UserType } from "../types/UserType"
 
-export const getStorageUser = async () => {
-    const res = await AsyncStorage.getItem(USER_KEY)
+export const getStorageUser = () => {
+    const res = storage.getString(USER_KEY)
     const user = res ? JSON.parse(res) as UserType : null
 
     return user
 }
 
-export const updateStorageUser = async (newUser: UserType) => {
-    await AsyncStorage.setItem(USER_KEY, JSON.stringify(newUser))
+export const updateStorageUser = (newUser: UserType) => {
+    storage.set(USER_KEY, JSON.stringify(newUser))
 }
 
-export const removeStorageUser = async () => {
-    await AsyncStorage.removeItem(USER_KEY)
+export const removeStorageUser = () => {
+    storage.delete(USER_KEY)
 }
