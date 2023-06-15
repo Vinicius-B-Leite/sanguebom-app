@@ -14,7 +14,7 @@ export const Avatar = styled.Image`
     border-radius: ${({ theme }) => theme.borderRadius.full}px;
     `
 export const Username = styled.Text`
-    color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.text_200};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
     margin-left: 3%;
     `
@@ -30,7 +30,7 @@ export const Deatils = styled.View`
     padding: 2% 0%;
 `
 export const ComunText = styled.Text`
-    color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.text_200};
     font-size: ${({ theme }) => theme.fontSize.sm}px;
 `
 export const Description = styled(ComunText)``

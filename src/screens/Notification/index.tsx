@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, FlatList, Text } from 'react-native';
 import * as S from './styles'
 import { useTheme } from 'styled-components/native';
@@ -14,6 +14,8 @@ import NotificationItem from '../../components/NotificationItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setNotificationLength } from '../../feature/notification/notificationSlice';
 import HeaderGoBack from '../../components/HeaderGoBack';
+import { getNotificationsStorage, setLastNotificationRead, setNotificationsStorage } from '../../storage/notificationStorage';
+import { NotificationType } from '../../types/NotificationType';
 
 
 
@@ -22,15 +24,23 @@ type Nav = StackScreenProps<StackHomeParamsList, 'Notification'>
 const Notification: React.FC<Nav> = ({ navigation }) => {
 
     const user = useSelector((state: RootState) => state.user.user)
-    const theme = useTheme()
     const dispatch = useDispatch()
+    const [offlineNotifications, setOfflineNotifications] = useState<NotificationType[]>([])
 
     const { data } = useQuery(
         ['notification'],
-        () => getNotification({ token: user?.token ?? '', uid: user?.uid ?? '' }),
+        () => getNotification({ uid: user?.uid ?? '' }),
         {
-            onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data),
-            onSuccess: async (res) => await AsyncStorage.setItem('@lastedNotificationReadID', res[0].id)
+            onError: (err: AxiosError) => {
+                if (err.message === 'Network Error') {
+                    const storageNotifications = getNotificationsStorage()
+                    setOfflineNotifications(storageNotifications || [])
+                }
+            },
+            onSuccess: (res) => {
+                setLastNotificationRead(res[0].id)
+                setNotificationsStorage(res)
+            }
         }
     )
 
@@ -41,13 +51,13 @@ const Notification: React.FC<Nav> = ({ navigation }) => {
 
     return (
         <S.Container>
-            
-            <HeaderGoBack goBack={() => navigation.goBack()} theme='contrast' title='Notificações'/>
 
-            
+            <HeaderGoBack goBack={() => navigation.goBack()} theme='contrast' title='Notificações' />
+
+
             <FlatList
                 contentContainerStyle={{ padding: '5%' }}
-                data={data}
+                data={data || offlineNotifications}
                 renderItem={({ item }) => <NotificationItem notification={item} />}
             />
         </S.Container>

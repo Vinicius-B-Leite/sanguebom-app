@@ -14,18 +14,30 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { BottomTabParamsList, QuestionsScreenProps } from '../../routes/models';
 import SkeletonContainer from '../../components/SkeletonContainer';
 import QuestionList from './components/QuestionList';
+import { QuestionType } from 'src/types/QuestionType';
+import { getQuestionsStorage, setQuestionsStorage } from '../../storage/questionsStorage';
 
 
 
 type Nav = QuestionsScreenProps
 const Questions: React.FC<Nav> = ({ navigation, route }) => {
-  const user = useSelector((state: RootState) => state.user.user)
   const theme = useTheme()
+
+  const [offlineQuestions, setOfflineQuestions] = useState<QuestionType[]>([])
+
   const { data, isLoading, refetch } = useQuery(
     ['questions'],
-    () => getQuestions(user?.token ?? ''),
+    () => getQuestions(),
     {
-      onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data)
+      onError: (err: AxiosError) => {
+        if (err.message === 'Network Error') {
+          const storageQuestions = getQuestionsStorage()
+          setOfflineQuestions(storageQuestions)
+        }
+      },
+      onSuccess: (res) => {
+        setQuestionsStorage(res)
+      }
     }
   )
 
@@ -43,7 +55,7 @@ const Questions: React.FC<Nav> = ({ navigation, route }) => {
             <SkeletonContainer w={theme.vw * 9} h={theme.vh * 0.1} />
           </View>
           :
-          <QuestionList questions={data} refetch={handleRefetch} />
+          <QuestionList questions={data || offlineQuestions} refetch={handleRefetch} />
       }
     </S.Container>
   )

@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 export const Container = styled.TouchableOpacity`
     flex-direction: row;
     align-items: center;
-    background-color: ${({theme}) => theme.colors.questionBackgroundColor};
+    background-color: ${({theme}) => theme.colors.contrast_10};
     margin: ${({theme}) => theme.vw * 0.05}px 0px;
     padding: ${({theme}) => theme.vw * 0.05}px ${({theme}) => theme.vw * 0.03}px;
     border-radius: ${({theme}) => theme.borderRadius.xxsm}px;
@@ -25,7 +25,7 @@ export const Right = styled.View`
 `
 
 export const Title = styled.Text`
-    color: ${({theme}) => theme.colors.text};
+    color: ${({theme}) => theme.colors.text_200};
     font-size: ${({theme}) => theme.fontSize.xxxsm}px;
     font-weight: 600;
 `

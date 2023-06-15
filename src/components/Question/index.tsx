@@ -23,9 +23,9 @@ const Question: React.FC<QuestionProps> = ({ item }) => {
                 <S.OpenDescription onPress={() => setDescriptionVisible(!descriptionVisible)}>
                     {
                         descriptionVisible ?
-                            <AntDesign name="up" size={icons.vvsm} color={colors.text} />
+                            <AntDesign name="up" size={icons.vvsm} color={colors.text_200} />
                             :
-                            <AntDesign name="down" size={icons.vvsm} color={colors.text} />
+                            <AntDesign name="down" size={icons.vvsm} color={colors.text_200} />
 
                     }
                 </S.OpenDescription>
