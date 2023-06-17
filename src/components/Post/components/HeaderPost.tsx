@@ -13,7 +13,7 @@ const HeaderPost: React.FC<Props> = ({ avatarUrl, username }) => {
 
         <S.Header>
             <S.Avatar source={{ uri: baseURL + avatarUrl || '' }} />
-            <S.Username>{username}</S.Username>
+            <S.Username numberOfLines={1}>{username}</S.Username>
         </S.Header>
 
     )

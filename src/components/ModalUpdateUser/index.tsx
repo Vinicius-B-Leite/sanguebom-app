@@ -6,6 +6,7 @@ import ComunButton from '../ComunButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
 import ModalBase from '../ModalBase';
+import { useTheme } from 'styled-components/native';
 
 
 type Props = {
@@ -18,7 +19,7 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
     const [confirmPassword, setConfirmPassword] = useState('')
     const user = useSelector((state: RootState) => state.user.user)
     const [value, setValue] = useState('')
-
+    const theme = useTheme()
 
     return (
         <ModalBase modalProps={{ transparent: true, visible, animationType: 'slide', onRequestClose: closeModal }}>
@@ -27,7 +28,7 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
 
                 <S.InputArea>
                     <Input
-
+                        placeholderTextColor={theme.colors.text_100}
                         placeholder={'Novo ' + title}
                         value={value}
                         onChangeText={txt => setValue(txt)}
@@ -37,7 +38,7 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
 
                 <S.InputArea>
                     <Input
-
+                        placeholderTextColor={theme.colors.text_100}
                         placeholder={'Digite sua senha atual para confirmar'}
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
@@ -46,7 +47,10 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
                 </S.InputArea>
 
                 <S.InputArea>
-                    <ComunButton bg={confirmPassword === user?.password ? 'darkContrast' : 'white'} onClick={() => confirmPassword === user?.password && submit(value)} >Salvar</ComunButton>
+                    <ComunButton
+                        bg={confirmPassword === user?.password ? 'darkContrast' : 'white'}
+                        onClick={() => confirmPassword === user?.password && submit(value)}
+                    >Salvar</ComunButton>
                 </S.InputArea>
             </S.Main>
         </ModalBase>

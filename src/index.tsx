@@ -18,8 +18,8 @@ const Index: React.FC = () => {
     const dispatch = useDispatch()
     const theme = useSelector((state: RootState) => state.theme.isDark)
 
-    const getTheme = async () => {
-        const themeStorage = await getStorageTheme()
+    const getTheme =  () => {
+        const themeStorage =  getStorageTheme()
 
         if (themeStorage === 'dark'){
             dispatch(changeTheme(true))

@@ -33,7 +33,6 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
         if (bloodTypesSelecteds.includes(b)) {
             setBloodTypesSelecteds(old => {
                 old.splice(old.indexOf(b), 1)
-                console.log("🚀 ~ file: index.tsx:24 ~ selectBloogType ~ old:", old)
                 return [...old]
             })
         }

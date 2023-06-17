@@ -34,7 +34,7 @@ const Home: React.FC<Nav> = ({ navigation }) => {
     onSuccess: (res) => {
       dispatch(setNotificationLength(res))
     },
-    onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data)
+    onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data.message)
   })
 
   const { data, fetchNextPage, isLoading, hasNextPage, refetch } = useInfiniteQuery({

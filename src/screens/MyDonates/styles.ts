@@ -19,7 +19,7 @@ export const OpenModalBtn = styled.TouchableOpacity`
     border-radius: ${({theme}) => theme.borderRadius.xxsm}px;
 `
 export const OpenModalTxt = styled.Text`
-    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.background_100};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text_100 : theme.colors.background_100};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
     font-weight: 600;
 `

@@ -40,14 +40,14 @@ const Routes: React.FC = () => {
     const user = useSelector((state: RootState) => state.user.user)
     const [isLoading, setIsLoading] = useState(true)
     const netInfo = useNetInfo()
-    
+
     useEffect(() => {
         getUser()
         api.registerInterceptorTokenMenager(() => dispatch(logoutUser()))
     }, [])
 
-    const getUser = async () => {
-        const userStorage = await getStorageUser()
+    const getUser = () => {
+        const userStorage = getStorageUser()
         if (userStorage) {
             api.defaults.headers.common['Authorization'] = 'Bearer ' + userStorage.token
             dispatch(setUser(userStorage))
@@ -62,7 +62,7 @@ const Routes: React.FC = () => {
 
     return (
         <NavigationContainer linking={linking}>
-            <StatusBar backgroundColor={netInfo.isConnected ?  type === 'dark' ? colors.background_100 : colors.contrast_100 : colors.text_50 } barStyle='light-content'  />
+            <StatusBar backgroundColor={netInfo.isConnected ? type === 'dark' ? colors.background_100 : colors.contrast_100 : colors.text_50} barStyle='light-content' />
             <NetFeedback isConnected={netInfo.isConnected} />
             {user && !isLoading ? <Tab /> : <LoginRoutes />}
         </NavigationContainer>

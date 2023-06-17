@@ -26,7 +26,7 @@ const Tab = () => {
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarActiveTintColor: theme.colors.contrast_100,
-                tabBarInactiveTintColor: theme.colors.darkText,
+                tabBarInactiveTintColor: theme.colors.text_100,
                 tabBarHideOnKeyboard: false,
                 tabBarStyle: {
                     backgroundColor: theme.colors.background_100,
@@ -64,7 +64,7 @@ const Tab = () => {
             />
 
             {
-                user.user?.type === 'blood collectors' && <Screen
+                user.user?.type === 'bloodCollectors' && <Screen
                     name='CreatePost'
                     options={{
                         tabBarIcon: ({ focused, color }) => (

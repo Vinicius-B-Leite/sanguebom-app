@@ -12,6 +12,7 @@ import DonatesList from './components/DonatesList';
 import BlockDonate from './components/BlockDonate';
 import { useTheme } from 'styled-components/native';
 import ModalRegisterDonate from '../../components/ModalRegisterDonate';
+import { AxiosError } from 'axios';
 
 
 type Nav = StackScreenProps<StackHomeParamsList, 'MyDonates'>
@@ -24,10 +25,14 @@ const MyDonates: React.FC<Nav> = ({ navigation }) => {
 
     const { data } = useQuery(
         ['donates'],
-        () => getMyDonates({ token: user?.token ?? '', uid: user?.uid ?? '' }),
+        () => getMyDonates({  uid: user?.uid ?? '' }),
+        {
+            onError: (err: AxiosError) => {
+                console.log(err.response?.data)
+            }
+        }
     )
 
-    console.log("🚀 ~ file: index.tsx:26 ~ data:", data)
 
     return (
         <S.Container>

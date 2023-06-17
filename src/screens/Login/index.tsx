@@ -16,6 +16,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from '../../api';
 import { updateStorageUser } from '../../storage/userStorage';
 import { updateBloodTypeTag } from 'src/onesignal/updateBloodTypeTag';
+import { UserType } from '../../types/UserType';
+import { GenderType } from 'src/types/GenderType';
 
 
 type Nav = StackScreenProps<StackRootParamsList, 'Login'>
@@ -35,10 +37,22 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                     )
                 }
             },
-            onSuccess: async ({ data }) => {
+            onSuccess: ({ data }) => {
                 api.defaults.headers.common['Authorization'] = 'Bearer ' + data.token
-                dispatch(setUser(data))
-                await updateStorageUser(data)
+                const user: UserType = {
+                    bloodType: data.donors?.bloodType || undefined,
+                    email: data.email,
+                    gender: data.donors?.gender as GenderType || undefined,
+                    password: data.password,
+                    type: data.type,
+                    token: data.token,
+                    uid: data.donors?.uid || data.bloodCollectors?.uid || '',
+                    username: data.username,
+                    adress: data.bloodCollectors?.adress,
+                    imageURL: data.bloodCollectors?.imageURL
+                }
+                dispatch(setUser(user))
+                updateStorageUser(user)
             }
 
         }
@@ -60,7 +74,7 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                 <Input
                     leftIcon='mail'
                     placeholder='Seu email'
-                    placeholderTextColor={theme.colors.darkText}
+                    placeholderTextColor={theme.colors.text_100}
                     value={email}
                     onChangeText={setEmail}
                     errorMessage={['05', '13'].includes(error?.response?.data.code || '') ? error?.response?.data.message : ''}
@@ -72,7 +86,7 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                     h={theme.vh * 0.07}
                     leftIcon='lock'
                     placeholder='Sua senha'
-                    placeholderTextColor={theme.colors.darkText}
+                    placeholderTextColor={theme.colors.text_100}
                     value={password}
                     onChangeText={setPassword}
                     errorMessage={['03', '06'].includes(error?.response?.data?.code || '') ? error?.response?.data.message : undefined}
@@ -83,7 +97,7 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                 isEnable={email.length > 0 && password.length > 7 && email.includes('@')}
                 onPress={handleSubmit}
             >
-                <S.SubmitLabel>{isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.background_100} /> : 'Concluir'}</S.SubmitLabel>
+                <S.SubmitLabel>{isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.text_200} /> : 'Concluir'}</S.SubmitLabel>
             </S.SubmitButton>
 
         </S.Container>

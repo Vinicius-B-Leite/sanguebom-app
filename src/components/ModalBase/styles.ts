@@ -14,6 +14,7 @@ export const CloseModal = styled.TouchableOpacity`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: ${({ theme }) => theme.colors.backgroundOpacity};
+    background-color: ${({ theme }) => theme.colors.background_200};
+    opacity: 0.8;
     z-index: -1;
 `

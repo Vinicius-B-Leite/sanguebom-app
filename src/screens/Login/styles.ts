@@ -33,7 +33,7 @@ type Props = {
     isEnable: boolean
 }
 export const SubmitButton = styled.TouchableOpacity<Props>`
-    background-color: ${({ theme, isEnable }) => isEnable ? theme.colors.contrast_100 : theme.colors.disabledContrast};
+    background-color: ${({ theme, isEnable }) => isEnable ? theme.colors.contrast_100 : theme.colors.contrast_10};
     width: 85%;
     justify-content: center;
     align-items: center;
@@ -44,7 +44,7 @@ export const SubmitButton = styled.TouchableOpacity<Props>`
 `
 export const SubmitLabel = styled.Text`
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
-    color: ${({ theme }) => theme.colors.background_100};
+    color: ${({ theme }) => theme.colors.text_200};
     font-weight: 700;
 `
 

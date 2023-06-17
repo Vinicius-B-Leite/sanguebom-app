@@ -4,6 +4,10 @@ import { LAST_NOTIFICATION_KEY, NOTIFICATIONS_KEY, storage } from "./storageConf
 export const setLastNotificationRead = (notifcationID: string) => {
     storage.set(LAST_NOTIFICATION_KEY, notifcationID)
 }
+export const getLastNotificationRead = () => {
+    const response = storage.getString(LAST_NOTIFICATION_KEY)
+    return response || ''
+}
 
 export const setNotificationsStorage = (notifications: NotificationType[]) => {
     storage.set(NOTIFICATIONS_KEY, JSON.stringify(notifications))

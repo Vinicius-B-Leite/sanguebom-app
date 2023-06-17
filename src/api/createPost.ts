@@ -18,6 +18,7 @@ export async function createPost({ adress, banner, bloodCollectorsID, descriptio
     form.append('bloodCollectorsID', bloodCollectorsID);
     form.append('description', description);
     form.append('linkRedirect', linkRedirect);
+
     const ext = banner.uri.substring(banner.uri.lastIndexOf('.') + 1)
     const formFile = {
         name: banner.name + '.' + ext,
@@ -27,5 +28,5 @@ export async function createPost({ adress, banner, bloodCollectorsID, descriptio
     form.append('banner', formFile);
 
 
-    return await api.postForm('posts')
+    return await api.postForm('posts', form)
 }

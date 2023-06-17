@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 export const Container = styled.TouchableOpacity`
     width: 100%;
     height: 100%;
-    background-color: ${({theme}) => theme.colors.backgroundOpacity};
+    background-color: ${({theme}) => theme.colors.background_100};
     z-index: 1;
 `
 export const Main = styled.View`
@@ -21,7 +21,7 @@ export const Main = styled.View`
 
 export const Title = styled.Text`
     font-size: ${({theme}) => theme.fontSize.md}px;
-    color: ${({theme}) => theme.colors.text};
+    color: ${({theme}) => theme.colors.text_200};
     font-weight: 600;
     text-align: center;
     margin-bottom: 5%;

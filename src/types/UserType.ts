@@ -1,12 +1,14 @@
+import { GenderType } from "./GenderType"
+
 export type UserType = {
+    uid: string,
     email: string,
     password: string,
-    bloodType: string
-    token: string,
-    uid: string,
     username: string,
-    type: 'normal user' | 'blood collectors',
-    imageURL: string | null,
+    type: string,
+    token: string,
+    imageURL?: string | null,
     adress?: string,
-    gender: 'female' | 'male'
+    gender?: GenderType
+    bloodType?: string
 }

@@ -24,6 +24,7 @@ const CreatePost: React.FC = () => {
   const theme = useTheme()
   const user = useSelector((state: RootState) => state.user.user)
   const client = useQueryClient()
+
   const { mutate, isLoading } = useMutation(() => createPost(
     {
       adress,
@@ -36,6 +37,8 @@ const CreatePost: React.FC = () => {
       onError: (err: AxiosError<ErrorResponse>) => {
         if (err.response && err.response.data.code !== '08') {
           ToastAndroid.show('Ops! Ocorreu um erro', ToastAndroid.LONG)
+        }else{
+          console.log(err.response?.data.message)
         }
       },
       onSuccess: () => {
@@ -59,7 +62,7 @@ const CreatePost: React.FC = () => {
   }
 
   const handleSubmit = () => {
-    if (file.uri.length === 0 || adress.length === 0 || hours.length === 0 || link.length === 0 || description.length === 0) return
+    if (file.uri.length === 0 || adress.length === 0 || hours.length === 0 || description.length === 0) return
 
     mutate()
   }
@@ -77,19 +80,18 @@ const CreatePost: React.FC = () => {
         <S.PickImageBtn onPress={handlePickImage}>
           {
             file.uri.length > 0 ? <Image
-              style={{ width: Dimensions.get('screen').width, maxHeight: Dimensions.get('screen').height * 0.7 }}
+              style={{ width: Dimensions.get('screen').width, height: Dimensions.get('screen').width}}
               source={{ uri: file.uri }}
             /> :
-              <Entypo name="image" size={icons.big} color={colors.darkText} style={{ paddingVertical: '10%' }} />
+              <Entypo name="image" size={icons.big} color={colors.contrast_20} style={{ paddingVertical: '10%' }} />
           }
         </S.PickImageBtn>
 
         <S.InputTitle>Endereço</S.InputTitle>
         <S.InputArea>
           <Input
-
             placeholder={'Rua Pernambuco Bairro Flores de Jardim'}
-            placeholderTextColor={theme.colors.darkText}
+            placeholderTextColor={theme.colors.text_100}
             value={adress}
             onChangeText={setAdress}
 
@@ -101,7 +103,7 @@ const CreatePost: React.FC = () => {
           <Input
 
             placeholder={'10hrs ~ 17hrs'}
-            placeholderTextColor={theme.colors.darkText}
+            placeholderTextColor={theme.colors.text_100}
             value={hours}
             onChangeText={setHours}
 
@@ -111,9 +113,8 @@ const CreatePost: React.FC = () => {
         <S.InputTitle>Link para agendar a doação (opcinal) </S.InputTitle>
         <S.InputArea>
           <Input
-
             placeholder={'Https={...'}
-            placeholderTextColor={theme.colors.darkText}
+            placeholderTextColor={theme.colors.text_100}
             value={link}
             onChangeText={setLink}
 
@@ -123,13 +124,13 @@ const CreatePost: React.FC = () => {
         <S.InputTitle>Descrição</S.InputTitle>
         <S.DescriptionArea>
           <Input
-
             placeholder={'Descrição'}
-            placeholderTextColor={theme.colors.darkText}
+            placeholderTextColor={theme.colors.text_100}
             textAlignVertical={'top'}
             value={description}
             onChangeText={setDescription}
             multiline={true}
+            h={theme.vw * 0.5}
           />
         </S.DescriptionArea>
       </S.Form>
