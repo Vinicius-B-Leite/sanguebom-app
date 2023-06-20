@@ -76,6 +76,7 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                     placeholder='Seu email'
                     placeholderTextColor={theme.colors.text_100}
                     value={email}
+                    autoCapitalize='none'
                     onChangeText={setEmail}
                     errorMessage={['05', '13'].includes(error?.response?.data.code || '') ? error?.response?.data.message : ''}
                 />
@@ -97,7 +98,8 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                 isEnable={email.length > 0 && password.length > 7 && email.includes('@')}
                 onPress={handleSubmit}
             >
-                <S.SubmitLabel>{isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.text_200} /> : 'Concluir'}</S.SubmitLabel>
+                <S.SubmitLabel isEnable={email.length > 0 && password.length > 7 && email.includes('@')} >{
+                    isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.background_100} /> : 'Concluir'}</S.SubmitLabel>
             </S.SubmitButton>
 
         </S.Container>

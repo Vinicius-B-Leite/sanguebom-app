@@ -10,9 +10,7 @@ import HeaderGoBack from '../../components/HeaderGoBack';
 type Nav = StackScreenProps<StackRootParamsList, 'SelectBloodType'>
 
 const SelectBloodType: React.FC<Nav> = ({ navigation }) => {
-
-    const theme = useTheme()
-
+    
     const [bloodTypeSelected, setBlooadTypeSelected] = useState('')
     const [rhFactorSelected, setRhFactorSelected] = useState('+')
 
@@ -23,10 +21,6 @@ const SelectBloodType: React.FC<Nav> = ({ navigation }) => {
 
             <S.Main>
                 <S.Title>SELECIONE SEU TIPO SANGUÍNEO</S.Title>
-
-                <S.IDKMBTButton>
-                    <S.IDKMBTLabel>Não sei meu tipo sanguíneo</S.IDKMBTLabel>
-                </S.IDKMBTButton>
 
                 <BloodTypeList
                     bloodTypeSelected={bloodTypeSelected}

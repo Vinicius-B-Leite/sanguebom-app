@@ -9,7 +9,7 @@ import { PostType } from 'src/types/PostType';
 
 
 type Props = {
-    posts: InfiniteData<InfinetePosts> | PostType[] | undefined,
+    posts: InfiniteData<InfinetePosts> | PostType[] | undefined | null,
     hasNextPage: boolean,
     fetchNextPage: () => Promise<void>
     refetch: () => Promise<void>

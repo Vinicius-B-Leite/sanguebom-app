@@ -26,7 +26,11 @@ function DropDown<T>({ data, placeholder, renderItem, onSelect, value }: Props<T
         <S.Container>
             <S.SelectBtn onPress={() => setShowData(old => !old)} isSelecting={showData}>
                 <S.SelectTxt numberOfLines={1}>{value || placeholder}</S.SelectTxt>
-                <AntDesign name={showData ? 'up' : 'down'} size={icons.sm} color={showData ? colors.contrast_100 : colors.text} />
+                <AntDesign
+                    name={showData ? 'up' : 'down'}
+                    size={icons.sm}
+                    color={showData ? colors.contrast_100 : colors.text_100}
+                />
             </S.SelectBtn>
             {
                 showData && data &&

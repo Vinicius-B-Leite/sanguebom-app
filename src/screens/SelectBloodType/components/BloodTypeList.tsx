@@ -1,9 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { FlatList, View } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import SelectBloodTypeItem from '../../../components/SelectBloodTypeItem';
-import RhFactorItem from '../../../components/rhFactorItem';
-import { rhFactor } from '../../../utlis/rhFactor';
+
 import { bloodTypesWithouRh } from '../../../utlis/bloodTypesWithouRh';
 import SelectRhFactor from './SelectRhFactor';
 

@@ -10,11 +10,11 @@ export const Container = styled.TouchableOpacity<Props>`
     border-radius: ${({ theme }) => theme.borderRadius.xsm}px;
     justify-content: center;
     align-items: center;
-    background-color: ${({ theme, bg }) => bg === 'darkContrast' ? theme.colors.contrast_200 : theme.colors.background_100};
+    background-color: ${({ theme, bg }) => bg === 'darkContrast' ? theme.colors.contrast_200 : '#fff'};
 `;
 
 export const Label = styled.Text<Props>`
     font-size: ${({ theme }) => theme.fontSize.xxsm}px;
     font-weight: 700;
-    color: ${({ theme, bg }) => bg === 'darkContrast' ?  theme.colors.background_100 : theme.colors.contrast_100};
+    color: ${({ theme, bg }) => bg === 'darkContrast' ? '#fff' : theme.colors.contrast_100};
 `

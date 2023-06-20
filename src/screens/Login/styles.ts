@@ -42,9 +42,9 @@ export const SubmitButton = styled.TouchableOpacity<Props>`
     margin-top: 5%;
     align-self: center;
 `
-export const SubmitLabel = styled.Text`
+export const SubmitLabel = styled.Text<Props>`
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
-    color: ${({ theme }) => theme.colors.text_200};
+    color: ${({ theme, isEnable }) => isEnable ? theme.colors.background_100 : theme.colors.contrast_100};
     font-weight: 700;
 `
 

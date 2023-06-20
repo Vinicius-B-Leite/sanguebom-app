@@ -26,29 +26,17 @@ type Nav = StackScreenProps<StackHomeParamsList, 'Home'>
 const Home: React.FC<Nav> = ({ navigation }) => {
   const user = useSelector((state: RootState) => state.user.user)
   const dispatch = useDispatch()
-  const [offlineData, setOfflineData] = useState<PostType[]>([])
-
-  useQuery({
-    queryKey: ['notificationLength'],
-    queryFn: () => getNotificationLength({ uid: user?.uid ?? '' }),
-    onSuccess: (res) => {
-      dispatch(setNotificationLength(res))
-    },
-    onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data.message)
-  })
+  const netinfo = useNetInfo()
+  const offlineData = useMemo(() => {
+    if (!netinfo.isConnected) return getPostsStorage()
+  }, [netinfo])
 
   const { data, fetchNextPage, isLoading, hasNextPage, refetch } = useInfiniteQuery({
     queryKey: ['posts'],
     queryFn: ({ pageParam = 1 }) => getPosts({ page: pageParam }),
     getNextPageParam: (lastPage, allPages) => lastPage.maxPage >= allPages.length + 1 ? allPages.length + 1 : undefined,
     onSuccess: (data) => {
-      setPostsStorage(data.pages[0].data)
-    },
-    onError: (error: AxiosError) => {
-      if (error.message === 'Network Error') {
-        const postsStorage = getPostsStorage()
-        setOfflineData(postsStorage || [])
-      }
+      setPostsStorage(data.pages[0].data)      
     }
   })
 
@@ -61,12 +49,11 @@ const Home: React.FC<Nav> = ({ navigation }) => {
           [1, 2, 3, 4, 5].map(i => <SkeletonPost key={i} />)
           :
           <PostList
-
             fetchNextPage={async () => {
               await fetchNextPage()
             }}
             hasNextPage={hasNextPage || false}
-            posts={data || offlineData}
+            posts={netinfo.isConnected ? data : offlineData}
 
             refetch={async () => {
               await refetch()

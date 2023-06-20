@@ -32,10 +32,12 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
     const [gender, setGender] = useState('')
     const dispatch = useDispatch()
 
-    const onSuccess = async (res: AxiosResponse<UserType, any>) => {
-        await updateStorageUser(res.data)
+    const onSuccess = (res: AxiosResponse<UserType, any>) => {
+        updateStorageUser(res.data)
         api.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
-        updateBloodTypeTag(res.data.bloodType)
+        if (res.data.bloodType){
+            updateBloodTypeTag(res.data.bloodType)
+        }
         dispatch(setUser(res.data as UserType))
     }
 
@@ -75,7 +77,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                         value={username}
                         onChangeText={setUsername}
                         placeholder={'Nome de usuário'}
-                        placeholderTextColor={theme.colors.darkText}
+                        placeholderTextColor={theme.colors.text_100}
                     />
                 </S.InputArea>
 
@@ -86,7 +88,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                         value={email}
                         onChangeText={setEmail}
                         placeholder={'Email'}
-                        placeholderTextColor={theme.colors.darkText}
+                        placeholderTextColor={theme.colors.text_100}
                         errorMessage={['02', '13'].includes(error?.response?.data.code || '') ? error?.response?.data.message : undefined}
                     />
                 </S.InputArea>
@@ -99,7 +101,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                         value={password}
                         onChangeText={setPassword}
                         placeholder={'Senha'}
-                        placeholderTextColor={theme.colors.darkText}
+                        placeholderTextColor={theme.colors.text_100}
                         errorMessage={['03'].includes(error?.response?.data.code || '') ? error?.response?.data.message : undefined}
                     />
                 </S.InputArea>
@@ -110,7 +112,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
                         placeholder={'Confirme a senha'}
-                        placeholderTextColor={theme.colors.darkText}
+                        placeholderTextColor={theme.colors.text_100}
                     />
                 </S.InputArea>
 

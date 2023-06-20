@@ -5,7 +5,7 @@ type Props = {
     selected: boolean
 }
 export const Container = styled.TouchableOpacity<Props>`
-    background-color: ${({theme, selected}) => selected ? theme.colors.contrast_100 : theme.colors.lightContrast};
+    background-color: ${({theme, selected}) => selected ? theme.colors.contrast_100 : theme.colors.contrast_20};
     width: ${({theme}) => theme.vw * 0.1}px;
     height: ${({theme}) => theme.vw * 0.1}px;
     margin: ${({theme}) => theme.vw * 0.02}px ${({theme}) => theme.vw * 0.02}px;
@@ -16,5 +16,5 @@ export const Container = styled.TouchableOpacity<Props>`
 
 export const Name = styled.Text<Props>`
     font-size: ${({theme}) => theme.fontSize.md}px;
-    color: ${({theme, selected}) => selected ? theme.colors.background_100 : theme.colors.text};
+    color: ${({theme, selected}) => selected ? theme.colors.text_200 : theme.colors.text_100};
 `
