@@ -99,7 +99,7 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                 onPress={handleSubmit}
             >
                 <S.SubmitLabel isEnable={email.length > 0 && password.length > 7 && email.includes('@')} >{
-                    isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.background_100} /> : 'Concluir'}</S.SubmitLabel>
+                    isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.oppositeContrast} /> : 'Concluir'}</S.SubmitLabel>
             </S.SubmitButton>
 
         </S.Container>

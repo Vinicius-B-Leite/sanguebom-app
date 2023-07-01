@@ -6,7 +6,7 @@ export const Container = styled.SafeAreaView`
     position: relative;
 `
 export const Header = styled.View`
-    background-color: ${({ theme }) => theme.type === 'dark' ? theme.colors.background_100 : theme.colors.contrast_100};
+    background-color: ${({ theme }) => theme.colors.communHeaderColor};
     width: 100%;
     padding: 5%;
     flex-direction: row;

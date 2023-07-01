@@ -21,5 +21,5 @@ interface P extends Props {
 }
 export const Name = styled.Text<P>`
     font-size: ${({ theme, fs }) => fs ? fs : theme.fontSize.md}px;
-    color: ${({ theme, selected }) => selected ? theme.colors.text_200 : theme.colors.text_100};
+    color: ${({ theme, selected }) => selected ? theme.colors.oppositeContrast : theme.colors.text_100};
 `

@@ -14,7 +14,7 @@ export const GoBack = styled.TouchableOpacity`
 `
 
 export const Title = styled.Text`
-    color: ${({ theme }) => theme.colors.contrast_100};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.oppositeContrast : theme.colors.contrast_100};
     font-weight: 700;
     font-size: ${({ theme }) => theme.fontSize.lg}px;
     text-align: center;
@@ -44,7 +44,7 @@ export const SubmitButton = styled.TouchableOpacity<Props>`
 `
 export const SubmitLabel = styled.Text<Props>`
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
-    color: ${({ theme, isEnable }) => isEnable ? theme.colors.background_100 : theme.colors.contrast_100};
+    color: ${({ theme, isEnable }) => isEnable ? theme.colors.oppositeContrast : theme.colors.contrast_100};
     font-weight: 700;
 `
 

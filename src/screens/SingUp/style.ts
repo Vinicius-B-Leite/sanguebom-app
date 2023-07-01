@@ -7,7 +7,7 @@ export const Container = styled.View`
 `;
 
 export const Title = styled.Text`
-    color: ${({ theme }) => theme.colors.contrast_100};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text_200 : theme.colors.contrast_100};
     font-size: ${({ theme }) => theme.fontSize.lg}px;
     font-weight: 700;
     text-align: center;
@@ -41,13 +41,13 @@ export const SubmitButton = styled.TouchableOpacity<Props>`
 `
 export const SubmitLabel = styled.Text`
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
-    color: ${({ theme }) => theme.colors.background_100};
+    color: ${({ theme }) => theme.colors.oppositeContrast};
     font-weight: 700;
 `
 
 
 export const DropdownItem = styled.Text`
-    ${({theme}) => css`
+    ${({ theme }) => css`
         font-size: ${theme.fontSize.xxsm}px;
         color: ${theme.colors.text_200};
         margin-bottom: ${theme.vh * 0.009}px;

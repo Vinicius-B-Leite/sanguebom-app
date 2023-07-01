@@ -18,6 +18,9 @@ export const lightMode: ThemeType = {
         text_200: '#000000',
         text_100: '#6A6A6A',
         text_50: '#A7A7A7',
+
+        communHeaderColor: '#BB1B1B',
+        oppositeContrast: '#fff'
     },
     icons: defaultTheme.icons,
     fontSize: defaultTheme.fontSize,

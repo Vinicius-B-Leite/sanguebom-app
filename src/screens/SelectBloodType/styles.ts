@@ -13,7 +13,7 @@ export const Main = styled.View`
     padding-top: 7%;
 `
 export const Title = styled.Text`
-    color: ${({ theme }) => theme.colors.contrast_100};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text_200 : theme.colors.contrast_100};
     font-weight: 700;
     font-size: ${({ theme }) => theme.fontSize.lg}px;
     text-align: center;
@@ -32,6 +32,6 @@ export const NextBtn = styled.TouchableOpacity<Props>`
 `
 export const NextLabel = styled.Text`
     font-size: ${({ theme }) => theme.fontSize.md}px;
-    color: ${({ theme }) => theme.colors.background_100};
+    color: ${({ theme }) => theme.colors.oppositeContrast};
     font-weight: 700;
 `

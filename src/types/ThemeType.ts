@@ -13,6 +13,8 @@ export type ThemeType = {
         background_200: string,
         background_100: string,
 
+        communHeaderColor: string,
+        oppositeContrast: string
     },
     icons: {
         big: number,

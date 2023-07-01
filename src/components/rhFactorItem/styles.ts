@@ -16,5 +16,5 @@ export const Container = styled.TouchableOpacity<Props>`
 
 export const Name = styled.Text<Props>`
     font-size: ${({theme}) => theme.fontSize.md}px;
-    color: ${({theme, selected}) => selected ? theme.colors.text_200 : theme.colors.text_100};
+    color: ${({theme, selected}) => selected ? theme.colors.oppositeContrast : theme.colors.text_100};
 `

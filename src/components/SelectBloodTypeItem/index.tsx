@@ -21,6 +21,5 @@ const SelectBloodTypeItem: React.FC<Props> = ({ bloodType, selected, onClick, h,
 }
 
 
-//true == no render
-//false == render
-export default memo(SelectBloodTypeItem, (prv, nxt) => prv.selected === nxt.selected );
+
+export default memo(SelectBloodTypeItem, (prv, nxt) => Object.is(prv, nxt) );

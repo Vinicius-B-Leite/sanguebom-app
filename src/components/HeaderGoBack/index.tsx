@@ -20,7 +20,7 @@ const HeaderGoBack: React.FC<Props> = ({ goBack, theme, title }) => {
                 <AntDesign
                     name="left"
                     size={icons.sm}
-                    color={theme === 'transparent' ? colors.contrast_100 : type === 'dark' ? colors.text_200 : colors.background_100} />
+                    color={theme === 'transparent' ? colors.contrast_100 : colors.oppositeContrast} />
             </TouchableOpacity>
             {
                 title && <S.Title>{title}</S.Title>

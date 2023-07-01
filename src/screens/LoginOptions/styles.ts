@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-    background-color: ${({theme}) => theme.type === 'dark' ? theme.colors.background_100 : theme.colors.contrast_100};
+    background-color: ${({theme}) => theme.colors.communHeaderColor};
     flex: 1;
     align-items: center;
     padding-top: 30%;

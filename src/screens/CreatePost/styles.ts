@@ -7,7 +7,7 @@ export const Container = styled.ScrollView`
 
 
 export const Header = styled.View`
-    background-color: ${({ theme }) => theme.type === 'dark' ? theme.colors.background_100 : theme.colors.contrast_100};
+    background-color: ${({ theme }) => theme.colors.communHeaderColor};
     padding: 5%;
     flex-direction: row;
     justify-content: space-between;

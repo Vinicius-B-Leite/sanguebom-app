@@ -18,6 +18,9 @@ export const darkMode: ThemeType = {
         text_200: '#ffffff',
         text_100: '#6A6A6A',
         text_50: '#A7A7A7',
+
+        communHeaderColor: '#1F1F1F',
+        oppositeContrast: '#fff'
     },
     icons: {
         big: width * 0.3,
