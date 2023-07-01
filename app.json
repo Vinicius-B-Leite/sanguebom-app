@@ -37,7 +37,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.viniciusbl21.sanguebom"
+      "bundleIdentifier": "com.viniciusbl21.sanguebom",
+      "config":{
+        "googleMapsApiKey": "AIzaSyCbSFJtYi05Ucktey6kodlFQ5lE2idPX1A"
+      }
 
     },
     "android": {
@@ -51,7 +54,12 @@
         "android.permission.FOREGROUND_SERVICE",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.viniciusbl21.sanguebom"
+      "package": "com.viniciusbl21.sanguebom",
+      "config":{
+        "googleMaps":{
+          "apiKey": "AIzaSyCbSFJtYi05Ucktey6kodlFQ5lE2idPX1A"
+        }
+      }
     },
     "extra": {
       "eas": {

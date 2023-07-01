@@ -19,7 +19,7 @@ export const GoBack = styled.TouchableOpacity`
     align-items: center;
 `
 export const Input = styled.TextInput`
-    background-color: ${({ theme }) => theme.colors.inputBackgroundColor};
+    background-color: ${({ theme }) => theme.colors.contrast_20};
     width: 85%;
     padding: 0% 5%;
     border-radius: ${({ theme }) => theme.borderRadius.sm}px;
@@ -29,7 +29,7 @@ export const Input = styled.TextInput`
 export const SuggestContainer = styled.TouchableOpacity`
     flex-direction: row;
     border-top-width: 1px;
-    border-top-color: ${({ theme }) => theme.colors.lightContrast};
+    border-top-color: ${({ theme }) => theme.colors.contrast_10};
     background-color: ${({ theme }) => theme.colors.contrast_100};
     padding: 2% 5%;
     align-items: center;

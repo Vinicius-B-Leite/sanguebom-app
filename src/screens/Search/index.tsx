@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState, useMemo, useRef, createRef } from 'react';
 import { FlatList, View } from 'react-native';
-import MapView, { MapMarker, Marker } from 'react-native-maps';
+import MapView, { MapMarker, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as S from './styles'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useTheme } from 'styled-components/native';
@@ -34,15 +34,16 @@ const Search: React.FC = () => {
 
   const { data } = useQuery(
     ['bloodCollectors'],
-    () => getBloodCollectors({  bloodCollectorName: searchInput }),
+    () => getBloodCollectors({ bloodCollectorName: searchInput }),
     {
       onError: (err: AxiosError<ErrorResponse>) => console.log(err.response?.data),
     }
   )
   const refs = useRef(Array.from({ length: data?.length || 999 }).map(() => createRef<MapMarker>()))
-
+  console.log(data)
   const markers = useMemo(() => {
-    return data?.map((bloodCollector) => (
+    if (!data) return
+    return data.map((bloodCollector) => (
       {
         coordinate: {
           latitude: bloodCollector.lat,
@@ -57,8 +58,11 @@ const Search: React.FC = () => {
 
   }, [data])
 
-  const suggestBloodCollectors = useMemo(() => searchInput.length > 0 && data?.filter((v) =>
-    v.username.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())), [searchInput])
+  const suggestBloodCollectors = useMemo(() => {
+    if (searchInput.length > 0 && data) {
+      return data.filter((v) => v.username.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase()))
+    }
+  }, [searchInput, data])
 
 
 
@@ -80,11 +84,11 @@ const Search: React.FC = () => {
     <S.Container>
       <S.Header>
         <S.GoBack>
-          <AntDesign name="arrowleft" size={icons.sm} color={type === 'dark' ? colors.text : colors.background_100} />
+          <AntDesign name="arrowleft" size={icons.sm} color={type === 'dark' ? colors.text_100 : colors.background_100} />
         </S.GoBack>
         <S.Input
           placeholder={'Pesquise por um ponto de coleta'}
-          placeholderTextColor={colors.background_100Second}
+          placeholderTextColor={colors.text_200}
           value={searchInput}
           onChangeText={setSeatchInput}
         />
@@ -105,6 +109,7 @@ const Search: React.FC = () => {
       }
       <MapView
         onPress={() => setCurrentBloodCollector(undefined)}
+        provider={PROVIDER_GOOGLE}
         style={{ flex: 1 }}
         region={{
           latitude: location?.lat ?? -23.1184444,
@@ -115,7 +120,7 @@ const Search: React.FC = () => {
       >
 
         {
-          markers?.map((mark, i) => (
+          markers && markers.map((mark, i) => (
             <Marker
               ref={refs.current[i]}
               key={i}
