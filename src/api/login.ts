@@ -6,7 +6,7 @@ type Props = {
     email: string,
     password: string
 }
-type Response = {
+export type AuthResponse = {
     bloodCollectors: {
         adress: string,
         imageURL: string,
@@ -28,5 +28,5 @@ type Response = {
 }
 
 export async function login({ email, password }: Props) {
-    return await api.post<Response>('auth/login', { email: email.toLocaleLowerCase(), password })
+    return await api.post<AuthResponse>('auth/login', { email: email.toLocaleLowerCase(), password })
 }

@@ -18,6 +18,7 @@ import { baseURL } from '../../api';
 import { HospitalType } from '../../types/HospitalType';
 import Alert from './components/Alert';
 import { getLocation } from '../../utlis/getLocation';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -25,6 +26,7 @@ const Search: React.FC = () => {
 
   const { colors, icons, type } = useTheme()
   const user = useSelector((state: RootState) => state.user.user)
+  const navigation = useNavigation()
 
   const [location, setLocation] = useState<{ lat: number, lng: number } | null>(null)
   const [userLocation, setUserLocation] = useState<{ lat: number, lng: number } | null>(null)
@@ -40,7 +42,6 @@ const Search: React.FC = () => {
     }
   )
   const refs = useRef(Array.from({ length: data?.length || 999 }).map(() => createRef<MapMarker>()))
-  console.log(data)
   const markers = useMemo(() => {
     if (!data) return
     return data.map((bloodCollector) => (
@@ -70,6 +71,7 @@ const Search: React.FC = () => {
     getLocation().then(res => res && setUserLocation(res))
   }, [])
 
+  console.log("🚀 ~ file: index.tsx:173 ~ currentBloodCollector:", currentBloodCollector)
 
   const handleClickSuggest = (suggestItem: HospitalType) => {
     setLocation({ lat: suggestItem.lat, lng: suggestItem.lng })
@@ -83,7 +85,7 @@ const Search: React.FC = () => {
   return (
     <S.Container>
       <S.Header>
-        <S.GoBack>
+        <S.GoBack onPress={() => navigation.goBack()}>
           <AntDesign name="arrowleft" size={icons.sm} color={type === 'dark' ? colors.text_100 : colors.background_100} />
         </S.GoBack>
         <S.Input
@@ -131,7 +133,7 @@ const Search: React.FC = () => {
               title={mark.title}
               pinColor={mark.pinColor}
               {...mark.description && { description: mark.description }}
-              onPress={() => mark?.description && setCurrentBloodCollector(mark)}
+              onPress={() => setCurrentBloodCollector(mark)}
             />
           ))
         }
@@ -152,12 +154,12 @@ const Search: React.FC = () => {
       </MapView>
 
       {
-        user?.type === 'blood collectors' && !currentBloodCollector &&
+        user?.type === 'bloodCollectors' && !currentBloodCollector &&
         <AlertButton onClick={() => setModalVisible(true)} />
       }
 
       {
-        user?.type === 'blood collectors' && modalVisible &&
+        user?.type === 'bloodCollectors' && modalVisible &&
         <ModalCreateAlert
           visible={modalVisible}
           onRequestClose={() => setModalVisible(false)}
@@ -167,7 +169,10 @@ const Search: React.FC = () => {
       }
 
 
-      <Alert visible={!!currentBloodCollector} bloodTypes={currentBloodCollector?.bloodTypes || []} username={currentBloodCollector?.title || ''} />
+      <Alert
+        visible={!!currentBloodCollector}
+        bloodTypes={currentBloodCollector?.bloodTypes || []}
+        username={currentBloodCollector?.title || ''} />
 
     </S.Container >
   )

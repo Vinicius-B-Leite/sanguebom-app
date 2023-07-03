@@ -19,6 +19,7 @@ import { updateStorageUser } from '../../storage/userStorage';
 import DropDown from '../../components/DropDown';
 import OneSignal from 'react-native-onesignal';
 import { updateBloodTypeTag } from '../../onesignal/updateBloodTypeTag';
+import { GenderType } from 'src/types/GenderType';
 
 
 type Nav = StackScreenProps<StackRootParamsList, 'SingUp'>
@@ -31,15 +32,6 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [gender, setGender] = useState('')
     const dispatch = useDispatch()
-
-    const onSuccess = (res: AxiosResponse<UserType, any>) => {
-        updateStorageUser(res.data)
-        api.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
-        if (res.data.bloodType){
-            updateBloodTypeTag(res.data.bloodType)
-        }
-        dispatch(setUser(res.data as UserType))
-    }
 
     const onError = async (error: AxiosError<ErrorResponse>) => {
         if (error.response && !(['02', '03', '13', '20'].includes(error.response?.data.code))) {
@@ -58,9 +50,33 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
             username,
             gender
         }),
-        onSuccess,
+        onSuccess: ({ data }) => {
+            api.defaults.headers.common['Authorization'] = 'Bearer ' + data.token
+            const user: UserType = {
+                bloodType: data.donors?.bloodType || undefined,
+                email: data.email,
+                gender: data.donors?.gender as GenderType || undefined,
+                password: data.password,
+                type: data.type,
+                token: data.token,
+                uid: data.donors?.uid || data.bloodCollectors?.uid || '',
+                username: data.username,
+                adress: data.bloodCollectors?.adress,
+                imageURL: data.bloodCollectors?.imageURL
+            }
+            dispatch(setUser(user))
+            updateStorageUser(user)
+        },
         onError
     })
+
+
+    const isEnableToSubmit = username.length > 0 &&
+        email.length > 0 &&
+        password.length > 0 &&
+        confirmPassword.length > 0 &&
+        confirmPassword == password &&
+        gender.length > 0
 
 
     return (
@@ -84,7 +100,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                 <S.InputArea>
                     <Input
                         leftIcon='mail'
-
+                        autoCapitalize='none'
                         value={email}
                         onChangeText={setEmail}
                         placeholder={'Email'}
@@ -120,18 +136,14 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                     data={['female', 'male']}
                     renderItem={({ item }) => <S.DropdownItem>{item === 'female' ? 'Feminino' : 'Masculino'}</S.DropdownItem>}
                     placeholder='Selecione seu sexo biológico'
-                    value={gender === 'female' ? 'Feminino' : 'Masculino'}
+                    value={gender.length > 0 ? gender === 'male' ? 'Masculino' : 'Feminino' : ''}
                     onSelect={(item) => setGender(item)}
                 />
 
                 <S.SubmitButton
-                    isEnable={
-                        username.length > 0 &&
-                        email.length > 0 &&
-                        password.length > 0 &&
-                        confirmPassword.length > 0 &&
-                        confirmPassword == password}
-                    onPress={() => mutate()}
+                    isEnable={isEnableToSubmit}
+
+                    onPress={() => isEnableToSubmit && mutate()}
                 >
                     <S.SubmitLabel>{isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.oppositeContrast} /> : 'Concluir'}</S.SubmitLabel>
                 </S.SubmitButton>

@@ -1,5 +1,6 @@
 import { UserType } from '../types/UserType'
 import { api } from './index'
+import { AuthResponse } from './login'
 
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
 }
 
 
+
 export async function createAccount({ bloodType, email, password, username, gender }: Props) {
-    return await api.post<UserType>('auth/create', { bloodType, email: email.toLocaleLowerCase(), password, username, gender })
+    return await api.post<AuthResponse>('auth/create', { bloodType, email: email.toLocaleLowerCase(), password, username, gender })
 }

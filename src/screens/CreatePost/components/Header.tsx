@@ -60,7 +60,12 @@ const Header: React.FC<Props> = ({ adress, banner, description, linkRedirect, ho
                 <S.Title>{'<   '} Criar post</S.Title>
             </TouchableOpacity>
             <S.DoneBtn onPress={handleSubmit}>
-                <S.DoneTxt>{isLoading ? <ActivityIndicator size={theme.icons.vvsm} color='transparent' /> : 'concluir'}</S.DoneTxt>
+                <S.DoneTxt>{isLoading ?
+                    <ActivityIndicator
+                        size={theme.icons.vvsm}
+                        color={theme.type === 'dark' ? theme.colors.oppositeContrast : theme.colors.contrast_100} /> :
+                    'concluir'}
+                </S.DoneTxt>
             </S.DoneBtn>
         </S.Header>
     )

@@ -23,12 +23,15 @@ type Props = {
     onRequestClose: () => void
 }
 const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds, visible, onRequestClose }) => {
+    
     const theme = useTheme()
+    const user = useSelector((state: RootState) => state.user.user)
+    const client = useQueryClient()
+
     const [switchEnable, setSwitchEnable] = useState(isAlertOn)
     const [bloodTypesSelecteds, setBloodTypesSelecteds] = useState<string[]>(bTypesSelecteds || [])
     const [message, setMessage] = useState('')
-    const user = useSelector((state: RootState) => state.user.user)
-    const client = useQueryClient()
+    
     const selectBloogType = (b: string) => {
         if (bloodTypesSelecteds.includes(b)) {
             setBloodTypesSelecteds(old => {
@@ -48,7 +51,8 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
         }),
         onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data),
         onSuccess: async () => {
-            await client.invalidateQueries()
+            await client.invalidateQueries(['bloodCollectors'])
+            onRequestClose()
         }
     })
 
@@ -65,7 +69,7 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
                 <S.Row>
                     <S.SectionTitle>Ativado</S.SectionTitle>
                     <Switch
-                        trackColor={{ false: theme.colors.background_100Second, true: theme.colors.contrast_100 }}
+                        trackColor={{ false: theme.colors.background_100, true: theme.colors.contrast_100 }}
                         thumbColor={'#f4f3f4'}
                         onValueChange={() => setSwitchEnable(old => !old)}
                         value={switchEnable}
@@ -94,7 +98,7 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
                 <S.InputArea>
                     <Input
                         placeholder={'Mensagem'}
-                        placeholderTextColor={theme.colors.darkText}
+                        placeholderTextColor={theme.colors.text_100}
                         value={message}
                         onChangeText={(v) => setMessage(v)}
                     />

@@ -1,6 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useLayoutEffect, useState } from 'react';
-import { View } from 'react-native';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTheme } from './feature/theme/themeSlicer';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -9,10 +7,8 @@ import { lightMode } from './theme/lightMode';
 import { ThemeProvider } from 'styled-components';
 import Routes from './routes';
 import { RootState } from './feature/store';
-import Loading from './screens/Loading';
 import { getStorageTheme } from './storage/themeStorage';
 
-// import { Container } from './styles';
 
 const Index: React.FC = () => {
     const dispatch = useDispatch()
@@ -21,15 +17,15 @@ const Index: React.FC = () => {
     const getTheme =  () => {
         const themeStorage =  getStorageTheme()
 
-        if (themeStorage === 'dark'){
-            dispatch(changeTheme(true))
+        if (!themeStorage || themeStorage === 'light' ){
+            dispatch(changeTheme(false))
             return
         }
 
-        dispatch(changeTheme(false))
+        dispatch(changeTheme(true))
     }
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         getTheme()
     }, [])
 

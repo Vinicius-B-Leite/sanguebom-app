@@ -21,7 +21,7 @@ import { GenderType } from 'src/types/GenderType';
 
 
 type Nav = StackScreenProps<StackRootParamsList, 'Login'>
-const Login: React.FC<Nav> = ({ navigation, route }) => {
+const Login: React.FC<Nav> = ({ navigation }) => {
     const theme = useTheme()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -30,7 +30,7 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
         () => login({ email, password }),
         {
             onError: (error: AxiosError<ErrorResponse>) => {
-                if (error.response && !(['05', '13', '03', '06'].includes(error.response.data.code))) {
+                if (error.response && !(['05', '13', '03', '06', '04'].includes(error.response.data.code))) {
                     Alert.alert(
                         'Erro',
                         'Ocorreu um erro inesperado. Volte mais tarde'
@@ -78,7 +78,7 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                     value={email}
                     autoCapitalize='none'
                     onChangeText={setEmail}
-                    errorMessage={['05', '13'].includes(error?.response?.data.code || '') ? error?.response?.data.message : ''}
+                    errorMessage={['05', '04', '13'].includes(error?.response?.data.code || '') ? error?.response?.data.message : ''}
                 />
             </S.InputArea>
 
@@ -90,7 +90,7 @@ const Login: React.FC<Nav> = ({ navigation, route }) => {
                     placeholderTextColor={theme.colors.text_100}
                     value={password}
                     onChangeText={setPassword}
-                    errorMessage={['03', '06'].includes(error?.response?.data?.code || '') ? error?.response?.data.message : undefined}
+                    errorMessage={['03', '04', '06'].includes(error?.response?.data?.code || '') ? error?.response?.data.message : undefined}
                 />
             </S.InputArea>
 
