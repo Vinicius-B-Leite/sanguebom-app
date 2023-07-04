@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
-export const baseURL = 'http://192.168.4.107:3333/'
+export const baseURL = 'http://192.168.4.106:3333/'
 // export const baseURL = 'https://sangue-bom.onrender.com/'
 
 type ApiAddIntecptorType = AxiosInstance & {

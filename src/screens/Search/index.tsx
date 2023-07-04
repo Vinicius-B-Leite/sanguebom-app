@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useMemo, useRef, createRef } from 'react';
+import React, { useLayoutEffect, useState, useMemo, useRef, createRef, useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import MapView, { MapMarker, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as S from './styles'
@@ -19,14 +19,16 @@ import { HospitalType } from '../../types/HospitalType';
 import Alert from './components/Alert';
 import { getLocation } from '../../utlis/getLocation';
 import { useNavigation } from '@react-navigation/native';
+import Header from './components/Header';
+import SearchList from './components/SearchList';
+import MarkersList from './components/MarkersLists';
+import UserMarker from './components/UserMarker';
 
 
 
 const Search: React.FC = () => {
 
-  const { colors, icons, type } = useTheme()
   const user = useSelector((state: RootState) => state.user.user)
-  const navigation = useNavigation()
 
   const [location, setLocation] = useState<{ lat: number, lng: number } | null>(null)
   const [userLocation, setUserLocation] = useState<{ lat: number, lng: number } | null>(null)
@@ -41,25 +43,11 @@ const Search: React.FC = () => {
       onError: (err: AxiosError<ErrorResponse>) => console.log(err.response?.data),
     }
   )
+
   const refs = useRef(Array.from({ length: data?.length || 999 }).map(() => createRef<MapMarker>()))
-  const markers = useMemo(() => {
-    if (!data) return
-    return data.map((bloodCollector) => (
-      {
-        coordinate: {
-          latitude: bloodCollector.lat,
-          longitude: bloodCollector.lng
-        },
-        title: bloodCollector.username,
-        description: (bloodCollector?.alert?.status) && 'Este ponto está coletando sangue',
-        pinColor: 'red',
-        bloodTypes: bloodCollector.alert?.bloodTypes
-      }
-    )) as MarkerType[] | undefined
 
-  }, [data])
 
-  const suggestBloodCollectors = useMemo(() => {
+  const searchedBloodCollectors = useMemo(() => {
     if (searchInput.length > 0 && data) {
       return data.filter((v) => v.username.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase()))
     }
@@ -67,13 +55,12 @@ const Search: React.FC = () => {
 
 
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getLocation().then(res => res && setUserLocation(res))
   }, [])
 
-  console.log("🚀 ~ file: index.tsx:173 ~ currentBloodCollector:", currentBloodCollector)
 
-  const handleClickSuggest = (suggestItem: HospitalType) => {
+  const handleClickSearchedBloodCollector = (suggestItem: HospitalType) => {
     setLocation({ lat: suggestItem.lat, lng: suggestItem.lng })
     setSeatchInput(suggestItem.username)
 
@@ -82,33 +69,18 @@ const Search: React.FC = () => {
     refs?.current[data.findIndex(v => v.username === suggestItem.username)]?.current?.showCallout()
   }
 
+
   return (
     <S.Container>
-      <S.Header>
-        <S.GoBack onPress={() => navigation.goBack()}>
-          <AntDesign name="arrowleft" size={icons.sm} color={type === 'dark' ? colors.text_100 : colors.background_100} />
-        </S.GoBack>
-        <S.Input
-          placeholder={'Pesquise por um ponto de coleta'}
-          placeholderTextColor={colors.text_200}
-          value={searchInput}
-          onChangeText={setSeatchInput}
-        />
-      </S.Header>
-      {
-        suggestBloodCollectors && suggestBloodCollectors?.length > 0 &&
-        <View>
-          <FlatList
-            data={suggestBloodCollectors}
-            renderItem={({ item, index }) => index < 3 ?
-              <S.SuggestContainer onPress={() => handleClickSuggest(item)}>
-                <S.SuggestItemAvatar source={{ uri: `${baseURL}${item.imageURL}` }} />
-                <S.SuggestItemName>{item.username}</S.SuggestItemName>
-              </S.SuggestContainer> : <></>
-            }
-          />
-        </View>
-      }
+
+      <Header
+        searchInput={searchInput}
+        setSeatchInput={setSeatchInput} />
+
+      <SearchList
+        searchedBloodCollectors={searchedBloodCollectors}
+        handleClickSearchedBloodCollector={handleClickSearchedBloodCollector} />
+
       <MapView
         onPress={() => setCurrentBloodCollector(undefined)}
         provider={PROVIDER_GOOGLE}
@@ -121,53 +93,25 @@ const Search: React.FC = () => {
         }}
       >
 
-        {
-          markers && markers.map((mark, i) => (
-            <Marker
-              ref={refs.current[i]}
-              key={i}
-              coordinate={{
-                latitude: mark.coordinate.latitude,
-                longitude: mark.coordinate.longitude,
-              }}
-              title={mark.title}
-              pinColor={mark.pinColor}
-              {...mark.description && { description: mark.description }}
-              onPress={() => setCurrentBloodCollector(mark)}
-            />
-          ))
-        }
+        <MarkersList
+          bloodCollectors={data}
+          onClick={(m) => setCurrentBloodCollector(m)}
+          refs={refs}
+        />
 
-        {
-          userLocation?.lat &&
-          <Marker
-            coordinate={{
-              latitude: userLocation?.lat,
-              longitude: userLocation?.lng,
-            }}
-            title='Você'
-            description='Você está localizado aqui'
-            pinColor='green'
-          />
-        }
+        <UserMarker userLocation={userLocation} />
 
       </MapView>
 
-      {
-        user?.type === 'bloodCollectors' && !currentBloodCollector &&
-        <AlertButton onClick={() => setModalVisible(true)} />
-      }
+      <AlertButton onClick={() => setModalVisible(true)} />
 
-      {
-        user?.type === 'bloodCollectors' && modalVisible &&
-        <ModalCreateAlert
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
-          bTypesSelecteds={data && user && data[data?.findIndex(v => v.uid === user.uid)].alert?.bloodTypes}
-          isAlertOn={!!(data && data[data?.findIndex(v => v.username === user?.username)].alert?.status)}
-        />
-      }
 
+      <ModalCreateAlert
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+        bTypesSelecteds={data && user && data[data?.findIndex(v => v.uid === user.uid)].alert?.bloodTypes}
+        isAlertOn={!!(data && data[data?.findIndex(v => v.username === user?.username)].alert?.status)}
+      />
 
       <Alert
         visible={!!currentBloodCollector}

@@ -23,7 +23,6 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
     const notificationsLength = useSelector((state: RootState) => state.notification.length)
     const user = useSelector((rootState: RootState) => rootState.user.user)
     const dispatch = useDispatch()
-    console.log(user)
     const { data, refetch } = useQuery({
         queryKey: ['notificationLength'],
         enabled: false,

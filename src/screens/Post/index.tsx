@@ -21,7 +21,6 @@ const Post: React.FC<NavProp> = ({ navigation, route }) => {
         queryFn: () => getOnePost({ postID: route.params.postID })
     })
 
-    console.log(data);
     
 
     return (

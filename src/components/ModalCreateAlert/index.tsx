@@ -58,7 +58,7 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
 
     return (
         <ModalBase modalProps={{
-            visible,
+            visible: visible && user?.type === 'bloodCollectors',
             onRequestClose,
             animationType: 'fade',
             transparent: true

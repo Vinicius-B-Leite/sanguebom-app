@@ -47,10 +47,10 @@ CRONOGRAMA DE TESTES
 
     Mapa
         - Verificar se aparece os pontos de coleta OK
-        - Verificar se aparece o alerta
+        - Verificar se aparece o alerta OK
         - Verificar se o campo de pesquisa retorna os pontos OK
         - Verificar se ao clicar no ponto do campo de pesquisa ele foca no mapa OK
-        - Verificar a criação de alertas
+        - Verificar a criação de alertas OK
         - Verificar a atualização dos alertas
         - Verificar a notificação dos alertas
     

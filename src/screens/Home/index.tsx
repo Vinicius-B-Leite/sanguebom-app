@@ -33,7 +33,6 @@ const Home: React.FC<Nav> = ({ navigation }) => {
     }
   })
 
-
   return (
     <S.Container>
       <Header onClickBell={() => navigation.navigate('Notification')} onClickBloodDonate={() => navigation.navigate('MyDonates')} />
