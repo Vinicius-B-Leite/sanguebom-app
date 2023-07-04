@@ -22,10 +22,6 @@ CRONOGRAMA DE TESTES
 
     Perfil
         - Fidelidade ao trocar de tema
-        
-    Perfil PONTO DE COLETA
-        - Atualizar endereço
-        - Atualizar telefone
 
     Perfil DOADOR
         - Atualizar tipo sanguíneo

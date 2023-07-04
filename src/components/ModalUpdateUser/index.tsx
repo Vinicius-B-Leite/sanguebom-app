@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-native';
 import * as S from './styles'
 import Input from '../Input';
@@ -20,6 +20,20 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
     const user = useSelector((state: RootState) => state.user.user)
     const [value, setValue] = useState('')
     const theme = useTheme()
+
+    useEffect(() => {
+        if (!visible) {
+            setValue('')
+            setConfirmPassword('')
+        }
+    }, [visible])
+
+
+    const handleSubmit = () => {
+        if (confirmPassword === user?.password && value.length > 0) {
+            submit(value)
+        }
+    }
 
     return (
         <ModalBase modalProps={{ transparent: true, visible, animationType: 'slide', onRequestClose: closeModal }}>
@@ -49,7 +63,7 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
                 <S.InputArea>
                     <ComunButton
                         bg={confirmPassword === user?.password ? 'darkContrast' : 'white'}
-                        onClick={() => confirmPassword === user?.password && submit(value)}
+                        onClick={handleSubmit}
                     >Salvar</ComunButton>
                 </S.InputArea>
             </S.Main>
