@@ -16,14 +16,14 @@ import { UpdateUserCredencialsProps, updateUserCredencials } from '../../api/upd
 import { ImagePickerAsset } from 'expo-image-picker';
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '../../types/ErrorResponse';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { baseURL } from '../../api';
+import { api, baseURL } from '../../api';
 import ModalUpdateUser from '../../components/ModalUpdateUser';
 import { Fontisto } from '@expo/vector-icons';
 import { ProfileScreenProps } from '../../routes/models/index'
 import { changeTheme } from '../../feature/theme/themeSlicer';
 import { updateStorageUser } from '../../storage/userStorage';
 import { changeStorageTheme } from '../../storage/themeStorage';
+import { GenderType } from '../../types/GenderType';
 
 type Nav = ProfileScreenProps
 const Profile: React.FC<Nav> = ({ navigation }) => {
@@ -44,11 +44,20 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
     () => submitConfig(),
     {
       onSuccess: async (res) => {
-        if (!user) return
-
-        const token = user.token
-        dispatch(setUser({ ...res, type: user.type, token }))
-        await updateStorageUser({ ...res, type: user.type, token })
+        const user = {
+          bloodType: res.donors?.bloodType || undefined,
+          email: res.email,
+          gender: res.donors?.gender as GenderType || undefined,
+          password: res.password,
+          type: res.type,
+          token: res.token,
+          uid: res.donors?.uid || res.bloodCollectors?.uid || '',
+          username: res.username,
+          adress: res.bloodCollectors?.adress,
+          imageURL: res.bloodCollectors?.imageURL
+        }
+        dispatch(setUser(user))
+        updateStorageUser(user)
       },
 
       onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data)
@@ -57,6 +66,7 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
 
 
   const handleImagePicker = () => {
+    if (user?.type === 'donors') return
     pickImage().then(file => {
       if (file?.assets[0].uri) {
         setAvatar(file.assets[0])
@@ -86,9 +96,9 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
     setIsModalVisible(true)
   }
 
-  const handleChangeTheme = async () => {
+  const handleChangeTheme = () => {
     dispatch(changeTheme(!themeIsDark))
-    await changeStorageTheme(themeIsDark ? 'light' : 'dark')
+    changeStorageTheme(themeIsDark ? 'light' : 'dark')
   }
   return (
     <S.Container>
@@ -110,19 +120,9 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
         <S.ItemLabel>Nome de usuário</S.ItemLabel>
       </S.ItemContainer>
 
-      <S.ItemContainer onPress={() => openModal((txt) => setEmail(txt), 'email')}>
-        <S.ItemBackgroundIcon>
-          <MaterialIcons name="email" size={icons.vsm} color={colors.contrast_100} />
-
-        </S.ItemBackgroundIcon>
-
-        <S.ItemLabel>Endereço de email</S.ItemLabel>
-      </S.ItemContainer>
-
       <S.ItemContainer onPress={() => openModal((txt) => setPassword(txt), 'senha')}>
         <S.ItemBackgroundIcon>
           <MaterialIcons name="lock" size={icons.vsm} color={colors.contrast_100} />
-
         </S.ItemBackgroundIcon>
 
         <S.ItemLabel>Senha</S.ItemLabel>
@@ -151,21 +151,23 @@ const Profile: React.FC<Nav> = ({ navigation }) => {
 
 
       {
-        user?.type === 'blood collectors' &&
-        <S.ItemContainer onPress={() => { }}>
-          <S.ItemBackgroundIcon>
-            <Feather name="home" size={icons.vsm} color={colors.contrast_100} />
-          </S.ItemBackgroundIcon>
+        user?.type === 'bloodCollectors' &&
+        <>
+          <S.ItemContainer onPress={() => { }}>
+            <S.ItemBackgroundIcon>
+              <Feather name="home" size={icons.vsm} color={colors.contrast_100} />
+            </S.ItemBackgroundIcon>
 
-          <S.ItemLabel>Endereço</S.ItemLabel>
-        </S.ItemContainer> &&
-        <S.ItemContainer onPress={() => { }}>
-          <S.ItemBackgroundIcon>
-            <Feather name="phone-call" size={icons.vsm} color={colors.contrast_100} />
-          </S.ItemBackgroundIcon>
+            <S.ItemLabel>Endereço</S.ItemLabel>
+          </S.ItemContainer>
+          <S.ItemContainer onPress={() => { }}>
+            <S.ItemBackgroundIcon>
+              <Feather name="phone-call" size={icons.vsm} color={colors.contrast_100} />
+            </S.ItemBackgroundIcon>
 
-          <S.ItemLabel>Número de telefone</S.ItemLabel>
-        </S.ItemContainer>
+            <S.ItemLabel>Número de telefone</S.ItemLabel>
+          </S.ItemContainer>
+        </>
       }
 
       <S.ItemContainer onPress={() => dispatch(logoutUser())}>

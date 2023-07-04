@@ -25,21 +25,22 @@ const MyDonates: React.FC<Nav> = ({ navigation }) => {
 
     const { data } = useQuery(
         ['donates'],
-        () => getMyDonates({  uid: user?.uid ?? '' }),
+        () => getMyDonates({ uid: user?.uid ?? '' }),
         {
             onError: (err: AxiosError) => {
                 console.log(err.response?.data)
-            }
+            },
         }
-    )
+        )
+        console.log("🚀 ~ file: index.tsx:27 ~ data:", data)
 
 
     return (
         <S.Container>
             <HeaderGoBack title='Minhas doações' goBack={() => navigation.goBack()} theme={type === 'dark' ? 'transparent' : 'contrast'} />
             {
-                data  && data.waitDaysToDonate > 0 &&
-                <BlockDonate daysWaitToDonate={data.waitDaysToDonate} />
+                data && (data.waitDaysToDonate >= 0) &&
+                <BlockDonate daysWaitToDonate={data.waitDaysToDonate === 0 ? 60 : data.waitDaysToDonate} />
             }
             <S.Main>
                 <DonatesList
@@ -47,7 +48,7 @@ const MyDonates: React.FC<Nav> = ({ navigation }) => {
                 />
 
                 {
-                    (data && data.waitDaysToDonate <= 0) &&
+                    data && (data.waitDaysToDonate < 0) &&
 
                     <S.OpenModalBtn onPress={() => setIsModalVisible(true)}>
                         <S.OpenModalTxt>Cadastrar doação</S.OpenModalTxt>

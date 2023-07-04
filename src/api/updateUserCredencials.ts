@@ -45,7 +45,7 @@ export async function updateUserCredencials({ adress, avatar, bloodType, email, 
 
 
 
-    return (await api.put<UserType>(
+    return (await api.put(
         'auth/update',
         form,
         {

@@ -3,7 +3,7 @@ import { HospitalType } from "../types/HospitalType";
 
 
 type Props = {
-    bloodCollectorName?: string,
+    bloodCollectorName?: string | null,
 }
 export async function getBloodCollectors({ bloodCollectorName }: Props) {
     let url = 'bloodcollectors/'

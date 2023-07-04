@@ -10,10 +10,11 @@ const DonateItem: React.FC<Props> = ({ donate }) => {
     const day = String(new Date(donate.date).getDate()).padStart(2, '0');
     const month = String(new Date(donate.date).getMonth() + 1).padStart(2, '0');
     const year = new Date(donate.date).getFullYear();
+    console.log('BLODDO ' + donate.bloodCollectors.adress)
 
     return (
         <S.DonateItemContainer>
-            <S.DonateItemBloodCollectorName>{donate.bloodCollectors.username}</S.DonateItemBloodCollectorName>
+            <S.DonateItemBloodCollectorName>{donate.bloodCollectors.users.username}</S.DonateItemBloodCollectorName>
             <S.DonateItemDate>{`${day}/${month}/${year}`}</S.DonateItemDate>
         </S.DonateItemContainer>
     )

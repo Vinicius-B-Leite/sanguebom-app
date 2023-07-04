@@ -1,27 +1,20 @@
-import React, { useLayoutEffect, useState, useMemo, useRef, createRef, useEffect } from 'react';
-import { FlatList, View } from 'react-native';
+import React, { useState, useMemo, useRef, createRef, useEffect } from 'react';
 import MapView, { MapMarker, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as S from './styles'
-import AntDesign from '@expo/vector-icons/AntDesign';
-import { useTheme } from 'styled-components/native';
 import { useQuery } from '@tanstack/react-query';
 import { getBloodCollectors } from '../../api/getBloodCollectors';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '../../types/ErrorResponse';
-import * as Location from 'expo-location';
 import AlertButton from '../../components/AlertButton';
 import ModalCreateAlert from '../../components/ModalCreateAlert';
 import { MarkerType } from '../../types/MarkerType';
-import { baseURL } from '../../api';
 import { HospitalType } from '../../types/HospitalType';
 import Alert from './components/Alert';
 import { getLocation } from '../../utlis/getLocation';
-import { useNavigation } from '@react-navigation/native';
 import Header from './components/Header';
 import SearchList from './components/SearchList';
-import MarkersList from './components/MarkersLists';
 import UserMarker from './components/UserMarker';
 
 
@@ -45,9 +38,9 @@ const Search: React.FC = () => {
   )
 
   const refs = useRef(Array.from({ length: data?.length || 999 }).map(() => createRef<MapMarker>()))
+  console.log(data)
 
-
-  const searchedBloodCollectors = useMemo(() => {
+  let searchedBloodCollectors = useMemo(() => {
     if (searchInput.length > 0 && data) {
       return data.filter((v) => v.username.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase()))
     }
@@ -62,14 +55,40 @@ const Search: React.FC = () => {
 
   const handleClickSearchedBloodCollector = (suggestItem: HospitalType) => {
     setLocation({ lat: suggestItem.lat, lng: suggestItem.lng })
-    setSeatchInput(suggestItem.username)
+    setSeatchInput('')
+
 
     if (!data) return
 
     refs?.current[data.findIndex(v => v.username === suggestItem.username)]?.current?.showCallout()
   }
 
+  const markers = useMemo(() => {
+    if (!data) return
+    return data.map((bloodCollector) => (
+      {
+        coordinate: {
+          latitude: bloodCollector.lat,
+          longitude: bloodCollector.lng
+        },
+        title: bloodCollector.username,
+        description: (bloodCollector?.alert?.status) && 'Este ponto está coletando sangue',
+        pinColor: 'red',
+        bloodTypes: bloodCollector.alert?.bloodTypes,
+        isInAlert: bloodCollector.alert?.status
+      }
+    )) as MarkerType[] | undefined
 
+  }, [data])
+
+  if (!markers) return null
+
+  const handleSelectMarker = (mark: MarkerType) => {
+
+    if (mark.isInAlert) {
+      setCurrentBloodCollector(mark)
+    }
+  }
   return (
     <S.Container>
 
@@ -92,18 +111,33 @@ const Search: React.FC = () => {
           longitudeDelta: 0.1
         }}
       >
+        {
 
-        <MarkersList
-          bloodCollectors={data}
-          onClick={(m) => setCurrentBloodCollector(m)}
-          refs={refs}
-        />
+          markers.map((mark, i) => (
+            <Marker
+              ref={refs.current[i]}
+              key={i}
+              coordinate={{
+                latitude: mark.coordinate.latitude,
+                longitude: mark.coordinate.longitude,
+              }}
+              title={mark.title}
+              pinColor={mark.pinColor}
+              {...mark.description && { description: mark.description }}
+              onPress={() => handleSelectMarker(mark)}
+            />
+          ))
+        }
+
 
         <UserMarker userLocation={userLocation} />
 
       </MapView>
 
-      <AlertButton onClick={() => setModalVisible(true)} />
+      {
+        !currentBloodCollector &&
+        <AlertButton onClick={() => setModalVisible(true)} />
+      }
 
 
       <ModalCreateAlert

@@ -16,6 +16,7 @@ const DonatesList: React.FC<Props> = ({ donates }) => {
                 showsVerticalScrollIndicator={false}
                 data={donates?.donates}
                 renderItem={({ item }) => <DonateItem donate={item} />}
+                ListEmptyComponent={() => <S.BlockDonateText>Nenhuma doação foi realizada</S.BlockDonateText>}
             />
         </>
 

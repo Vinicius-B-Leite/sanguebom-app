@@ -6,5 +6,6 @@ export type MarkerType = {
     title: string,
     description: string | false | undefined,
     pinColor: string,
-    bloodTypes: string[] | undefined
+    bloodTypes: string[] | undefined,
+    isInAlert: boolean
 }

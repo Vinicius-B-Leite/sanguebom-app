@@ -23,17 +23,13 @@ type Props = {
 }
 const ModalRegisterDonate: React.FC<Props> = ({ closeModal, visible }) => {
 
-    const user = useSelector((state: RootState) => state.user.user)
     const [bloodCollectorSelected, setBloodCollectorSelected] = useState<HospitalType | undefined>(undefined)
     const [dateSelected, setDateSelected] = useState(new Date())
 
     const { data } = useQuery(
         ['bloodCollectors'],
-        () => getBloodCollectors({ token: user?.token ?? '' })
+        () => getBloodCollectors({ bloodCollectorName: null })
     )
-
-    
-
 
     return (
         <ModalBase modalProps={{ visible, transparent: true, animationType: 'fade', onRequestClose: closeModal }}>
@@ -57,7 +53,10 @@ const ModalRegisterDonate: React.FC<Props> = ({ closeModal, visible }) => {
                     <DatePicker dateSelected={dateSelected} selectDate={(date) => setDateSelected(date)} />
                 </S.Section>
 
-                <SubmitButton bloodCollectorID={bloodCollectorSelected?.uid} date={dateSelected} />
+                <SubmitButton
+                    closeModal={closeModal}
+                    bloodCollectorID={bloodCollectorSelected?.uid}
+                    date={dateSelected} />
             </S.Container>
         </ModalBase>
     )

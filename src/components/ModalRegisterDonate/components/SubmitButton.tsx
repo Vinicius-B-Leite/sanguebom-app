@@ -11,9 +11,10 @@ import { RootState } from '../../../feature/store';
 
 type Props = {
     bloodCollectorID: string | undefined,
-    date: Date
+    date: Date,
+    closeModal: () => void
 }
-const SubmitButton: React.FC<Props> = ({ bloodCollectorID, date }) => {
+const SubmitButton: React.FC<Props> = ({ bloodCollectorID, date, closeModal }) => {
 
     const user = useSelector((state: RootState) => state.user.user)
     const queryClient = useQueryClient()
@@ -21,10 +22,12 @@ const SubmitButton: React.FC<Props> = ({ bloodCollectorID, date }) => {
         mutationFn: ({ bcID }: { bcID: string }) => createDonate({
             bloodCollectorID: bcID,
             date,
-            token: user?.token ?? '',
             userID: user?.uid ?? ''
         }),
-        onSuccess: () => queryClient.invalidateQueries(['donates'])
+        onSuccess: async () => {
+            closeModal()
+            await queryClient.invalidateQueries(['donates'])
+        }
     })
 
     const handleSubmit = () => {

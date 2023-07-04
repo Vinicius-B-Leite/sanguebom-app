@@ -20,9 +20,12 @@ type Props = {
 const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
 
     const { colors, icons, type } = useTheme()
+    const dispatch = useDispatch()
+    
     const notificationsLength = useSelector((state: RootState) => state.notification.length)
     const user = useSelector((rootState: RootState) => rootState.user.user)
-    const dispatch = useDispatch()
+
+
     const { data, refetch } = useQuery({
         queryKey: ['notificationLength'],
         enabled: false,

@@ -6,7 +6,7 @@ export type Donate = {
     date: Date,
     userID: string,
     bloodCollectoID: string,
-    bloodCollectors: HospitalType,
+    bloodCollectors: HospitalType & { users: { username: string } },
     users: UserType
 }
 
