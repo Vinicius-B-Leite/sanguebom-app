@@ -11,21 +11,22 @@ type Props = TextInputProps & {
     h?: number
 }
 
-const Input: React.FC<Props> = ({ leftIcon, errorMessage, h,...rest }) => {
+const Input: React.FC<Props> = ({ leftIcon, errorMessage, h, ...rest }) => {
     const [isFocused, setIsFocused] = useState(false)
     const theme = useTheme()
     const [secureTextEntry, setsecureTextEntry] = useState(true)
-
+    
     return (
         <>
-            <S.Container h={h} isFocused={isFocused} hasLeftIcon={!!leftIcon} >
+            <S.Container testID='containerView' h={h} isFocused={isFocused} hasLeftIcon={!!leftIcon} >
                 {
                     leftIcon &&
-                    <TouchableOpacity  onPress={() => setsecureTextEntry(!secureTextEntry)}>
+                    <TouchableOpacity onPress={() => setsecureTextEntry(!secureTextEntry)}>
                         <AntDesign
+                            testID='leftIcon'
                             name={secureTextEntry ? leftIcon : 'unlock'}
                             size={theme.icons.vsm}
-                            color={isFocused ? theme.colors.contrast_100 : rest.value ?  theme.colors.text_200 : theme.colors.text_100}
+                            color={isFocused ? theme.colors.contrast_100 : rest.value ? theme.colors.text_200 : theme.colors.text_100}
                         />
                     </TouchableOpacity>
                 }
