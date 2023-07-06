@@ -12,12 +12,13 @@ type Props = {
 }
 
 const HeaderGoBack: React.FC<Props> = ({ goBack, theme, title }) => {
-    const { colors, icons, type } = useTheme()
+    const { colors, icons } = useTheme()
 
     return (
-        <S.Header themeBg={theme}>
+        <S.Header themeBg={theme} testID='header-view'>
             <TouchableOpacity onPress={goBack}>
                 <AntDesign
+                    testID='arrow-icon'
                     name="left"
                     size={icons.sm}
                     color={theme === 'transparent' ? colors.contrast_100 : colors.oppositeContrast} />

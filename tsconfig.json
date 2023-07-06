@@ -11,5 +11,9 @@
     "types": [
       "styled-components-react-native"
     ],
-  }
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.test.tsx"
+  ]
 }

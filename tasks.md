@@ -2,12 +2,10 @@
 task atual: 
 
 trocar tipo sanguineo
-terminar as funções da tela profille
 refatorar os temas 
 
 
 TESTES EM FILA
-     - Verificar a notificação dos alertas 
      - Verificar o offline dos posts
      - Verificar o offline das notificações 
      - Verificar o offline das doações

@@ -1,4 +1,6 @@
 node_modules/
+coverage/
+.env
 .expo/
 dist/
 npm-debug.*
@@ -45,6 +47,7 @@ project.xcworkspace
 
 # Android/IntelliJ
 #
+
 build/
 .idea
 .gradle

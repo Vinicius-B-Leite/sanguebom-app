@@ -21,7 +21,7 @@ const Input: React.FC<Props> = ({ leftIcon, errorMessage, h,...rest }) => {
             <S.Container h={h} isFocused={isFocused} hasLeftIcon={!!leftIcon} >
                 {
                     leftIcon &&
-                    <TouchableOpacity onPress={() => setsecureTextEntry(!secureTextEntry)}>
+                    <TouchableOpacity  onPress={() => setsecureTextEntry(!secureTextEntry)}>
                         <AntDesign
                             name={secureTextEntry ? leftIcon : 'unlock'}
                             size={theme.icons.vsm}
