@@ -1,7 +1,7 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React from 'react';
 
-import { Provider, useDispatch, useSelector } from 'react-redux';
-import { RootState, store } from './src/feature/store';
+import { Provider } from 'react-redux';
+import { store } from './src/feature/store';
 
 import Index from './src';
 
