@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import * as S from './styles'
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from 'styled-components/native';
@@ -19,11 +18,12 @@ const AlertButton: React.FC<Props> = ({ onClick }) => {
     if (userType !== 'bloodCollectors') return <></>
 
     return (
-        <S.Container onPress={onClick}>
+        <S.Container onPress={onClick} >
             <Feather
+                testID='alertTriangleIcon'
                 name="alert-triangle"
                 size={theme.icons.vmd}
-                color={theme.type === 'dark' ? theme.colors.oppositeContrast : theme.colors.background_100} />
+                color={theme.type === 'light' ?theme.colors.background_100 : theme.colors.oppositeContrast } />
         </S.Container>
     )
 }

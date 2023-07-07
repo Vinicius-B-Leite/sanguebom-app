@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { removeStorageUser } from "../../storage/userStorage";
 
 
-type InitalState = {
+export type InitalState = {
     user: undefined | UserType
 }
 const initialState: InitalState = {
@@ -14,8 +14,8 @@ const initialState: InitalState = {
 
 export const logoutUser = createAsyncThunk(
     'user/logout',
-    async () => {
-        await removeStorageUser()
+    () => {
+        removeStorageUser()
     }
 )
 

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { userReducer } from './user/userSlicer'
+import { userReducer, } from './user/userSlicer'
 import { notificationReducer } from './notification/notificationSlice'
 import { themeReducer } from './theme/themeSlicer'
 
