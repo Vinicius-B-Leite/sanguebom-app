@@ -14,7 +14,7 @@ interface Props<T> {
 
 function DropDown<T>({ data, placeholder, renderItem, onSelect, value }: Props<T>) {
 
-    const { colors, type, icons } = useTheme()
+    const { colors, icons } = useTheme()
     const [showData, setShowData] = useState(false)
 
     const handleSelect = (item: T) => {
@@ -27,6 +27,7 @@ function DropDown<T>({ data, placeholder, renderItem, onSelect, value }: Props<T
             <S.SelectBtn onPress={() => setShowData(old => !old)} isSelecting={showData}>
                 <S.SelectTxt numberOfLines={1}>{value || placeholder}</S.SelectTxt>
                 <AntDesign
+                    testID='arrowIcon'
                     name={showData ? 'up' : 'down'}
                     size={icons.sm}
                     color={showData ? colors.contrast_100 : colors.text_100}
@@ -34,7 +35,7 @@ function DropDown<T>({ data, placeholder, renderItem, onSelect, value }: Props<T
             </S.SelectBtn>
             {
                 showData && data &&
-                <S.ListContainer>
+                <S.ListContainer testID='dataList'>
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         data={data}
