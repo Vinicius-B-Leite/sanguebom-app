@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
 })
 
 
-function setupStore(preloadedState?: PreloadedState<ReturnType<typeof rootReducer>>) {
+export function setupStore(preloadedState?: PreloadedState<ReturnType<typeof rootReducer>>) {
     return configureStore({
         reducer: rootReducer,
         preloadedState

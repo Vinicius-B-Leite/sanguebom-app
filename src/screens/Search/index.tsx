@@ -143,7 +143,7 @@ const Search: React.FC = () => {
       <ModalCreateAlert
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
-        bTypesSelecteds={data && user && data[data?.findIndex(v => v.uid === user.uid)].alert?.bloodTypes}
+        bTypesSelecteds={data && data[data?.findIndex(v => v.uid === user!.uid)].alert?.bloodTypes}
         isAlertOn={!!(data && data[data?.findIndex(v => v.username === user?.username)].alert?.status)}
       />
 

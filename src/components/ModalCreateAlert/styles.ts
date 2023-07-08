@@ -8,15 +8,6 @@ export const Container = styled.View`
     align-items: center;
 `;
 
-export const CloseModal = styled.TouchableOpacity`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: ${({ theme }) => theme.colors.backgroundOpacity};
-    z-index: -1;
-`
 
 export const Main = styled.View`
     background-color: ${({ theme }) => theme.colors.background_100};
@@ -25,7 +16,7 @@ export const Main = styled.View`
     `
 
 export const Title = styled.Text`
-    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.contrast_100};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text_100 : theme.colors.contrast_100};
     font-size: ${({ theme }) => theme.fontSize.md}px;
     font-weight: 700;
     `
@@ -38,7 +29,7 @@ export const Row = styled.View`
 
 export const SectionTitle = styled.Text`
     margin: 2% 0%;
-    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.contrast_100};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text_100 : theme.colors.contrast_100};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
 `
 
@@ -61,7 +52,7 @@ export const SubmitButton = styled.TouchableOpacity`
 `
 
 export const SubmitLabel = styled.Text`
-    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text : theme.colors.background_100};
+    color: ${({ theme }) => theme.colors.oppositeContrast};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
     font-weight: 700;
 `

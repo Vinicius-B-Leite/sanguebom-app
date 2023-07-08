@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import * as S from './styles'
 import { FlatList, Modal, ModalProps, Switch, View } from 'react-native'
 import { useTheme } from 'styled-components/native';
-import SelectBloodType from '../../screens/SelectBloodType';
 import SelectBloodTypeItem from '../SelectBloodTypeItem';
 import { bloodTypes } from '../../utlis/bloodTypes';
 import Input from '../Input';
@@ -10,20 +9,18 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createAlert } from '../../api/createAlert';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
-import { AxiosError } from 'axios';
-import { ErrorResponse } from '../../types/ErrorResponse';
 import ModalBase from '../ModalBase';
 
 
 
 type Props = {
-    isAlertOn: boolean,
-    bTypesSelecteds: string[] | undefined,
+    isAlertOn: boolean | undefined,
+    bTypesSelecteds?: string[] | undefined,
     visible: boolean,
     onRequestClose: () => void
 }
 const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds, visible, onRequestClose }) => {
-    
+
     const theme = useTheme()
     const user = useSelector((state: RootState) => state.user.user)
     const client = useQueryClient()
@@ -31,7 +28,7 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
     const [switchEnable, setSwitchEnable] = useState(isAlertOn)
     const [bloodTypesSelecteds, setBloodTypesSelecteds] = useState<string[]>(bTypesSelecteds || [])
     const [message, setMessage] = useState('')
-    
+
     const selectBloogType = (b: string) => {
         if (bloodTypesSelecteds.includes(b)) {
             setBloodTypesSelecteds(old => {
@@ -44,15 +41,14 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
     }
     const { mutate } = useMutation({
         mutationFn: () => createAlert({
-            bloodCollectorsID: user?.uid || '',
+            bloodCollectorsID: user!.uid,
             bloodTypes: bloodTypesSelecteds,
             description: message,
             status: switchEnable,
         }),
-        onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data),
         onSuccess: async () => {
-            await client.invalidateQueries(['bloodCollectors'])
             onRequestClose()
+            await client.invalidateQueries(['bloodCollectors'])
         }
     })
 
@@ -69,6 +65,7 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
                 <S.Row>
                     <S.SectionTitle>Ativado</S.SectionTitle>
                     <Switch
+                        testID='switchAlertStatus'
                         trackColor={{ false: theme.colors.background_100, true: theme.colors.contrast_100 }}
                         thumbColor={'#f4f3f4'}
                         onValueChange={() => setSwitchEnable(old => !old)}

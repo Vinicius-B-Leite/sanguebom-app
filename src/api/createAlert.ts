@@ -10,12 +10,10 @@ type Props = {
 }
 
 export async function createAlert({ bloodCollectorsID, bloodTypes, description, status }: Props) {
-    return await api.post(
-        'alert',
-        {
-            bloodTypes,
-            bloodCollectorsID,
-            status,
-            description
-        })
+    return (await api.post('alert', {
+        bloodTypes,
+        bloodCollectorsID,
+        status,
+        description
+    })).status
 }

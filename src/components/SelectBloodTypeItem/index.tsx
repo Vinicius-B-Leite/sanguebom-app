@@ -14,7 +14,7 @@ type Props = {
 const SelectBloodTypeItem: React.FC<Props> = ({ bloodType, selected, onClick, h, w , fs}) => {
 
     return (
-        <S.Container selected={selected} onPress={() => onClick(bloodType)} w={w} h={h} >
+        <S.Container testID={`bloodType_${bloodType}`} selected={selected} onPress={() => onClick(bloodType)} w={w} h={h} >
             <S.Name fs={fs} selected={selected}>{bloodType}</S.Name>
         </S.Container>
     )
