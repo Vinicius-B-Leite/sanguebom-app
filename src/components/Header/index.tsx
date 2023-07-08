@@ -21,7 +21,7 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
 
     const { colors, icons, type } = useTheme()
     const dispatch = useDispatch()
-    
+
     const notificationsLength = useSelector((state: RootState) => state.notification.length)
     const user = useSelector((rootState: RootState) => rootState.user.user)
 
@@ -29,11 +29,10 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
     const { data, refetch } = useQuery({
         queryKey: ['notificationLength'],
         enabled: false,
-        queryFn: () => getNotificationLength({ uid: user?.uid ?? '' }),
-        onSuccess: (res) => {
+        queryFn: () => getNotificationLength({ uid: user!.uid }),
+        onSuccess: (res: number) => {
             dispatch(setNotificationLength(res))
-        },
-        onError: (err: AxiosError<ErrorResponse>) => console.log(err?.response?.data.message)
+        }
     })
 
     useEffect(() => {
@@ -46,16 +45,15 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
         <S.Container>
             <S.Logo>Sangue Bom</S.Logo>
             <S.Right>
-                <S.Notifications onPress={onClickBell}>
+                <S.Notifications onPress={onClickBell} >
                     {
-                        (data && data > 0) ?
-                            <S.NotificationNumberArea>
-                                <S.NotificationLabel>{Number(data) < 99 ? Number(data) : '99+'}</S.NotificationLabel>
-                            </S.NotificationNumberArea>
-                            :
-                            <></>
+                        (data && data > 0) &&
+                        <S.NotificationNumberArea testID='notificationLenght'>
+                            <S.NotificationLabel>{Number(data) < 99 ? Number(data) : '99+'}</S.NotificationLabel>
+                        </S.NotificationNumberArea>
                     }
                     <EvilIcons
+                        testID='bellIcon'
                         name='bell'
                         color={type === 'dark' ? colors.text_200 : colors.background_100}
                         size={icons.sm}
@@ -63,7 +61,7 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
                 </S.Notifications>
 
                 <TouchableOpacity onPress={onClickBloodDonate}>
-                    <BloodDonateIcon width={icons.sm} height={icons.sm} />
+                    <BloodDonateIcon testID='bloodDonateIcon' width={icons.sm} height={icons.sm} />
                 </TouchableOpacity>
             </S.Right>
         </S.Container>
