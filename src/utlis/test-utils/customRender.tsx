@@ -13,13 +13,13 @@ import { darkMode } from '../../theme/darkMode'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 
-export const rootReducer = combineReducers({
+const rootReducer = combineReducers({
     user: userReducer,
     notification: notificationReducer
 })
 
 
-export function setupStore(preloadedState?: PreloadedState<ReturnType<typeof rootReducer>>) {
+function setupStore(preloadedState?: PreloadedState<ReturnType<typeof rootReducer>>) {
     return configureStore({
         reducer: rootReducer,
         preloadedState

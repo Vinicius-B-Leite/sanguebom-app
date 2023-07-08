@@ -12,7 +12,7 @@ const ModalBase: React.FC<Props> = ({ children, modalProps }) => {
     return (
         <Modal {...modalProps}>
             <S.Container>
-                <S.CloseModal onPress={modalProps.onRequestClose} />
+                <S.CloseModal testID='closeModalButton' onPress={modalProps.onRequestClose} />
                 {children}
             </S.Container>
         </Modal>
