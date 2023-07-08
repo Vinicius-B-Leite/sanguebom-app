@@ -1,4 +1,4 @@
-import { QuestionType } from "src/types/QuestionType"
+import { QuestionType } from "../types/QuestionType"
 import { QUESTIONS_KEY, storage } from "./storageConfig"
 
 export const setQuestionsStorage = (questions: QuestionType[]) => {
@@ -7,7 +7,7 @@ export const setQuestionsStorage = (questions: QuestionType[]) => {
 
 export const getQuestionsStorage = () => {
     const storageResponse = storage.getString(QUESTIONS_KEY)
-    const questions = storageResponse ? JSON.parse(storageResponse) as QuestionType[] : []
+    const questions = storageResponse ? JSON.parse(storageResponse) as QuestionType[] : null
 
     return questions
 }

@@ -1,4 +1,4 @@
-import { PostType } from "src/types/PostType";
+import { PostType } from "../types/PostType";
 import { POSTS_KEY, storage } from "./storageConfig";
 
 export const setPostsStorage = (posts: PostType[]) => {
