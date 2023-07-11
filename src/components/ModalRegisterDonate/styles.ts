@@ -19,7 +19,7 @@ export const Section = styled.View`
     margin: 5% 0%;
 `
 export const SectionTitle = styled.Text`
-    color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.text_100};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
     font-weight: 400;
     margin-bottom: 3%;

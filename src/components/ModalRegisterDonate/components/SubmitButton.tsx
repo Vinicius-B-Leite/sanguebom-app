@@ -18,11 +18,12 @@ const SubmitButton: React.FC<Props> = ({ bloodCollectorID, date, closeModal }) =
 
     const user = useSelector((state: RootState) => state.user.user)
     const queryClient = useQueryClient()
+
     const { mutate } = useMutation({
         mutationFn: ({ bcID }: { bcID: string }) => createDonate({
             bloodCollectorID: bcID,
             date,
-            userID: user?.uid ?? ''
+            userID: user!.uid
         }),
         onSuccess: async () => {
             closeModal()
@@ -31,7 +32,7 @@ const SubmitButton: React.FC<Props> = ({ bloodCollectorID, date, closeModal }) =
     })
 
     const handleSubmit = () => {
-        if (!bloodCollectorID || !date) return
+        if (!bloodCollectorID ) return
 
         mutate({ bcID: bloodCollectorID })
     }

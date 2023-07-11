@@ -10,7 +10,7 @@ type Props = {
 
 const BloodCollectorItem: React.FC<Props> = ({ bloodCollector }) => {
     return (
-        <S.Container>
+        <S.Container testID={bloodCollector.username}>
             <S.Avatar source={{ uri: baseURL + bloodCollector.imageURL }} />
             <S.BloodCollectorName numberOfLines={1}>{bloodCollector.username}</S.BloodCollectorName>
         </S.Container>

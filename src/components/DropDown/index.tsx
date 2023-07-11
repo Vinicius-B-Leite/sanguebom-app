@@ -34,7 +34,7 @@ function DropDown<T>({ data, placeholder, renderItem, onSelect, value }: Props<T
                 />
             </S.SelectBtn>
             {
-                showData && data &&
+                showData && data && data?.length > 0 &&
                 <S.ListContainer testID='dataList'>
                     <FlatList
                         showsVerticalScrollIndicator={false}

@@ -3,15 +3,10 @@ import ModalBase from '../ModalBase';
 import * as S from './styles'
 import DropDown from '../DropDown';
 import BloodCollectorItem from './components/BloodCollectorItem';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getBloodCollectors } from '../../api/getBloodCollectors';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../feature/store';
 import { HospitalType } from '../../types/HospitalType';
-import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import DatePicker from './components/DatePicker';
-import ComunButton from '../ComunButton';
-import { createDonate } from '../../api/createDonate';
 import SubmitButton from './components/SubmitButton';
 
 
@@ -28,7 +23,7 @@ const ModalRegisterDonate: React.FC<Props> = ({ closeModal, visible }) => {
 
     const { data } = useQuery(
         ['bloodCollectors'],
-        () => getBloodCollectors({ bloodCollectorName: null })
+        () => getBloodCollectors()
     )
 
     return (
@@ -40,7 +35,7 @@ const ModalRegisterDonate: React.FC<Props> = ({ closeModal, visible }) => {
                     <S.SectionTitle>Local</S.SectionTitle>
                     <S.DropDownArea>
                         <DropDown
-                            placeholder={'Selecione um ponto'}
+                            placeholder='Selecione um ponto'
                             value={bloodCollectorSelected?.username}
                             data={data}
                             onSelect={(item) => setBloodCollectorSelected(item)}

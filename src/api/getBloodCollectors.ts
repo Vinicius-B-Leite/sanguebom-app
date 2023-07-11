@@ -2,10 +2,9 @@ import { api } from ".";
 import { HospitalType } from "../types/HospitalType";
 
 
-type Props = {
-    bloodCollectorName?: string | null,
-}
-export async function getBloodCollectors({ bloodCollectorName }: Props) {
+
+
+export async function getBloodCollectors(bloodCollectorName?: string ) {
     let url = 'bloodcollectors/'
 
     if (bloodCollectorName && bloodCollectorName?.length > 0) {

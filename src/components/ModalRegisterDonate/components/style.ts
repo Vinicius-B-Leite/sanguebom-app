@@ -15,7 +15,7 @@ export const Avatar = styled.Image`
 
 export const BloodCollectorName = styled.Text`
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
-    color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.text_100};
     margin-left: 5%;
 `
 
@@ -23,7 +23,7 @@ export const BloodCollectorName = styled.Text`
 export const DatePickerArea = styled.TouchableOpacity`
     flex-direction: row;
     border-bottom-width: 1px;
-    border-bottom-color: ${({theme}) => theme.colors.text};
+    border-bottom-color: ${({theme}) => theme.colors.text_100};
     align-items: center;
     width: 93%;
     align-self: flex-end;
@@ -31,7 +31,7 @@ export const DatePickerArea = styled.TouchableOpacity`
 `
 export const Date = styled.Text`
     ${({theme}) => css`
-        color: ${theme.colors.text};
+        color: ${theme.colors.text_100};
         font-size: ${theme.fontSize.xxsm}px;
         margin-left: 3%;
     `}

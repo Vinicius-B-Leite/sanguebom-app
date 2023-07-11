@@ -31,7 +31,7 @@ const Search: React.FC = () => {
 
   const { data } = useQuery(
     ['bloodCollectors'],
-    () => getBloodCollectors({ bloodCollectorName: searchInput }),
+    () => getBloodCollectors(searchInput),
     {
       onError: (err: AxiosError<ErrorResponse>) => console.log(err.response?.data),
     }

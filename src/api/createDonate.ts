@@ -13,5 +13,5 @@ export async function createDonate({ bloodCollectorID, date, userID }: Props) {
             userID,
             bloodCollectorID,
             date
-        })).data
+        })).status
 }
