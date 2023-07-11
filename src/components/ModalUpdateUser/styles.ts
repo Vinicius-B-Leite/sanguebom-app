@@ -1,12 +1,6 @@
 import styled from "styled-components/native";
 
 
-export const Container = styled.TouchableOpacity`
-    width: 100%;
-    height: 100%;
-    background-color: ${({theme}) => theme.colors.background_100};
-    z-index: 1;
-`
 export const Main = styled.View`
     background-color:${({theme}) => theme.colors.background_100};
     height: ${({theme}) => theme.vh * 0.4}px;

@@ -4,7 +4,6 @@ import ModalRegisterDonate from '../index'
 import * as apiService from '../../../api/getBloodCollectors'
 import { HospitalType } from '../../../types/HospitalType'
 import { act, fireEvent, waitFor } from '@testing-library/react-native'
-import { mockAndroidDialogDateChange } from '@react-native-community/datetimepicker/jest'
 import { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 
 
@@ -52,7 +51,7 @@ describe('ModalRegisterDonate', () => {
     })
 
     it('selected a bloodCollector item when DropDown was openned', async () => {
-        jest.spyOn(apiService, 'getBloodCollectors').mockResolvedValue(fakeHospital)
+        jest.spyOn(apiService, 'getBloodCollectors').mockResolvedValueOnce(fakeHospital)
 
 
         const { getByText } = renderWithProviders(
@@ -74,18 +73,16 @@ describe('ModalRegisterDonate', () => {
     })
 
     it('selected the date of donation', async () => {
-        jest.spyOn(apiService, 'getBloodCollectors').mockResolvedValue(fakeHospital)
+        jest.spyOn(apiService, 'getBloodCollectors').mockResolvedValueOnce(fakeHospital)
 
         const dateSelected = new Date()
 
-        const { getByTestId, getByText, debug } = renderWithProviders(
+        const { getByTestId, getByText } = renderWithProviders(
             <ModalRegisterDonate
                 closeModal={() => { }}
                 visible={true}
             />
         )
-
-
 
         await waitFor(() => {
             const openCalendarButton = getByTestId('openCalendarButton')

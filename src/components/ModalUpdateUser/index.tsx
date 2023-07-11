@@ -16,17 +16,12 @@ type Props = {
     title: string
 }
 const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }) => {
-    const [confirmPassword, setConfirmPassword] = useState('')
     const user = useSelector((state: RootState) => state.user.user)
-    const [value, setValue] = useState('')
     const theme = useTheme()
 
-    useEffect(() => {
-        if (!visible) {
-            setValue('')
-            setConfirmPassword('')
-        }
-    }, [visible])
+
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [value, setValue] = useState('')
 
 
     const handleSubmit = () => {
@@ -35,8 +30,13 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
         }
     }
 
+    const handleCloseModal = () => {
+        setValue('')
+        setConfirmPassword('')
+        closeModal()
+    }
     return (
-        <ModalBase modalProps={{ transparent: true, visible, animationType: 'slide', onRequestClose: closeModal }}>
+        <ModalBase modalProps={{ transparent: true, visible, animationType: 'slide', onRequestClose:  handleCloseModal}}>
             <S.Main>
                 <S.Title>Atualizar {title}</S.Title>
 
@@ -53,7 +53,7 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
                 <S.InputArea>
                     <Input
                         placeholderTextColor={theme.colors.text_100}
-                        placeholder={'Digite sua senha atual para confirmar'}
+                        placeholder='Digite sua senha atual para confirmar'
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
 
