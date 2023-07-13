@@ -12,7 +12,7 @@ type Props = {
 const RhFactorItem: React.FC<Props> = ({ rh, selected, onClick }) => {
     
     return (
-        <S.Container selected={selected} onPress={() => onClick(rh)}>
+        <S.Container testID='rhContainer' selected={selected} onPress={() => onClick(rh)}>
             <S.Name selected={selected}>{rh}</S.Name>
         </S.Container>
     )

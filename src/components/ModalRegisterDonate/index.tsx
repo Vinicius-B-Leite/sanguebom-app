@@ -17,7 +17,7 @@ type Props = {
     closeModal: () => void
 }
 const ModalRegisterDonate: React.FC<Props> = ({ closeModal, visible }) => {
-
+                                                 
     const [bloodCollectorSelected, setBloodCollectorSelected] = useState<HospitalType | undefined>(undefined)
     const [dateSelected, setDateSelected] = useState(new Date())
 

@@ -6,7 +6,6 @@ import { HospitalType } from '../../../types/HospitalType'
 import { act, fireEvent, waitFor } from '@testing-library/react-native'
 import { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 
-
 const fakeHospital: HospitalType[] = [{
     adress: 'bloodCollectors.adress',
     alert: null,
@@ -20,22 +19,27 @@ const fakeHospital: HospitalType[] = [{
 }]
 const createDateTimeSetEvtParams = (
     date: Date,
-  ): [DateTimePickerEvent, Date] => {
+): [DateTimePickerEvent, Date] => {
     return [
-      {
-        type: 'set',
-        nativeEvent: {
-          timestamp: date.getTime(),
+        {
+            type: 'set',
+            nativeEvent: {
+                timestamp: date.getTime(),
+            },
         },
-      },
-      date,
+        date,
     ];
-  };
+};
 
 describe('ModalRegisterDonate', () => {
-    it('rendered', async () => {
+    beforeAll(() => {
         jest.spyOn(apiService, 'getBloodCollectors').mockResolvedValue(fakeHospital)
+    })
+    beforeEach(() => {
+        jest.useFakeTimers()
+    })
 
+    it('rendered', async () => {
 
         const { getByText } = renderWithProviders(
             <ModalRegisterDonate
@@ -44,55 +48,50 @@ describe('ModalRegisterDonate', () => {
             />
         )
 
-        await waitFor(() => {
-            const element = getByText(/Cadastrar Doação/i)
-            expect(element).toBeTruthy()
-        })
+        const element =  getByText(/Cadastrar Doação/i)
+        expect(element).toBeTruthy()
     })
 
     it('selected a bloodCollector item when DropDown was openned', async () => {
-        jest.spyOn(apiService, 'getBloodCollectors').mockResolvedValueOnce(fakeHospital)
 
-
-        const { getByText } = renderWithProviders(
+        const { getByText , findByText} = renderWithProviders(
             <ModalRegisterDonate
                 closeModal={() => { }}
                 visible={true}
             />
         )
 
-        await waitFor(() => {
-            const dropDownElement = getByText(/Selecione um ponto/i)
-            fireEvent.press(dropDownElement)
+        const dropDownElement = getByText(/Selecione um ponto/i)
+        fireEvent.press(dropDownElement)
+        const bloodCollectorItem = await findByText(fakeHospital[0].username)
 
-            const bloodCollectorItem = getByText(fakeHospital[0].username)
-            fireEvent(bloodCollectorItem, 'press')
-
-            expect(dropDownElement.props.children).toBe(fakeHospital[0].username)
-        })
+        fireEvent(bloodCollectorItem, 'press')
+        expect(dropDownElement.props.children).toBe(fakeHospital[0].username)
     })
 
     it('selected the date of donation', async () => {
-        jest.spyOn(apiService, 'getBloodCollectors').mockResolvedValueOnce(fakeHospital)
 
         const dateSelected = new Date()
 
-        const { getByTestId, getByText } = renderWithProviders(
+        const { getByTestId, getByText, findByTestId } = renderWithProviders(
             <ModalRegisterDonate
-                closeModal={() => { }}
+                closeModal={jest.fn()}
                 visible={true}
             />
         )
 
-        await waitFor(() => {
-            const openCalendarButton = getByTestId('openCalendarButton')
+        const openCalendarButton = await findByTestId('openCalendarButton')
+
+        await act(() => {
             fireEvent(openCalendarButton, 'press')
-
-
-            const calendarPicker = getByTestId('calendarPicker')
-            fireEvent(calendarPicker, 'onChange', ...createDateTimeSetEvtParams(dateSelected))
-
-            expect(getByText(dateSelected.toLocaleDateString())).toBeTruthy()
         })
+
+        const calendarPicker = getByTestId('calendarPicker')
+
+        fireEvent(calendarPicker, 'onChange', ...createDateTimeSetEvtParams(dateSelected))
+
+
+        expect(getByText(dateSelected.toLocaleDateString())).toBeTruthy()
     })
+
 })
