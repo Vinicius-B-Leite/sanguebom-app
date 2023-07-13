@@ -11,6 +11,7 @@ import { ThemeProvider } from 'styled-components/native'
 import { lightMode } from '../../theme/lightMode'
 import { darkMode } from '../../theme/darkMode'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { NavigationContainer } from '@react-navigation/native'
 
 
 const rootReducer = combineReducers({
@@ -47,7 +48,9 @@ export function renderWithProviders(ui: React.ReactElement, { preloadedState = {
             <QueryClientProvider client={client}>
                 <Provider store={store}>
                     <ThemeProvider theme={theme === 'light' ? lightMode : darkMode}>
-                        {children}
+                        <NavigationContainer>
+                            {children}
+                        </NavigationContainer>
                     </ThemeProvider>
                 </Provider>
             </QueryClientProvider>

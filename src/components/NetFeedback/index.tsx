@@ -28,7 +28,7 @@ const NetFeedback: React.FC<Props> = ({ isConnected }) => {
 
 
     return (
-        <Animated.View style={animatedStyle}> 
+        <Animated.View testID='animatedContainer' style={animatedStyle}> 
             <S.Container>
                 <S.Label>Você está offline. Conecte-se á internet</S.Label>
             </S.Container>

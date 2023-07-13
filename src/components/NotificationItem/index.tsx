@@ -26,18 +26,16 @@ const NotificationItem: React.FC<Props> = ({ notification }) => {
     const [open, setOpen] = useState(false)
 
     const handleClick = () => {
-        if (notification.description.length > 0 && notification.type === 'alert') {
+        if (notification.type === 'alert' && notification.description.length > 0 ) {
             setOpen(old => !old)
             return
         }
 
-        if (notification.type === 'post') {            
-            navigation.navigate('Post', { postID: notification.postID ?? '' })
-        }
+        navigation.navigate('Post', { postID: notification.postID as string })
     }
 
     return (
-        <S.Container onPress={handleClick}>
+        <S.Container testID='notificationContainer' onPress={handleClick}>
             <S.Circle>
                 {
                     notification.type === 'alert' ?
