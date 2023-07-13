@@ -13,7 +13,7 @@ type Props = {
 }
 const FooterPost: React.FC<Props> = ({ adress, createdAt, enableMaxLength, description }) => {
 
-    const [maxLength, setMathLength] = useState(150)
+    const [maxLength, setMaxLength] = useState(150)
 
 
     return (
@@ -31,7 +31,7 @@ const FooterPost: React.FC<Props> = ({ adress, createdAt, enableMaxLength, descr
                 }</S.ComunText>
             </S.Deatils>
 
-            <S.Description>
+            <S.Description testID='description'>
                 {
                     enableMaxLength ?
                         description.substring(0, maxLength) :
@@ -39,7 +39,7 @@ const FooterPost: React.FC<Props> = ({ adress, createdAt, enableMaxLength, descr
                 }
                 {
                     enableMaxLength && maxLength <= description.length &&
-                    <S.ReadMore onPress={() => setMathLength(old => old + 150)}>Ver mais</S.ReadMore>
+                    <S.ReadMore onPress={() => setMaxLength(old => old + 150)}>Ver mais</S.ReadMore>
                 }
             </S.Description>
         </S.Footer>

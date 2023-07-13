@@ -25,10 +25,15 @@ const PostDetails: React.FC<PostProps> = ({ info, enableMaxLenght }) => {
 
             <Image
                 style={{ width: Dimensions.get('screen').width, height: Dimensions.get('screen').width }}
-                source={{ uri: baseURL + info?.bannerURL }}
+                source={{ uri: baseURL + info.bannerURL }}
             />
 
-            <FooterPost adress={bloodCollectors?.adress} createdAt={createdAt} description={description} enableMaxLength={enableMaxLenght || false} />
+            <FooterPost
+                adress={bloodCollectors?.adress}
+                createdAt={createdAt}
+                description={description}
+                enableMaxLength={enableMaxLenght || false}
+            />
 
         </S.Container>
     )

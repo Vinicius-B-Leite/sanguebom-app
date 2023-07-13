@@ -68,7 +68,7 @@ describe('ModalRegisterDonate', () => {
             const bloodCollectorItem = getByText(fakeHospital[0].username)
             fireEvent(bloodCollectorItem, 'press')
 
-            expect(dropDownElement.props.children).toBe('bloodCollectors.username')
+            expect(dropDownElement.props.children).toBe(fakeHospital[0].username)
         })
     })
 
