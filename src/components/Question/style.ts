@@ -5,7 +5,7 @@ export const Container = styled.View`
     padding: 5%;
     margin: 3% 0%;
 `
-export const Header = styled.View`
+export const Header = styled.TouchableOpacity`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
