@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Header from '../../components/Header';
 import * as S from './styles'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
 import { getPosts } from '../../api/getPosts';
@@ -12,14 +12,17 @@ import PostList from './components/PostList';
 import { registerAppOneSignal } from '../../onesignal/registerAppOneSignal';
 import { getPostsStorage, setPostsStorage } from '../../storage/postsStorage';
 import { useNetInfo } from '@react-native-community/netinfo';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 
 registerAppOneSignal()
 
-type Nav = StackScreenProps<StackHomeParamsList, 'Home'>
-const Home: React.FC<Nav> = ({ navigation }) => {
+type Nav = NavigationProp<StackHomeParamsList, 'Home'>
+const Home: React.FC = () => {
   const netinfo = useNetInfo()
-  
+  const navigation = useNavigation<Nav>()
+
+
   const offlineData = useMemo(() => {
     if (!netinfo.isConnected) return getPostsStorage()
   }, [netinfo])
@@ -30,7 +33,7 @@ const Home: React.FC<Nav> = ({ navigation }) => {
     getNextPageParam: (lastPage, allPages) => lastPage.maxPage >= allPages.length + 1 ? allPages.length + 1 : undefined,
     onSuccess: (data) => {
       setPostsStorage(data.pages[0].data)
-    }
+    },
   })
 
   return (

@@ -45,6 +45,23 @@ describe('HeaderGoBack', () => {
         expect(arrowIcon.props.style[0].color).toEqual(lightMode.colors.contrast_100)
     })
 
+    it('changed border when it was in darkMode', () => {
+        const { getByTestId } = render(
+            <ThemeProvider theme={darkMode}>
+                <HeaderGoBack
+                    theme='contrast'
+                    title='Voltar'
+                    goBack={jest.fn()}
+                />
+            </ThemeProvider>
+        )
+
+        const element = getByTestId('header-view')
+
+        expect(element.props.style[0].borderBottomWidth).toEqual(1)
+        expect(element.props.style[0].borderBottomColor).toEqual(darkMode.colors.contrast_100)
+    })
+
     it('header has not color border in light mode', () => {
         const { getByTestId } = render(
             <HeaderGoBack

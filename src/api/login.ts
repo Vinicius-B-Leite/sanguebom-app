@@ -28,5 +28,5 @@ export type AuthResponse = {
 }
 
 export async function login({ email, password }: Props) {
-    return await api.post<AuthResponse>('auth/login', { email: email.toLocaleLowerCase(), password })
+    return await api.post<AuthResponse>('auth/login', { email: email.toLowerCase(), password })
 }

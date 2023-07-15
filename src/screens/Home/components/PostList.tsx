@@ -31,18 +31,17 @@ const PostList: React.FC<Props> = ({ posts, hasNextPage, fetchNextPage, refetch 
         return <FlatList
             data={posts}
             renderItem={({ item }) => <PostDetails enableMaxLenght={true} info={item} />}
-            ListFooterComponent={() => hasNextPage ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.contrast_100} /> : <></>}
             refreshing={refreshFlatList}
             onRefresh={onRefreshFlatList}
         />
     }
 
-
     return (
         <FlatList
+            testID='postList'
             data={posts?.pages.map(p => p.data).flat()}
             renderItem={({ item }) => <PostDetails enableMaxLenght={true} info={item} />}
-            ListFooterComponent={() => hasNextPage ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.contrast_100} /> : <></>}
+            ListFooterComponent={() => hasNextPage ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.contrast_100} /> : null}
             onEndReached={async () => {
                 await fetchNextPage()
             }}
