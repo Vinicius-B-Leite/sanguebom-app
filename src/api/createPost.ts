@@ -28,5 +28,5 @@ export async function createPost({ adress, banner, bloodCollectorsID, descriptio
     form.append('banner', formFile);
 
 
-    return await api.postForm('posts', form)
+    return (await api.postForm('posts', form)).status
 }

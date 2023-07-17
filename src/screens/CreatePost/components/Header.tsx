@@ -32,14 +32,12 @@ const Header: React.FC<Props> = ({ adress, banner, description, linkRedirect, ho
             banner,
             description,
             linkRedirect,
-            bloodCollectorsID: user?.uid || '',
+            bloodCollectorsID: user!.uid
         }),
         {
             onError: (err: AxiosError<ErrorResponse>) => {
                 if (err.response && err.response.data.code !== '08') {
                     ToastAndroid.show('Ops! Ocorreu um erro', ToastAndroid.LONG)
-                } else {
-                    console.log(err.response?.data.message)
                 }
             },
             onSuccess: () => {
@@ -60,11 +58,14 @@ const Header: React.FC<Props> = ({ adress, banner, description, linkRedirect, ho
                 <S.Title>{'<   '} Criar post</S.Title>
             </TouchableOpacity>
             <S.DoneBtn onPress={handleSubmit}>
-                <S.DoneTxt>{isLoading ?
-                    <ActivityIndicator
-                        size={theme.icons.vvsm}
-                        color={theme.type === 'dark' ? theme.colors.oppositeContrast : theme.colors.contrast_100} /> :
-                    'concluir'}
+                <S.DoneTxt>{
+                    isLoading ?
+                        <ActivityIndicator
+                            size={theme.icons.vvsm}
+                            color={theme.type === 'dark' ? theme.colors.oppositeContrast : theme.colors.contrast_100} />
+                        :
+                        'concluir'
+                }
                 </S.DoneTxt>
             </S.DoneBtn>
         </S.Header>

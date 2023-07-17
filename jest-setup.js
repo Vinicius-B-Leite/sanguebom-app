@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler/jestSetup';
 
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
+import { cleanup } from '@testing-library/react-native';
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
 

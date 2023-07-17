@@ -23,11 +23,17 @@ const CreatePost: React.FC = () => {
   const [file, setFile] = useState({ uri: '', name: '', type: '' })
 
   const handlePickImage = async () => {
-    pickImage().then(res => {
-      if (res && res.assets[0] && user && res.assets[0].type) {
-        setFile({ name: 'post-' + user.uid, type: res.assets[0].type, uri: res.assets[0].uri })
+    try {
+      const res = await pickImage()
+      if (res && res.assets[0] && res.assets[0].type) {
+        setFile({ name: 'post-' + user!.uid, type: res.assets[0].type, uri: res.assets[0].uri })
       }
-    })
+
+    } catch (error) {
+      console.log("🚀 ~ file: index.tsx:33 ~ handlePickImage ~ error:", error)
+      
+    }
+    
   }
 
   const cleanInputs = () => {
@@ -49,7 +55,7 @@ const CreatePost: React.FC = () => {
         onSucessed={cleanInputs} />
       <S.Container>
         <S.Form>
-          <S.PickImageBtn onPress={handlePickImage}>
+          <S.PickImageBtn testID='PickImageBtn' onPress={handlePickImage} >
             {
               file.uri.length > 0 ? <Image
                 style={{ width: Dimensions.get('screen').width, height: Dimensions.get('screen').width }}
@@ -62,7 +68,7 @@ const CreatePost: React.FC = () => {
           <S.InputTitle>Endereço</S.InputTitle>
           <S.InputArea>
             <Input
-              placeholder={'Rua Pernambuco Bairro Flores de Jardim'}
+              placeholder={'Endereço do local da campanha'}
               placeholderTextColor={theme.colors.text_100}
               value={adress}
               onChangeText={setAdress}
@@ -85,7 +91,7 @@ const CreatePost: React.FC = () => {
           <S.InputTitle>Link para agendar a doação (opcinal) </S.InputTitle>
           <S.InputArea>
             <Input
-              placeholder={'Https={...'}
+              placeholder={'https:'}
               placeholderTextColor={theme.colors.text_100}
               value={link}
               onChangeText={setLink}
