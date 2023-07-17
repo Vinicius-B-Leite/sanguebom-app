@@ -3,7 +3,6 @@ import * as S from './styles'
 import { ActivityIndicator, Alert } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { useTheme } from 'styled-components/native';
-import { StackScreenProps } from '@react-navigation/stack';
 import { StackRootParamsList } from '../../routes/models';
 import Input from '../../components/Input';
 import { useMutation } from '@tanstack/react-query';
@@ -12,20 +11,25 @@ import { AxiosError } from 'axios';
 import { ErrorResponse } from '../../types/ErrorResponse';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../feature/user/userSlicer';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from '../../api';
 import { updateStorageUser } from '../../storage/userStorage';
-import { updateBloodTypeTag } from 'src/onesignal/updateBloodTypeTag';
 import { UserType } from '../../types/UserType';
 import { GenderType } from 'src/types/GenderType';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 
-type Nav = StackScreenProps<StackRootParamsList, 'Login'>
-const Login: React.FC<Nav> = ({ navigation }) => {
+type Nav = NavigationProp<StackRootParamsList, 'Login'>
+
+const Login: React.FC = () => {
     const theme = useTheme()
+    const dispatch = useDispatch()
+    const navigation = useNavigation<Nav>()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const dispatch = useDispatch()
+
+
+    const isEnableToSubmit = email.length > 0 && password.length > 7 && email.includes('@')
+
     const { isLoading, mutate, error } = useMutation(
         () => login({ email, password }),
         {
@@ -37,7 +41,7 @@ const Login: React.FC<Nav> = ({ navigation }) => {
                     )
                 }
             },
-            onSuccess: ({ data }) => {
+            onSuccess: (data) => {
                 api.defaults.headers.common['Authorization'] = 'Bearer ' + data.token
                 const user: UserType = {
                     bloodType: data.donors?.bloodType || undefined,
@@ -59,13 +63,14 @@ const Login: React.FC<Nav> = ({ navigation }) => {
     )
 
     const handleSubmit = () => {
+        if (!isEnableToSubmit) return
         mutate()
     }
 
 
     return (
         <S.Container>
-            <S.GoBack onPress={() => navigation.goBack()}>
+            <S.GoBack testID='arrowLeft' onPress={() => navigation.goBack()}>
                 <AntDesign name="left" size={theme.icons.sm} color={theme.colors.contrast_100} />
             </S.GoBack>
 
@@ -95,11 +100,15 @@ const Login: React.FC<Nav> = ({ navigation }) => {
             </S.InputArea>
 
             <S.SubmitButton
-                isEnable={email.length > 0 && password.length > 7 && email.includes('@')}
+                isEnable={isEnableToSubmit}
                 onPress={handleSubmit}
             >
-                <S.SubmitLabel isEnable={email.length > 0 && password.length > 7 && email.includes('@')} >{
-                    isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.oppositeContrast} /> : 'Concluir'}</S.SubmitLabel>
+                <S.SubmitLabel isEnable={isEnableToSubmit} >{
+                    isLoading ?
+                        <ActivityIndicator size={theme.icons.sm} color={theme.colors.oppositeContrast} />
+                        :
+                        'Concluir'}
+                </S.SubmitLabel>
             </S.SubmitButton>
 
         </S.Container>

@@ -41,6 +41,12 @@ export function renderWithProviders(ui: React.ReactElement, { preloadedState = {
                     retry: false
                 },
             },
+             logger:  {
+                log: console.log,
+                warn: console.warn,
+                // ✅ no more errors on the console for tests
+                error: process.env.NODE_ENV === 'test' ? () => {} : console.error,
+              },
         })
 
 
