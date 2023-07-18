@@ -48,13 +48,13 @@ describe('ModalRegisterDonate', () => {
             />
         )
 
-        const element =  getByText(/Cadastrar Doação/i)
+        const element = getByText(/Cadastrar Doação/i)
         expect(element).toBeTruthy()
     })
 
     it('selected a bloodCollector item when DropDown was openned', async () => {
 
-        const { getByText , findByText} = renderWithProviders(
+        const { getByText, findByText } = renderWithProviders(
             <ModalRegisterDonate
                 closeModal={() => { }}
                 visible={true}
@@ -82,9 +82,7 @@ describe('ModalRegisterDonate', () => {
 
         const openCalendarButton = await findByTestId('openCalendarButton')
 
-        await act(() => {
-            fireEvent(openCalendarButton, 'press')
-        })
+        fireEvent(openCalendarButton, 'press')
 
         const calendarPicker = getByTestId('calendarPicker')
 

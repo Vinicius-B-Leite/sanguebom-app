@@ -10,16 +10,14 @@ type Props = {
 
 const DonatesList: React.FC<Props> = ({ donates }) => {
     return (
-        <>
-            <S.DonatesListTitle>Doações realizadas</S.DonatesListTitle>
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                data={donates?.donates}
-                renderItem={({ item }) => <DonateItem donate={item} />}
-                ListEmptyComponent={() => <S.BlockDonateText>Nenhuma doação foi realizada</S.BlockDonateText>}
-            />
-        </>
-
+        <FlatList
+            showsVerticalScrollIndicator={false}
+            data={donates?.donates}
+            keyExtractor={(_, i) => String(i)}
+            ListHeaderComponent={() => <S.DonatesListTitle>Doações realizadas</S.DonatesListTitle>}
+            renderItem={({ item }) => <DonateItem donate={item} />}
+            ListEmptyComponent={() => <S.BlockDonateText>Nenhuma doação foi realizada</S.BlockDonateText>}
+        />
     )
 }
 

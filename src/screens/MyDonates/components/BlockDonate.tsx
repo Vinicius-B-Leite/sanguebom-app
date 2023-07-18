@@ -8,7 +8,7 @@ type Props = {
 }
 const BlockDonate: React.FC<Props> = ({ daysWaitToDonate }) => {
     return (
-        <S.BlockDonateContainer>
+        <S.BlockDonateContainer testID='blockDonateIcon'>
             <BlockDonateVector />
             <S.BlockDonateText>{`${daysWaitToDonate > 1 ? 'Faltam' : 'Falta'} ${daysWaitToDonate} ${daysWaitToDonate > 1 ? 'dias' : 'dia'} para você estar apto(a) a doar novamente`}</S.BlockDonateText>
         </S.BlockDonateContainer>

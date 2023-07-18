@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, renderWithProviders, screen, waitFor } from '../../../utlis/test-utils/customRender'
+import { act, fireEvent, renderWithProviders, screen, waitFor } from '../../../utlis/test-utils/customRender'
 import Login from '../index'
 import *  as apiService from '../../../api/login'
 import { GenderType } from "../../../types/GenderType";
@@ -156,11 +156,11 @@ describe('Login', () => {
             }
         })
 
-        renderWithProviders(<Login />)
+        const { getByPlaceholderText, getByText, findByText } = renderWithProviders(<Login />)
 
-        const emailInput = screen.getByPlaceholderText(/seu email/i)
-        const passwordInput = screen.getByPlaceholderText(/sua senha/i)
-        const submitBtn = screen.getByText(/concluir/i)
+        const emailInput = getByPlaceholderText(/seu email/i)
+        const passwordInput = getByPlaceholderText(/sua senha/i)
+        const submitBtn = getByText(/concluir/i)
 
         fireEvent.changeText(emailInput, 'user.email@gmail.com')
         fireEvent.changeText(passwordInput, 'user.password')
@@ -168,11 +168,13 @@ describe('Login', () => {
 
         fireEvent.press(submitBtn)
 
-        await waitFor(() => expect(loginSpy).toHaveBeenCalled())
+        await act(async() => {
+            jest.runAllTimers()
+        })
         expect(loginSpy).toHaveBeenCalled()
 
 
-        const messageError = await screen.findByText('error email 05')
+        const messageError = await findByText('error email 05')
         expect(messageError).toBeTruthy()
     })
     it('showed password message error', async () => {

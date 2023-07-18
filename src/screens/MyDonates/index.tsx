@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
 import * as S from './styles'
 import HeaderGoBack from '../../components/HeaderGoBack';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -12,32 +11,31 @@ import DonatesList from './components/DonatesList';
 import BlockDonate from './components/BlockDonate';
 import { useTheme } from 'styled-components/native';
 import ModalRegisterDonate from '../../components/ModalRegisterDonate';
-import { AxiosError } from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 
-type Nav = StackScreenProps<StackHomeParamsList, 'MyDonates'>
 
-const MyDonates: React.FC<Nav> = ({ navigation }) => {
+const MyDonates: React.FC = () => {
 
+    const navigation = useNavigation()
+    
     const user = useSelector((state: RootState) => state.user.user)
     const { type } = useTheme()
     const [isModalVisible, setIsModalVisible] = useState(false)
 
     const { data } = useQuery(
         ['donates'],
-        () => getMyDonates({ uid: user?.uid ?? '' }),
-        {
-            onError: (err: AxiosError) => {
-                console.log(err.response?.data)
-            },
-        }
-        )
-        console.log("🚀 ~ file: index.tsx:27 ~ data:", data)
+        () => getMyDonates({ uid: user!.uid }),
+    )
 
 
     return (
         <S.Container>
-            <HeaderGoBack title='Minhas doações' goBack={() => navigation.goBack()} theme={type === 'dark' ? 'transparent' : 'contrast'} />
+            <HeaderGoBack
+                title='Minhas doações'
+                goBack={() => navigation.goBack()}
+                theme={type === 'dark' ? 'transparent' : 'contrast'}
+            />
             {
                 data && (data.waitDaysToDonate >= 0) &&
                 <BlockDonate daysWaitToDonate={data.waitDaysToDonate === 0 ? 60 : data.waitDaysToDonate} />

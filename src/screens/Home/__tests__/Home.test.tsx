@@ -115,14 +115,14 @@ describe('Home', () => {
 
         it('refresed list when pull up post list', async () => {
 
-            const { getByTestId } = renderWithProviders(<Home />, {
+            const { findByTestId } = renderWithProviders(<Home />, {
                 preloadedState: {
                     user: mocks.fakeUser,
                     notification: { length: 1 }
                 }
             })
 
-            const postList = await waitFor(() => getByTestId('postList'))
+            const postList = await findByTestId('postList')
             const { refreshControl } = postList.props;
 
             await act(() => {
