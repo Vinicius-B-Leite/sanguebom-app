@@ -2,11 +2,6 @@ import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import Header from '../../components/Header';
 import * as S from './styles'
-import AntDesign from '@expo/vector-icons/AntDesign';
-import { useTheme } from 'styled-components/native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import Feather from '@expo/vector-icons/Feather';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser, setUser } from '../../feature/user/userSlicer';
 import { AppDispatch, RootState } from '../../feature/store';
