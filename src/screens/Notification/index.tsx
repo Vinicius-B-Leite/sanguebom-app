@@ -14,13 +14,14 @@ import HeaderGoBack from '../../components/HeaderGoBack';
 import { getNotificationsStorage, setLastNotificationRead, setNotificationsStorage } from '../../storage/notificationStorage';
 import { NotificationType } from '../../types/NotificationType';
 import { useTheme } from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
 
 
 
-type Nav = StackScreenProps<StackHomeParamsList, 'Notification'>
+const Notification: React.FC = () => {
 
-const Notification: React.FC<Nav> = ({ navigation }) => {
 
+    const navigation = useNavigation()
     const user = useSelector((state: RootState) => state.user.user)
     const dispatch = useDispatch()
     const theme = useTheme()
@@ -29,24 +30,22 @@ const Notification: React.FC<Nav> = ({ navigation }) => {
 
     const { data, isLoading } = useQuery(
         ['notification'],
-        () => getNotification({ uid: user?.uid ?? '' }),
+        () => getNotification({ uid: user!.uid }),
         {
             onError: (err: AxiosError) => {
                 if (err.message === 'Network Error') {
                     const storageNotifications = getNotificationsStorage()
-                    setOfflineNotifications(storageNotifications || [])
+                    storageNotifications && setOfflineNotifications(storageNotifications)
                 }
             },
             onSuccess: (res) => {
                 setLastNotificationRead(res[0].id)
                 setNotificationsStorage(res)
+                dispatch(setNotificationLength(0))
             }
         }
     )
 
-    useEffect(() => {
-        dispatch(setNotificationLength(0))
-    }, [])
 
 
     return (

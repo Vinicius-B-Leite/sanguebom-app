@@ -6,6 +6,5 @@ type Props = {
     uid: string,
 }
 export async function getNotification({ uid }: Props) {
-    const response = await api.get<NotificationType[]>(baseURL + 'notification?uid=' + uid);
-    return response.data;
+    return (await api.get<NotificationType[]>(baseURL + 'notification?uid=' + uid)).data;
 }
