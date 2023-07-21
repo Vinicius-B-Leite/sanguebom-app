@@ -29,10 +29,10 @@ export type StackHomeParamsList = {
 }
 
 
-export type QuestionsScreenProps = CompositeScreenProps<
-    BottomTabScreenProps<BottomTabParamsList, 'Questions'>,
-    StackScreenProps<StackHomeParamsList>
->
+export type QuestionsScreenProps = {
+    HomeStack: NavigatorScreenParams<StackHomeParamsList>
+}
+
 export type ProfileScreenProps = {
     HomeStack: NavigatorScreenParams<StackHomeParamsList>,
 }

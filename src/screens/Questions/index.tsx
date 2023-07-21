@@ -1,28 +1,24 @@
 import React, { useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 import Header from '../../components/Header';
-import Question from '../../components/Question';
 import * as S from './styles'
 import { useQuery } from '@tanstack/react-query';
 import { getQuestions } from '../../api/getQuestions';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../feature/store';
 import { AxiosError } from 'axios';
-import { ErrorResponse } from '../../types/ErrorResponse';
 import { useTheme } from 'styled-components/native';
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { BottomTabParamsList, QuestionsScreenProps } from '../../routes/models';
+import { QuestionsScreenProps } from '../../routes/models';
 import SkeletonContainer from '../../components/SkeletonContainer';
 import QuestionList from './components/QuestionList';
 import { QuestionType } from 'src/types/QuestionType';
 import { getQuestionsStorage, setQuestionsStorage } from '../../storage/questionsStorage';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 
 
-type Nav = QuestionsScreenProps
-const Questions: React.FC<Nav> = ({ navigation, route }) => {
+type Nav = NavigationProp<QuestionsScreenProps>
+const Questions: React.FC = () => {
   const theme = useTheme()
-
+  const navigation = useNavigation<Nav>()
   const [offlineQuestions, setOfflineQuestions] = useState<QuestionType[]>([])
 
   const { data, isLoading, refetch } = useQuery(
@@ -32,7 +28,7 @@ const Questions: React.FC<Nav> = ({ navigation, route }) => {
       onError: (err: AxiosError) => {
         if (err.message === 'Network Error') {
           const storageQuestions = getQuestionsStorage()
-          setOfflineQuestions(storageQuestions)
+          storageQuestions && setOfflineQuestions(storageQuestions)
         }
       },
       onSuccess: (res) => {
@@ -48,7 +44,10 @@ const Questions: React.FC<Nav> = ({ navigation, route }) => {
 
   return (
     <S.Container>
-      <Header onClickBell={() => navigation.navigate('Notification')} onClickBloodDonate={() => navigation.navigate('MyDonates')} />
+      <Header
+        onClickBell={() => navigation.navigate('HomeStack', { screen: 'Notification' })}
+        onClickBloodDonate={() => navigation.navigate('HomeStack', { screen: 'MyDonates' })}
+      />
       {
         isLoading ?
           <View style={{ padding: '5%' }}>

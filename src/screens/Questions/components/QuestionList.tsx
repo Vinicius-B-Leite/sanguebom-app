@@ -20,6 +20,7 @@ const QuestionList: React.FC<Props> = ({ questions, refetch }) => {
 
     return (
         <FlatList
+            testID='questionsList'
             contentContainerStyle={{ padding: '5%' }}
             data={questions}
             renderItem={({ item }) => <Question item={item} />}
