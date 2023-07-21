@@ -7,16 +7,20 @@ import { Provider } from 'react-redux'
 
 import { userReducer } from '../../feature/user/userSlicer'
 import { notificationReducer } from '../../feature/notification/notificationSlice'
+import { themeReducer } from '../../feature/theme/themeSlicer'
+
 import { ThemeProvider } from 'styled-components/native'
-import { lightMode } from '../../theme/lightMode'
-import { darkMode } from '../../theme/darkMode'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { NavigationContainer } from '@react-navigation/native'
+
+import { lightMode } from '../../theme/lightMode'
+import { darkMode } from '../../theme/darkMode'
 
 
 const rootReducer = combineReducers({
     user: userReducer,
-    notification: notificationReducer
+    notification: notificationReducer,
+    theme: themeReducer
 })
 
 

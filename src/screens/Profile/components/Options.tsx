@@ -14,9 +14,9 @@ const Options: React.FC<Props> = ({ iconName, onPress, title }) => {
     const { icons, colors } = useTheme()
 
     return (
-        <S.ItemContainer onPress={onPress}>
+        <S.ItemContainer testID={`option_${title}`} onPress={onPress}>
             <S.ItemBackgroundIcon>
-                <FontAwesome name={iconName} size={icons.vsm} color={colors.contrast_100} />
+                <FontAwesome testID={`icon_${title}`} name={iconName} size={icons.vsm} color={colors.contrast_100} />
             </S.ItemBackgroundIcon>
 
             <S.ItemLabel>{title}</S.ItemLabel>

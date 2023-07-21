@@ -1,5 +1,5 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
-import { CompositeScreenProps } from '@react-navigation/native'
+import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native'
 import type { StackScreenProps } from '@react-navigation/stack'
 
 export type StackRootParamsList = {
@@ -33,7 +33,6 @@ export type QuestionsScreenProps = CompositeScreenProps<
     BottomTabScreenProps<BottomTabParamsList, 'Questions'>,
     StackScreenProps<StackHomeParamsList>
 >
-export type ProfileScreenProps = CompositeScreenProps<
-    BottomTabScreenProps<BottomTabParamsList, 'Profile'>,
-    StackScreenProps<StackHomeParamsList>
->
+export type ProfileScreenProps = {
+    HomeStack: NavigatorScreenParams<StackHomeParamsList>,
+}

@@ -10,5 +10,6 @@ export type UserType = {
     imageURL?: string | null,
     adress?: string,
     gender?: GenderType
-    bloodType?: string
+    bloodType?: string,
+    phoneNumber?: string
 }

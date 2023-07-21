@@ -1,8 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+type InitialStateType = {
+    isDark: boolean
+}
 
-
-const initialState = {
+const initialState: InitialStateType = {
     isDark: false
 }
 

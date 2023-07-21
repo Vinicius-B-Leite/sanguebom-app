@@ -1,6 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { UserType } from "../../types/UserType";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { removeStorageUser } from "../../storage/userStorage";
 
 
@@ -12,12 +11,7 @@ const initialState: InitalState = {
 }
 
 
-export const logoutUser = createAsyncThunk(
-    'user/logout',
-    () => {
-        removeStorageUser()
-    }
-)
+
 
 const userSlicer = createSlice({
     name: 'user',
@@ -25,18 +19,16 @@ const userSlicer = createSlice({
     reducers: {
         setUser: (state, action: PayloadAction<UserType | undefined>) => {
             state.user = action.payload
-
         },
-    },
-    extraReducers: (builder) => {
-        builder.addCase(logoutUser.fulfilled, (state) => {
+        logoutUser: (state) => {
+            removeStorageUser()
             state.user = undefined
-        })
-    }
+        }
+    },
 })
 
 
 
 
-export const { setUser } = userSlicer.actions
+export const { setUser,logoutUser } = userSlicer.actions
 export const userReducer = userSlicer.reducer
