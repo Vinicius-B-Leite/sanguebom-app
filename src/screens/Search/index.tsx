@@ -38,7 +38,6 @@ const Search: React.FC = () => {
   )
 
   const refs = useRef(Array.from({ length: data?.length || 999 }).map(() => createRef<MapMarker>()))
-  console.log(data)
 
   let searchedBloodCollectors = useMemo(() => {
     if (searchInput.length > 0 && data) {

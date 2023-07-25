@@ -17,4 +17,4 @@ const RhFactorItem: React.FC<Props> = ({ rh, selected, onClick }) => {
     )
 }
 
-export default memo(RhFactorItem, (p, n) => Object.is(p, n));
+export default RhFactorItem

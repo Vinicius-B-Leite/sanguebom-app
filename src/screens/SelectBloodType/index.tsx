@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import * as S from './styles';
-import type { StackScreenProps } from '@react-navigation/stack'
 import { StackRootParamsList } from '../../routes/models';
-import { useTheme } from 'styled-components/native';
-import { View } from 'react-native';
 import BloodTypeList from './components/BloodTypeList';
 import HeaderGoBack from '../../components/HeaderGoBack';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
-type Nav = StackScreenProps<StackRootParamsList, 'SelectBloodType'>
+type Nav = NavigationProp<StackRootParamsList, 'SelectBloodType'>
 
-const SelectBloodType: React.FC<Nav> = ({ navigation }) => {
-    
+const SelectBloodType: React.FC = () => {
+
+    const navigation = useNavigation<Nav>()
+
     const [bloodTypeSelected, setBlooadTypeSelected] = useState('')
     const [rhFactorSelected, setRhFactorSelected] = useState('+')
 
@@ -30,7 +30,9 @@ const SelectBloodType: React.FC<Nav> = ({ navigation }) => {
                 />
 
                 <S.NextBtn
-                    onPress={() => bloodTypeSelected.length > 0 && navigation.navigate('SingUp', { bloodtype: bloodTypeSelected + rhFactorSelected })}
+                    onPress={() => bloodTypeSelected.length > 0 &&
+                        navigation.navigate('SingUp', { bloodtype: bloodTypeSelected + rhFactorSelected })
+                    }
                     isEnable={bloodTypeSelected.length > 0}
                 >
                     <S.NextLabel>Avançar</S.NextLabel>
