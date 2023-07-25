@@ -1,14 +1,13 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, Text, View } from 'react-native'
-import AntDesign from '@expo/vector-icons/AntDesign';
+import { ActivityIndicator, Alert } from 'react-native'
 import { StackRootParamsList } from '../../routes/models';
 import * as S from './style'
 import { useTheme } from 'styled-components/native';
 import Input from '../../components/Input';
 import { useMutation } from '@tanstack/react-query';
 import { createAccount } from '../../api/createAcount'
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../feature/user/userSlicer';
 import { UserType } from '../../types/UserType';
@@ -17,8 +16,6 @@ import HeaderGoBack from '../../components/HeaderGoBack';
 import { api } from '../../api';
 import { updateStorageUser } from '../../storage/userStorage';
 import DropDown from '../../components/DropDown';
-import OneSignal from 'react-native-onesignal';
-import { updateBloodTypeTag } from '../../onesignal/updateBloodTypeTag';
 import { GenderType } from 'src/types/GenderType';
 
 
@@ -33,7 +30,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
     const [gender, setGender] = useState('')
     const dispatch = useDispatch()
 
-    const onError = async (error: AxiosError<ErrorResponse>) => {
+    const onError = (error: AxiosError<ErrorResponse>) => {
         if (error.response && !(['02', '03', '13', '20'].includes(error.response?.data.code))) {
             Alert.alert(
                 'Ops',
@@ -50,7 +47,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
             username,
             gender
         }),
-        onSuccess: ({ data }) => {
+        onSuccess: (data) => {
             api.defaults.headers.common['Authorization'] = 'Bearer ' + data.token
             const user: UserType = {
                 bloodType: data.donors?.bloodType || undefined,
@@ -89,7 +86,6 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                 <S.InputArea>
                     <Input
                         leftIcon='user'
-
                         value={username}
                         onChangeText={setUsername}
                         placeholder={'Nome de usuário'}
@@ -113,7 +109,6 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                 <S.InputArea>
                     <Input
                         leftIcon='lock'
-
                         value={password}
                         onChangeText={setPassword}
                         placeholder={'Senha'}
@@ -129,6 +124,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                         onChangeText={setConfirmPassword}
                         placeholder={'Confirme a senha'}
                         placeholderTextColor={theme.colors.text_100}
+                        errorMessage={(password.length > 0 && password !== confirmPassword) ? 'As senhas devem ser iguais' : undefined}
                     />
                 </S.InputArea>
 
@@ -145,7 +141,10 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
 
                     onPress={() => isEnableToSubmit && mutate()}
                 >
-                    <S.SubmitLabel>{isLoading ? <ActivityIndicator size={theme.icons.sm} color={theme.colors.oppositeContrast} /> : 'Concluir'}</S.SubmitLabel>
+                    <S.SubmitLabel>{
+                        isLoading ?
+                            <ActivityIndicator size={theme.icons.sm} color={theme.colors.oppositeContrast} /> : 'Concluir'}
+                    </S.SubmitLabel>
                 </S.SubmitButton>
             </S.Form>
 

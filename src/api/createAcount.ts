@@ -13,7 +13,7 @@ type Props = {
 
 
 export async function createAccount({ bloodType, email, password, username, gender }: Props) {
-    return await api.post<AuthResponse>(
+    return( await api.post<AuthResponse>(
         'auth/create',
         {
             bloodType,
@@ -21,6 +21,6 @@ export async function createAccount({ bloodType, email, password, username, gend
             password,
             username,
             gender
-        })
+        })).data
 
 }
