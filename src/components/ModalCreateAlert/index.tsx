@@ -14,7 +14,7 @@ import ModalBase from '../ModalBase';
 
 
 type Props = {
-    isAlertOn: boolean | undefined,
+    isAlertOn?: boolean | undefined,
     bTypesSelecteds?: string[] | undefined,
     visible: boolean,
     onRequestClose: () => void
@@ -47,8 +47,8 @@ const ModalCreateAlert: React.FC<Props> = ({ isAlertOn = false, bTypesSelecteds,
             status: switchEnable,
         }),
         onSuccess: async () => {
-            onRequestClose()
             await client.invalidateQueries(['bloodCollectors'])
+            onRequestClose()
         }
     })
 

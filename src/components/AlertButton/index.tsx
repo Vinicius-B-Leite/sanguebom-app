@@ -13,9 +13,9 @@ type Props = {
 const AlertButton: React.FC<Props> = ({ onClick }) => {
 
     const theme = useTheme()
-    const userType = useSelector((state: RootState) => state.user.user?.type)
+    const userType = useSelector((state: RootState) => state.user.user!.type)
 
-    if (userType !== 'bloodCollectors') return <></>
+    if (userType !== 'bloodCollectors') return null
 
     return (
         <S.Container onPress={onClick} >

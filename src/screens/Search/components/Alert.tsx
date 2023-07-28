@@ -13,7 +13,7 @@ const Alert: React.FC<Props> = ({ username, bloodTypes, visible }) => {
     if (!visible) return <></>
 
     return (
-        <S.AlertInfoContainer>
+        <S.AlertInfoContainer testID='alertInfoView'>
             <S.Left>
                 <S.BloodCollectorName numberOfLines={2}>{username}</S.BloodCollectorName>
             </S.Left>

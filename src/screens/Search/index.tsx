@@ -59,7 +59,7 @@ const Search: React.FC = () => {
 
     if (!data) return
 
-    refs?.current[data.findIndex(v => v.username === suggestItem.username)]?.current?.showCallout()
+    refs?.current[data.findIndex(v => v.username === suggestItem.username)].current?.showCallout()
   }
 
   const markers = useMemo(() => {
@@ -83,7 +83,6 @@ const Search: React.FC = () => {
   if (!markers) return null
 
   const handleSelectMarker = (mark: MarkerType) => {
-
     if (mark.isInAlert) {
       setCurrentBloodCollector(mark)
     }
@@ -100,6 +99,7 @@ const Search: React.FC = () => {
         handleClickSearchedBloodCollector={handleClickSearchedBloodCollector} />
 
       <MapView
+        testID='mapview'
         onPress={() => setCurrentBloodCollector(undefined)}
         provider={PROVIDER_GOOGLE}
         style={{ flex: 1 }}
@@ -114,7 +114,8 @@ const Search: React.FC = () => {
 
           markers.map((mark, i) => (
             <Marker
-              ref={refs.current[i]}
+              testID={`marker_${i}`}
+              ref={refs?.current[i]}
               key={i}
               coordinate={{
                 latitude: mark.coordinate.latitude,
@@ -142,8 +143,8 @@ const Search: React.FC = () => {
       <ModalCreateAlert
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
-        bTypesSelecteds={data && data[data?.findIndex(v => v.uid === user!.uid)].alert?.bloodTypes}
-        isAlertOn={!!(data && data[data?.findIndex(v => v.username === user?.username)].alert?.status)}
+        bTypesSelecteds={data && data[data?.findIndex(v => v.uid === user!.uid)]?.alert?.bloodTypes}
+        isAlertOn={(data && data[data?.findIndex(v => v.uid === user!.uid)]?.alert?.status)}
       />
 
       <Alert
