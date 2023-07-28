@@ -39,24 +39,22 @@ describe('MyDonates', () => {
     it('showed block donate icon if the user has donated yet', async () => {
 
         const { findByTestId } = renderComponentWithPreState()
-
-
         expect(await findByTestId('blockDonateIcon')).toBeTruthy()
     })
+
     it('showed donate list', async () => {
         const { findByText } = renderComponentWithPreState()
         const firstElementList = await findByText(mocks.fakeDonatesWithWaitDaysToDonate.donates[0].bloodCollectors.username)
         expect(firstElementList).toBeTruthy()
     })
 
-    it('enabled create donate button if block donate icon did NOT show', async () => {
-        jest.clearAllMocks();
+    it('enabled create donate button if wait days to donate >= 0', async () => {
         jest.spyOn(apiGetMyDonates, 'getMyDonates').mockResolvedValue(mocks.fakeDonatesWith0DaysToWait)
 
-        const { queryByTestId } = renderComponentWithPreState()
+        const { findByText } = renderComponentWithPreState()
 
-
-        expect(queryByTestId('blockDonateIcon')).toBeNull()
+        const openModalBtn = await findByText('Cadastrar doação')
+        expect(openModalBtn).toBeTruthy()
 
     })
 
@@ -90,11 +88,10 @@ describe('MyDonates', () => {
     })
 
     it('went back to home when clicked on header title', async () => {
+        jest.useFakeTimers()
         const { findByTestId } = renderComponentWithPreState()
 
         fireEvent.press(await findByTestId('arrow-icon'))
-
-
 
         expect(mockGoBack).toHaveBeenCalled()
     })
