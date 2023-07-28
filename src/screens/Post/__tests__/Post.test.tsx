@@ -1,6 +1,6 @@
 import React from "react"
 import Post from '../index'
-import { fireEvent, renderWithProviders } from '../../../utlis/test-utils/customRender'
+import { fireEvent, renderWithProviders, waitFor } from '../../../utlis/test-utils/customRender'
 import * as apiService from '../../../api/getOnePost'
 import { mocks } from './mocks'
 
@@ -13,23 +13,27 @@ const renderComponent = (mockNavigate?: jest.Mock) => renderWithProviders(
     />
 )
 describe('Post', () => {
-    beforeEach(() => {
-        jest.spyOn(apiService, 'getOnePost').mockResolvedValue(mocks.fakePost)
-    })
 
     it('rendered post details', async () => {
+        jest.spyOn(apiService, 'getOnePost').mockResolvedValue(mocks.fakePost)
+
         const { findByText } = renderComponent()
         const postDescription = mocks.fakePost.description
         expect(await findByText(postDescription, { exact: false })).toBeTruthy()
     })
 
     it('went back to home when click on header', async () => {
+        const getOnePostSpy = jest.spyOn(apiService, 'getOnePost').mockResolvedValue(mocks.fakePost)
+
         const mockGoBack = jest.fn()
         const { findByTestId } = renderComponent(mockGoBack)
 
+
+        await waitFor(() => expect(getOnePostSpy).toBeCalled())
+        
         const arrowIcon = await findByTestId('arrow-icon')
         fireEvent(arrowIcon, 'press')
 
-        expect(mockGoBack).toHaveBeenCalled()
+        expect(mockGoBack).toHaveBeenCalledWith('Home')
     })
 })

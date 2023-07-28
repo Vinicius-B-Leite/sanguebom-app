@@ -247,7 +247,6 @@ describe('Profile', () => {
                 fireEvent.press(submitBtn)
             })
             const userCache = userStorage.getStorageUser()
-            console.log("🚀 ~ file: Profile.test.tsx:242 ~ it ~ userCache:", userCache)
 
             expect(userCache?.phoneNumber).toEqual('phoneNumberUpdated')
         })

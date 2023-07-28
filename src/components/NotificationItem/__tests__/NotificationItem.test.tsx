@@ -58,7 +58,6 @@ describe('NotificationItem', () => {
         const { getByTestId } = renderWithProviders(<NotificationItem notification={fakePostNotification} />)
 
         const notificationContainer = getByTestId('notificationContainer')
-        console.log("🚀 ~ file: NotificationItem.test.tsx:53 ~ it ~ notificationContainer:", notificationContainer)
         fireEvent.press(notificationContainer)
 
 
