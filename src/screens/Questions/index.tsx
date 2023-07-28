@@ -9,7 +9,7 @@ import { useTheme } from 'styled-components/native';
 import { QuestionsScreenProps } from '../../routes/models';
 import SkeletonContainer from '../../components/SkeletonContainer';
 import QuestionList from './components/QuestionList';
-import { QuestionType } from 'src/types/QuestionType';
+import { QuestionType } from '../../types/QuestionType';
 import { getQuestionsStorage, setQuestionsStorage } from '../../storage/questionsStorage';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
@@ -17,8 +17,10 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 type Nav = NavigationProp<QuestionsScreenProps>
 const Questions: React.FC = () => {
+
   const theme = useTheme()
   const navigation = useNavigation<Nav>()
+  
   const [offlineQuestions, setOfflineQuestions] = useState<QuestionType[]>([])
 
   const { data, isLoading, refetch } = useQuery(

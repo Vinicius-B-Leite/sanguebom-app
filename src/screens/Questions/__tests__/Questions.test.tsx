@@ -4,7 +4,7 @@ import * as apiService from '../../../api/getQuestions'
 import Questions from '../index'
 import { mocks } from './mocks'
 import { QuestionType } from '../../../types/QuestionType'
-import * as questionsStorage  from '../../../storage/questionsStorage'
+import * as questionsStorage from '../../../storage/questionsStorage'
 
 
 
@@ -15,41 +15,48 @@ jest.mock('@react-navigation/native', () => ({
         navigate: mockNavigate,
     })
 }))
-describe('Questions', () => {
-    let getQuestionsMock: jest.SpyInstance<Promise<QuestionType[]>, [], any> | null
-    beforeEach(() => {
-        getQuestionsMock = jest.spyOn(apiService, 'getQuestions')
-            .mockResolvedValue(mocks.fakeQuestions)
-    })
 
-    afterEach(() => {
-        getQuestionsMock = null
-    })
+const comunRender = () => renderWithProviders(
+    <Questions />, {
+    preloadedState: {
+        notification: { length: 10 },
+        user: mocks.fakeUser
+    }
+})
+
+describe('Questions', () => {
+
 
     it('rendered', async () => {
-        const { findByText } = renderWithProviders(<Questions />)
+        jest.spyOn(apiService, 'getQuestions').mockResolvedValue(mocks.fakeQuestions)
+
+        const { findByText } = comunRender()
 
         expect(await findByText(/Sangue Bom/i)).toBeTruthy()
     })
     it('got storage questions when axios returned "Network Error"', async () => {
+        jest.spyOn(apiService, 'getQuestions').mockRejectedValue({ message: 'Network Error' })
         jest.spyOn(questionsStorage, 'getQuestionsStorage').mockReturnValueOnce(mocks.fakeCacheQuestions)
-        getQuestionsMock?.mockRejectedValue({ message: 'Network Error' })
 
-        const { findByText } = renderWithProviders(<Questions />)
+        const { findByText } = comunRender()
+
 
         expect(await findByText(mocks.fakeCacheQuestions[0].questions)).toBeTruthy()
-
     })
     it('saved in cache the posts from api ', async () => {
-        renderWithProviders(<Questions />)
+        jest.useFakeTimers()
+        const getQuestionsMock = jest.spyOn(apiService, 'getQuestions').mockResolvedValue(mocks.fakeQuestions)
+        
+        comunRender()
 
         await waitFor(() => expect(getQuestionsMock).toHaveBeenCalled())
+
         const postsInCache = questionsStorage.getQuestionsStorage()
 
         expect(postsInCache).toEqual(mocks.fakeQuestions)
     })
     it('navigated to Notification screen when bell icon was clicked', async () => {
-        const { findByTestId } = renderWithProviders(<Questions />)
+        const { findByTestId } = renderWithProviders(<Questions />, {preloadedState: {notification: {length: 10}}})
 
         const bellIcon = await findByTestId('bellIcon')
 
@@ -58,7 +65,7 @@ describe('Questions', () => {
         expect(mockNavigate).toHaveBeenCalledWith('HomeStack', { screen: 'Notification' })
     })
     it('navigated to MyDonates screen when bell icon was clicked', async () => {
-        const { findByTestId } = renderWithProviders(<Questions />)
+        const { findByTestId } = renderWithProviders(<Questions />, {preloadedState: {notification: {length: 10}}})
 
         const bloodDonateIcon = await findByTestId('bloodDonateIcon')
 
@@ -67,12 +74,12 @@ describe('Questions', () => {
         expect(mockNavigate).toHaveBeenCalledWith('HomeStack', { screen: 'MyDonates' })
     })
     it('refetched post on scroll down', async () => {
+        jest.spyOn(apiService, 'getQuestions').mockResolvedValue([...mocks.fakeQuestions, mocks.newQuestionFromRefetch])
 
-        const { findByTestId } = renderWithProviders(<Questions />)
+        const { findByTestId } = renderWithProviders(<Questions />, {preloadedState: {notification: {length: 10}}})
 
         const questionsList = await findByTestId('questionsList')
-
-        getQuestionsMock?.mockResolvedValue([...mocks.fakeQuestions, mocks.newQuestionFromRefetch])
+        
         await act(() => questionsList.props.onRefresh())
 
         expect(questionsList.props.data).toContainEqual(mocks.newQuestionFromRefetch)

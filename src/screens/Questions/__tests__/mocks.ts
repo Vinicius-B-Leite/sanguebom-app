@@ -1,4 +1,5 @@
 import { QuestionType } from "../../../types/QuestionType";
+import { GenderType } from "../../../types/GenderType";
 
 
 const fakeQuestions: QuestionType[] = [
@@ -41,8 +42,22 @@ const newQuestionFromRefetch = {
     id: 'newQuestion.id',
     questions: 'newQuestion.questions'
 }
+
+const fakeUser = {
+    user: {
+        uid: "123123123",
+        email: 'email',
+        password: "23123",
+        token: '11111',
+        type: 'donors',
+        username: 'username',
+        bloodType: 'A+',
+        gender: 'male' as GenderType
+    }
+}
 export const mocks = {
     fakeQuestions,
     newQuestionFromRefetch,
-    fakeCacheQuestions
+    fakeCacheQuestions,
+    fakeUser
 }
