@@ -29,9 +29,7 @@ const CreatePost: React.FC = () => {
         setFile({ name: 'post-' + user!.uid, type: res.assets[0].type, uri: res.assets[0].uri })
       }
 
-    } catch (error) {
-      console.log("🚀 ~ file: index.tsx:33 ~ handlePickImage ~ error:", error)
-      
+    } catch (error) {      
     }
     
   }

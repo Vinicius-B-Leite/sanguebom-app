@@ -23,6 +23,7 @@ jest.mock('@react-navigation/native', () => ({
         goBack: mockGoBack
     })
 }))
+
 describe('MyDonates', () => {
 
     beforeEach(() => {

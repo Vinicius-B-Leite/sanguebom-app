@@ -46,7 +46,7 @@ describe('Questions', () => {
     it('saved in cache the posts from api ', async () => {
         jest.useFakeTimers()
         const getQuestionsMock = jest.spyOn(apiService, 'getQuestions').mockResolvedValue(mocks.fakeQuestions)
-        
+
         comunRender()
 
         await waitFor(() => expect(getQuestionsMock).toHaveBeenCalled())
@@ -56,7 +56,7 @@ describe('Questions', () => {
         expect(postsInCache).toEqual(mocks.fakeQuestions)
     })
     it('navigated to Notification screen when bell icon was clicked', async () => {
-        const { findByTestId } = renderWithProviders(<Questions />, {preloadedState: {notification: {length: 10}}})
+        const { findByTestId } = renderWithProviders(<Questions />, { preloadedState: { notification: { length: 10 } } })
 
         const bellIcon = await findByTestId('bellIcon')
 
@@ -65,7 +65,7 @@ describe('Questions', () => {
         expect(mockNavigate).toHaveBeenCalledWith('HomeStack', { screen: 'Notification' })
     })
     it('navigated to MyDonates screen when bell icon was clicked', async () => {
-        const { findByTestId } = renderWithProviders(<Questions />, {preloadedState: {notification: {length: 10}}})
+        const { findByTestId } = renderWithProviders(<Questions />, { preloadedState: { notification: { length: 10 } } })
 
         const bloodDonateIcon = await findByTestId('bloodDonateIcon')
 
@@ -76,10 +76,10 @@ describe('Questions', () => {
     it('refetched post on scroll down', async () => {
         jest.spyOn(apiService, 'getQuestions').mockResolvedValue([...mocks.fakeQuestions, mocks.newQuestionFromRefetch])
 
-        const { findByTestId } = renderWithProviders(<Questions />, {preloadedState: {notification: {length: 10}}})
+        const { findByTestId } = renderWithProviders(<Questions />, { preloadedState: { notification: { length: 10 } } })
 
         const questionsList = await findByTestId('questionsList')
-        
+
         await act(() => questionsList.props.onRefresh())
 
         expect(questionsList.props.data).toContainEqual(mocks.newQuestionFromRefetch)
