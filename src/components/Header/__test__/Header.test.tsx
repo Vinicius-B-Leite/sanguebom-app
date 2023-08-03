@@ -7,6 +7,7 @@ import { darkMode } from '../../../theme/darkMode'
 import { fireEvent } from '@testing-library/react-native'
 import { store } from '../../../feature/store'
 import { setNotificationLength } from '../../../feature/notification/notificationSlice'
+import { UserType } from '../../../types/UserType'
 
 
 const fakeUser = {
@@ -19,7 +20,7 @@ const fakeUser = {
         username: 'username',
         bloodType: 'A+',
         gender: 'male' as GenderType
-    }
+    } as UserType
 }
 describe('Header', () => {
     it('was rendered without notification number when notification length > 0', () => {
@@ -31,7 +32,7 @@ describe('Header', () => {
             {
                 preloadedState: {
                     notification: { length: 1 },
-                    user: { ...fakeUser }
+                    user: fakeUser
                 },
             })
 
@@ -101,6 +102,8 @@ describe('Header', () => {
                     },
                 })
 
+                jest.runAllTimers()
+
             const notificationNumberElement = await findByText('14')
             expect(notificationNumberElement).toBeTruthy()
         })
@@ -166,7 +169,7 @@ describe('Header', () => {
             expect(bellIconElement.props.style[0].color).toBe(darkMode.colors.text_200)
             expect(notificationLenght.props.style[0].backgroundColor).toBe(darkMode.colors.contrast_100)
         })
-        
+
 
     })
 })

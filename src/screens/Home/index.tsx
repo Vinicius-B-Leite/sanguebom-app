@@ -38,7 +38,11 @@ const Home: React.FC = () => {
 
   return (
     <S.Container>
-      <Header onClickBell={() => navigation.navigate('Notification')} onClickBloodDonate={() => navigation.navigate('MyDonates')} />
+      <Header
+        onClickBell={() => navigation.navigate('Notification')}
+        onClickBloodDonate={() => navigation.navigate('MyDonates')}
+      />
+      
       {
         isLoading ?
           [1, 2, 3, 4, 5].map(i => <SkeletonPost key={i} />)

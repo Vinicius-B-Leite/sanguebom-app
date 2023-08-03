@@ -18,6 +18,7 @@ import { GenderType } from '../../types/GenderType';
 import Options from './components/Options';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { UserType } from '../../types/UserType';
+import ModalUpdateBloodType from '../../components/ModalUpdateBloodType';
 
 
 
@@ -41,6 +42,7 @@ const Profile: React.FC = () => {
     (props: UpdateUserCredencialsProps) => updateUserCredencials(props),
     {
       onSuccess: (res) => {
+        console.log(res)
         const isBloodCollector = res.type == 'bloodCollectors'
 
         const userUpdated: UserType = {
@@ -49,7 +51,7 @@ const Profile: React.FC = () => {
           gender: isBloodCollector ? undefined : res.donors.gender as GenderType,
           password: res.password,
           type: res.type,
-          token: res.token,
+          token: user!.token,
           uid: isBloodCollector ? res.bloodCollectors.uid : res.donors.uid,
           username: res.username,
           adress: res.bloodCollectors?.adress,
@@ -59,9 +61,8 @@ const Profile: React.FC = () => {
         dispatch(setUser(userUpdated))
         updateStorageUser(userUpdated)
         setIsModalVisible(false)
-      },
-    }
-  )
+      }
+    })
 
 
   const handleImagePicker = async () => {
@@ -116,10 +117,10 @@ const Profile: React.FC = () => {
         title='Senha' />
 
       {
-        user?.type === 'normal user' &&
+        user?.type === 'donors' &&
         <Options
           iconName='tint'
-          onPress={() => { }}
+          onPress={() => setIsModalVisible(true)}
           title='Tipo sanguíneo' />
       }
 
@@ -144,9 +145,15 @@ const Profile: React.FC = () => {
 
       <ModalUpdateUser
         closeModal={() => setIsModalVisible(false)}
-        visible={isModalVisible}
+        visible={isModalVisible && modalProps.title ? true : false}
         submit={(txt) => modalProps.callback(txt)}
         title={modalProps.title}
+      />
+
+      <ModalUpdateBloodType
+        visible={isModalVisible && !modalProps.title ? true : false}
+        onRequestClose={() => setIsModalVisible(false)}
+        onSubmit={(btSelected) => mutate({ ...user, bloodType: btSelected } as UpdateUserCredencialsProps)}
       />
     </S.Container>
   )

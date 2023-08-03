@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React  from 'react';
 import { TouchableOpacity } from 'react-native';
 import * as S from './style'
 import EvilIcons from '@expo/vector-icons/EvilIcons';
@@ -9,8 +9,6 @@ import BloodDonateIcon from '../../assets/blood-donation.svg'
 import { useQuery } from '@tanstack/react-query';
 import { getNotificationLength } from '../../api/getNotificationLength';
 import { setNotificationLength } from '../../feature/notification/notificationSlice';
-import { AxiosError } from 'axios';
-import { ErrorResponse } from '../../types/ErrorResponse';
 
 
 type Props = {
@@ -26,20 +24,15 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
     const user = useSelector((rootState: RootState) => rootState.user.user)
 
 
-    const { data, refetch } = useQuery({
+    const { data } = useQuery({
         queryKey: ['notificationLength'],
-        enabled: false,
+        enabled: notificationsLength >= 0 ,
         queryFn: () => getNotificationLength({ uid: user!.uid }),
         onSuccess: (res: number) => {
             dispatch(setNotificationLength(res))
         }
     })
 
-    useEffect(() => {
-        if (!notificationsLength) {
-            refetch()
-        }
-    }, [])
 
     return (
         <S.Container>
@@ -47,10 +40,10 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
             <S.Right>
                 <S.Notifications onPress={onClickBell} >
                     {
-                        (data && data > 0) &&
-                        <S.NotificationNumberArea testID='notificationLenght'>
+                        (data && Number(data) > 0) &&
+                        (<S.NotificationNumberArea testID='notificationLenght'>
                             <S.NotificationLabel>{Number(data) < 99 ? Number(data) : '99+'}</S.NotificationLabel>
-                        </S.NotificationNumberArea>
+                        </S.NotificationNumberArea>)
                     }
                     <EvilIcons
                         testID='bellIcon'

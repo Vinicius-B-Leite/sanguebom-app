@@ -4,6 +4,8 @@ import { StackRootParamsList } from '../../routes/models';
 import BloodTypeList from './components/BloodTypeList';
 import HeaderGoBack from '../../components/HeaderGoBack';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../feature/store';
 
 type Nav = NavigationProp<StackRootParamsList, 'SelectBloodType'>
 
@@ -11,6 +13,7 @@ const SelectBloodType: React.FC = () => {
 
     const navigation = useNavigation<Nav>()
 
+    const isUpdatingBloodType = !!(useSelector((state: RootState) => state.user.user))
     const [bloodTypeSelected, setBlooadTypeSelected] = useState('')
     const [rhFactorSelected, setRhFactorSelected] = useState('+')
 

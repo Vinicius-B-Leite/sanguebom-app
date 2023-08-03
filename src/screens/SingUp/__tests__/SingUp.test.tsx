@@ -4,13 +4,22 @@ import { cleanup, fireEvent, renderWithProviders, waitFor } from '../../../utlis
 import * as apiService from '../../../api/createAcount'
 import { mocks } from './mocks'
 import { getStorageUser } from "../../../storage/userStorage";
+import { Alert } from 'react-native'
+
+
+
+const mockGoback = jest.fn()
 
 const renderComponent = () => renderWithProviders(
     <SingUp
-        navigation={jest.requireActual('@react-navigation/stack')}
+        navigation={{ ...jest.requireActual('@react-navigation/stack'), goBack: mockGoback }}
         route={{ ...jest.requireActual('@react-navigation/stack'), params: { bloodtype: 'AB+' } }}
     />
 )
+
+
+
+
 describe('SingUp', () => {
     beforeEach(() => {
         jest.useFakeTimers()
@@ -131,7 +140,7 @@ describe('SingUp', () => {
 
         expect(createAccSpy).not.toHaveBeenCalled()
     })
-    it('submited correctly and user on cache when all props were passed', async () => {
+    it('submited correctly and saved user on cache when all props were passed', async () => {
         const createAccSpy = jest.spyOn(apiService, 'createAccount').mockResolvedValueOnce(mocks.userCreated)
 
         const { getByText, getByPlaceholderText } = renderComponent()
@@ -161,6 +170,41 @@ describe('SingUp', () => {
         expect(userStorage).toBeTruthy()
 
         createAccSpy.mockReset()
+    })
+    it('showed alert if code error response WAS NOT included in ["02", "03", "13", "20"] ', async () => {
+        const createAccSpy = jest.spyOn(apiService, 'createAccount').mockRejectedValueOnce({
+            response: {
+                data: {
+                    code: '01'
+                }
+            }
+        })
+        const mockAlert = jest.spyOn(Alert, 'alert')
+
+        const { getByText, getByPlaceholderText } = renderComponent()
+
+        const usernameInput = getByPlaceholderText(/Nome de usuário/i)
+        const emailInput = getByPlaceholderText(/Email/i)
+        const passwordInput = getByPlaceholderText('Senha')
+        const confirmPasswordInput = getByPlaceholderText(/Confirme a senha/i)
+        const genderDropDown = getByText(/Selecione seu sexo biológico/i)
+        const submitButton = getByText(/Concluir/i)
+
+
+        fireEvent.changeText(usernameInput, 'username')
+        fireEvent.changeText(emailInput, 'email')
+        fireEvent.changeText(passwordInput, '123123')
+        fireEvent.changeText(confirmPasswordInput, '123123')
+
+        fireEvent.press(genderDropDown)
+        fireEvent.press(getByText('Feminino'))
+
+        fireEvent.press(submitButton)
+
+        await waitFor(() => expect(createAccSpy).toHaveBeenCalled())
+        expect(createAccSpy).toHaveBeenCalled()
+
+        expect(mockAlert).toHaveBeenCalled()
     })
     it('showed email error message if the email did NOT pass in verification', async () => {
         const createAccSpy = jest.spyOn(apiService, 'createAccount').mockRejectedValueOnce({
@@ -248,5 +292,13 @@ describe('SingUp', () => {
         fireEvent.changeText(confirmPasswordInput, '321')
 
         expect(getByText('As senhas devem ser iguais')).toBeTruthy()
+    })
+    it('went back when arrow-icon was clicked', async () => {
+        const { findByTestId } = renderComponent()
+
+        const arrowIcon = await findByTestId('arrow-icon')
+        fireEvent.press(arrowIcon)
+
+        expect(mockGoback).toHaveBeenCalled()
     })
 })

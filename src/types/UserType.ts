@@ -5,7 +5,7 @@ export type UserType = {
     email: string,
     password: string,
     username: string,
-    type: string,
+    type: 'bloodCollectors' | 'donors',
     token: string,
     imageURL?: string | null,
     adress?: string,
