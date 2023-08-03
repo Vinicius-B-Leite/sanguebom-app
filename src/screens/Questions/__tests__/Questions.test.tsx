@@ -25,7 +25,9 @@ const comunRender = () => renderWithProviders(
 })
 
 describe('Questions', () => {
-
+    beforeEach(() => {
+        mockNavigate.mockReset()
+    })
 
     it('rendered', async () => {
         jest.spyOn(apiService, 'getQuestions').mockResolvedValue(mocks.fakeQuestions)
@@ -72,6 +74,14 @@ describe('Questions', () => {
         fireEvent.press(bloodDonateIcon)
 
         expect(mockNavigate).toHaveBeenCalledWith('HomeStack', { screen: 'MyDonates' })
+    })
+    it('navigated to Questionary screen when user clicked on questionary button', async() => {
+        const { findByText } = renderWithProviders(<Questions />, { preloadedState: { notification: { length: 10 } } })
+
+        const questionaryBtn = await findByText('Questionário de aptdão', {exact: false})
+        fireEvent.press(questionaryBtn)
+
+        expect(mockNavigate).toHaveBeenCalledWith('Questionary')
     })
     it('refetched post on scroll down', async () => {
         jest.spyOn(apiService, 'getQuestions').mockResolvedValue([...mocks.fakeQuestions, mocks.newQuestionFromRefetch])

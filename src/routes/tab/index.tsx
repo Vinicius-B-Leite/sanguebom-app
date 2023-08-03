@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../feature/store';
 import HomeStack from '../homeStack';
 import { BottomTabParamsList } from '../models';
+import QuestionsStack from '../questionsStack';
 
 const { Navigator, Screen } = createBottomTabNavigator<BottomTabParamsList>()
 
@@ -85,8 +86,8 @@ const Tab = () => {
             }
 
             <Screen
-                name='Questions'
-                component={Questions}
+                name='QuestionsStack'
+                component={QuestionsStack}
                 options={{
                     tabBarIcon: ({ focused, color }) => (
                         <AntDesign

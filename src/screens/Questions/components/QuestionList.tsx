@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { QuestionType } from '../../../types/QuestionType';
 import Question from '../../../components/Question';
+import Questionary from './QuestionaryButton';
+import QuestionaryButton from './QuestionaryButton';
 
 
 
@@ -26,6 +28,7 @@ const QuestionList: React.FC<Props> = ({ questions, refetch }) => {
             renderItem={({ item }) => <Question item={item} />}
             refreshing={refreshList}
             onRefresh={handleRefresh}
+            ListHeaderComponent={() => <QuestionaryButton />}
         />
     )
 }

@@ -1,6 +1,6 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native'
-import type { StackScreenProps } from '@react-navigation/stack'
+import { CompositeScreenProps, NavigatorScreenParams,  } from '@react-navigation/native'
+import type { StackScreenProps,StackNavigationProp } from '@react-navigation/stack'
 
 export type StackRootParamsList = {
     LoginOptions: undefined,
@@ -15,7 +15,7 @@ export type BottomTabParamsList = {
     HomeStack: StackScreenProps<StackHomeParamsList>,
     Search: undefined,
     CreatePost?: undefined,
-    Questions: undefined,
+    QuestionsStack: StackScreenProps<QuestionsParamsList>,
     Profile: undefined
 }
 
@@ -28,6 +28,10 @@ export type StackHomeParamsList = {
     MyDonates: undefined
 }
 
+export type QuestionsParamsList = {
+    Questions: undefined,
+    Questionary: undefined
+}
 
 export type QuestionsScreenProps = {
     HomeStack: NavigatorScreenParams<StackHomeParamsList>

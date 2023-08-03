@@ -1,5 +1,6 @@
 import { QuestionType } from "../../../types/QuestionType";
 import { GenderType } from "../../../types/GenderType";
+import { UserType } from "../../../types/UserType";
 
 
 const fakeQuestions: QuestionType[] = [
@@ -53,7 +54,7 @@ const fakeUser = {
         username: 'username',
         bloodType: 'A+',
         gender: 'male' as GenderType
-    }
+    } as UserType
 }
 export const mocks = {
     fakeQuestions,
