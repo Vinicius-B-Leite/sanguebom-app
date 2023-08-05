@@ -37,7 +37,7 @@ const MyDonates: React.FC = () => {
                 theme={type === 'dark' ? 'transparent' : 'contrast'}
             />
             {
-                data && (data.waitDaysToDonate >= 0) &&
+                data && (data.waitDaysToDonate > 0) &&
                 <BlockDonate daysWaitToDonate={data.waitDaysToDonate === 0 ? 60 : data.waitDaysToDonate} />
             }
             <S.Main>
@@ -46,7 +46,7 @@ const MyDonates: React.FC = () => {
                 />
 
                 {
-                    data && (data.waitDaysToDonate < 0) &&
+                    data && (data.waitDaysToDonate <= 0) &&
 
                     <S.OpenModalBtn onPress={() => setIsModalVisible(true)}>
                         <S.OpenModalTxt>Cadastrar doação</S.OpenModalTxt>

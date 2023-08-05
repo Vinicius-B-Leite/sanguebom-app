@@ -15,6 +15,7 @@ const DatePicker: React.FC<Props> = ({ dateSelected, selectDate }) => {
     const { icons, colors } = useTheme()
     const [isDateVisible, setIsDateVisible] = useState(false)
 
+
     return (
         <S.DatePickerArea testID='openCalendarButton' onPress={() => setIsDateVisible(true)}>
             <AntDesign name="calendar" size={icons.sm} color={colors.text_100} />
