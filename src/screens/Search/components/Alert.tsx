@@ -23,7 +23,7 @@ const Alert: React.FC<Props> = ({ username, bloodTypes, visible }) => {
                     horizontal
                     contentContainerStyle={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}
                     showsHorizontalScrollIndicator={false}
-                    data={bloodTypes?.map((b, i, a) => i === a.length - 1 ? b : b + ', ')}
+                    data={bloodTypes?.map((b, i, a) => b + ' ')}
                     renderItem={({ item }) => (
                         <S.BloodTypeItem>{item}</S.BloodTypeItem>
                     )}

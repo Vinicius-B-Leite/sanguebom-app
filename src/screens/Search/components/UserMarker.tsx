@@ -12,6 +12,7 @@ const UserMarker: React.FC<Props> = ({ userLocation }) => {
     if (!userLocation) return <></>
     return (
         <Marker
+        testID='userMarker'
             coordinate={{
                 latitude: userLocation?.lat,
                 longitude: userLocation?.lng,

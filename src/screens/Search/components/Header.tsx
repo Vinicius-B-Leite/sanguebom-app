@@ -15,7 +15,7 @@ const Header: React.FC<Props> = ({ searchInput, setSeatchInput }) => {
     return (
         <S.Header>
             <S.GoBack onPress={() => navigation.goBack()}>
-                <AntDesign name="arrowleft" size={icons.sm} color={type === 'dark' ? colors.text_100 : colors.background_100} />
+                <AntDesign testID='arrowleft' name="arrowleft" size={icons.sm} color={type === 'dark' ? colors.text_100 : colors.background_100} />
             </S.GoBack>
             <S.Input
                 placeholder={'Pesquise por um ponto de coleta'}

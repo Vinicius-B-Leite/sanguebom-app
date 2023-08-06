@@ -1,10 +1,11 @@
 import React from 'react'
-import {fireEvent, renderWithProviders, waitFor } from '../../../utlis/test-utils/customRender'
+import { fireEvent, renderWithProviders, waitFor } from '../../../utlis/test-utils/customRender'
 import Search from '../index'
 import * as apiService from '../../../api/getBloodCollectors'
 import * as createAlert from '../../../api/createAlert'
 import * as locationService from '../../../utlis/getLocation'
 import { mocks } from './mocks'
+import { darkMode } from '../../../theme/darkMode'
 
 
 jest.mock('react-native-maps', () => {
@@ -22,7 +23,13 @@ jest.mock('react-native-maps', () => {
     };
 });
 
-
+const mockGoback = jest.fn()
+jest.mock('@react-navigation/native', () => ({
+    ...jest.requireActual('@react-navigation/native'),
+    useNavigation: () => ({
+        goBack: mockGoback
+    })
+}))
 
 const mockinvalidateQueries = jest.fn()
 
@@ -36,16 +43,28 @@ jest.mock("@tanstack/react-query", () => ({
 describe('Search', () => {
 
     beforeEach(() => {
-        jest.spyOn(apiService, 'getBloodCollectors').mockResolvedValueOnce([mocks.fakeBloodCollector])
+        jest.spyOn(apiService, 'getBloodCollectors').mockResolvedValueOnce(mocks.fakeBloodCollectorList)
         jest.spyOn(locationService, 'getLocation').mockResolvedValueOnce({ lat: mocks.fakeBloodCollector.lat, lng: mocks.fakeBloodCollector.lng })
     })
 
     it('rendered', async () => {
-        const { findByPlaceholderText } = renderWithProviders(<Search />, {
+        const { findByPlaceholderText, debug } = renderWithProviders(<Search />, {
             preloadedState: { user: mocks.fakeUser }
         })
 
         expect(await findByPlaceholderText('Pesquise por um ponto de coleta')).toBeTruthy()
+    })
+    it('went back if it clicked on arrowleft and changed icon color when theme is dark', async () => {
+        const { findByTestId, debug } = renderWithProviders(<Search />, {
+            preloadedState: { user: mocks.fakeUser },
+        }, 'dark')
+
+        const arrowleft = await findByTestId('arrowleft')
+        fireEvent.press(arrowleft)
+
+        expect(arrowleft.props.style[0].color).toEqual(darkMode.colors.text_100)
+        expect(mockGoback).toHaveBeenCalled()
+
     })
     it('searched bloodCollectors when typing on search input', async () => {
         const { findByPlaceholderText, findByText } = renderWithProviders(<Search />, {
@@ -58,6 +77,18 @@ describe('Search', () => {
         const bloodCollectorSearched = await findByText(mocks.fakeBloodCollector.username)
 
         expect(bloodCollectorSearched).toBeTruthy()
+    })
+    it('did NOT searched bloodCollectors when index of bloodCollector >= 3', async () => {
+        const { findByPlaceholderText, queryByText } = renderWithProviders(<Search />, {
+            preloadedState: { user: mocks.fakeUser }
+        })
+
+        const searchInput = await findByPlaceholderText(/Pesquise por um ponto de coleta/i)
+        fireEvent.changeText(searchInput, 'name')
+
+        const bloodCollectorSearched = queryByText(mocks.fakeBloodCollectorList[3].username)
+
+        expect(bloodCollectorSearched).not.toBeTruthy()
     })
     it('focused on bloodCollector when search it and selected', async () => {
 
@@ -76,7 +107,7 @@ describe('Search', () => {
         expect(mapView.props.region.latitude).toBe(mocks.fakeBloodCollector.lat)
     })
     it('showed the alert info if the blood collector was in alert', async () => {
-        const { findByTestId, debug } = renderWithProviders(<Search />, {
+        const { findByTestId } = renderWithProviders(<Search />, {
             preloadedState: { user: mocks.fakeUser }
         })
 

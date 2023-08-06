@@ -32,9 +32,6 @@ const Search: React.FC = () => {
   const { data } = useQuery(
     ['bloodCollectors'],
     () => getBloodCollectors(searchInput),
-    {
-      onError: (err: AxiosError<ErrorResponse>) => console.log(err.response?.data),
-    }
   )
 
   const refs = useRef(Array.from({ length: data?.length || 999 }).map(() => createRef<MapMarker>()))

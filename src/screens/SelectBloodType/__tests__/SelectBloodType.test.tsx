@@ -7,10 +7,12 @@ import { lightMode } from "../../../theme/lightMode";
 
 
 const mockNavigate = jest.fn()
+const mockGoback = jest.fn()
 jest.mock('@react-navigation/native', () => ({
     ...jest.requireActual('@react-navigation/native'),
     useNavigation: () => ({
-        navigate: mockNavigate
+        navigate: mockNavigate,
+        goBack: mockGoback
     })
 }))
 
@@ -23,8 +25,10 @@ describe('SelectBloodType', () => {
     })
     it('went back when header arrow-icon clicked', async () => {
         const { findByTestId } = renderWithProviders(<SelectBloodType />)
+        const arrowIcon = await findByTestId('arrow-icon')
 
-        expect(await findByTestId('arrow-icon')).toBeTruthy()
+        fireEvent.press(arrowIcon)
+        expect(mockGoback).toHaveBeenCalled()
 
     })
     it('selected single blood type', async () => {

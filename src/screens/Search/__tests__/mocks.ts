@@ -39,11 +39,26 @@ const fakeUser = {
         username: 'username',
         bloodType: 'A+',
         gender: 'male' as GenderType
-    }
+    } as UserType
 }
-
+export const fakeBloodCollectorList = [
+    fakeBloodCollector,
+    {
+        ...fakeBloodCollector,
+        username: 'fakeBloodCollectorList.name1'
+    },
+    {
+        ...fakeBloodCollector,
+        username: 'fakeBloodCollectorList.name2'
+    },
+    {
+        ...fakeBloodCollector,
+        username: 'fakeBloodCollectorList.name3'
+    }
+]
 export const mocks = {
     fakeBloodCollector,
     fakeUser,
-    fakeUserBloodCollector
+    fakeUserBloodCollector,
+    fakeBloodCollectorList
 }
