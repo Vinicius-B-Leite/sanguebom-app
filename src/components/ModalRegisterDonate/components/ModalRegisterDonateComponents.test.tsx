@@ -54,7 +54,11 @@ describe('ModalRegisterDonateComponents', () => {
       const datePickerElement = getByTestId('calendarPicker')
       fireEvent(datePickerElement, 'onChange', ...createDateTimeSetEvtParams(newDateSelected))
 
-      expect(getByText(newDateSelected.toLocaleDateString())).toBeTruthy()
+      const day = newDateSelected.getDate()
+      const month = newDateSelected.getMonth() + 1
+      const year = newDateSelected.getFullYear()
+      
+      expect(getByText(`${day}/${month}/${year}`)).toBeTruthy()
     })
   })
 
@@ -101,7 +105,7 @@ describe('ModalRegisterDonateComponents', () => {
         fireEvent(buttonElement, 'press')
       })
 
-      
+
       expect(closeModalMock).toHaveBeenCalled()
 
     })

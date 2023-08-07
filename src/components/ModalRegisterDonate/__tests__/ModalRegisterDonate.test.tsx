@@ -89,7 +89,11 @@ describe('ModalRegisterDonate', () => {
         fireEvent(calendarPicker, 'onChange', ...createDateTimeSetEvtParams(dateSelected))
 
 
-        expect(getByText(dateSelected.toLocaleDateString())).toBeTruthy()
+        const day = dateSelected.getDate()
+        const month = dateSelected.getMonth() + 1
+        const year = dateSelected.getFullYear()
+
+        expect(getByText(`${day}/${month}/${year}`)).toBeTruthy()
     })
 
 })
