@@ -4,16 +4,17 @@ import MyDonates from '../index'
 import * as apiGetMyDonates from '../../../api/getMyDonates'
 import * as apiGetBloodCollectors from '../../../api/getBloodCollectors'
 import { mocks } from './mocks'
+import { darkMode } from "../../../theme/darkMode";
 
 
 
-const renderComponentWithPreState = () => renderWithProviders(<MyDonates />, {
+const renderComponentWithPreState = (theme?: 'light' | 'dark') => renderWithProviders(<MyDonates />, {
     preloadedState: {
         user: {
             user: mocks.fakeUser
         }
     }
-})
+}, theme || 'light')
 
 
 const mockGoBack = jest.fn()
@@ -36,6 +37,14 @@ describe('MyDonates', () => {
         await waitFor(() => getByText(/Doações realizadas/i))
 
         expect(getByText(/Doações realizadas/i)).toBeTruthy()
+    })
+    it('headerGoBack was transparent if theme is dark',async () => {
+        const { findByTestId } = renderComponentWithPreState('dark')
+
+        const headerGoBack = await findByTestId('header-view')
+
+        expect(headerGoBack.props.themeBg).toBe('transparent')
+
     })
     it('showed block donate icon if the user has donated yet', async () => {
 

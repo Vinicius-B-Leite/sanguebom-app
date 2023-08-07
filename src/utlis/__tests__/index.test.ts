@@ -2,9 +2,9 @@ import { getLocation } from '../getLocation'
 import { pickImage } from '../pickImage'
 import * as Location from 'expo-location'
 import * as ImagePicker from 'expo-image-picker';
+import * as  getStorageUser from '../../storage/userStorage'
 
-
-
+import { questions } from '../questions'
 
 describe('Utils', () => {
     describe('getLocation', () => {
@@ -75,4 +75,6 @@ describe('Utils', () => {
         })
 
     })
+
+    
 })

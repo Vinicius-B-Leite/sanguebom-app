@@ -5,7 +5,7 @@ const fakeUser: UserType = {
     email: 'user.email',
     password: 'user.password',
     token: 'user.token',
-    type: 'user.type',
+    type: 'donors',
     uid: 'user.uid',
     username: 'user.username',
 }

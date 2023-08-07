@@ -18,7 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 const MyDonates: React.FC = () => {
 
     const navigation = useNavigation()
-    
+
     const user = useSelector((state: RootState) => state.user.user)
     const { type } = useTheme()
     const [isModalVisible, setIsModalVisible] = useState(false)
@@ -38,7 +38,7 @@ const MyDonates: React.FC = () => {
             />
             {
                 data && (data.waitDaysToDonate > 0) &&
-                <BlockDonate daysWaitToDonate={data.waitDaysToDonate === 0 ? 60 : data.waitDaysToDonate} />
+                <BlockDonate daysWaitToDonate={data.waitDaysToDonate} />
             }
             <S.Main>
                 <DonatesList

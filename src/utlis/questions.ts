@@ -2,7 +2,8 @@ import { Questionary } from '../types/Questionary'
 import { getStorageUser } from '../storage/userStorage'
 
 
-const userGender = getStorageUser()?.gender
+const user = getStorageUser()
+const userGender = user?.gender
 
 export var questions: Questionary[] = [
     {

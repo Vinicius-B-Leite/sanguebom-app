@@ -288,8 +288,55 @@ describe('CreatePost', () => {
 
         expect(mockedGoBack).toHaveBeenCalled()
     })
+    it('DID NOT showed toast if request return error == "08"', async () => {
+        jest.useFakeTimers()
+        const alertSpy = jest.spyOn(ToastAndroid, 'show').mockReturnValue()
 
-    it('showed toast if request return error', async () => {
+        jest.spyOn(createPostMock, 'createPost').mockRejectedValueOnce({
+            response: {
+                data: {
+                    code: '08'
+                }
+            }
+        })
+        jest.spyOn(pickImageToMock, 'pickImage').mockResolvedValueOnce({
+            canceled: false,
+            assets: [{
+                type: 'image',
+                uri: 'abc.jpeg',
+                width: 200,
+                height: 200
+            }]
+        })
+
+        const { getByText, findByTestId, getByPlaceholderText } = renderWithProviders(<CreatePost />, {
+            preloadedState: {
+                user: { user: mock.user }
+            }
+        })
+
+        const pickImageBtn = await findByTestId('PickImageBtn')
+        const inputAdress = getByPlaceholderText(/Endereço do local da campanha/i)
+        const inputHour = getByPlaceholderText(/10hrs ~ 17hrs/i)
+        const inputDescription = getByPlaceholderText(/Descrição/i)
+        const submitButton = getByText(/concluir/i)
+
+        await act(async () => {
+            fireEvent(pickImageBtn, 'press')
+        })
+
+        fireEvent.changeText(inputAdress, 'adres')
+        fireEvent.changeText(inputHour, '9hr ~ 16hr')
+        fireEvent.changeText(inputDescription, 'blablablabla')
+
+        await act(() => {
+            fireEvent.press(submitButton)
+        })
+
+        expect(alertSpy).not.toHaveBeenCalled()
+
+    })
+    it('showed toast if request return error !== "08"', async () => {
         jest.useFakeTimers()
         const alertSpy = jest.spyOn(ToastAndroid, 'show').mockReturnValue()
 
@@ -337,4 +384,5 @@ describe('CreatePost', () => {
         expect(alertSpy).toHaveBeenCalled()
 
     })
+   
 })

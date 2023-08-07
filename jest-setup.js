@@ -11,5 +11,6 @@ jest.mock('react-native-onesignal', () => ({
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
     inFocusDisplaying: jest.fn(),
-    setAppId: jest.fn()
+    setAppId: jest.fn(),
+    sendTag: jest.fn()
   }))
