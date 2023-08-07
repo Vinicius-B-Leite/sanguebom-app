@@ -125,7 +125,7 @@ describe('Profile', () => {
 
         expect(userCache?.password).toEqual('newPassword')
     })
-    it('logged out user', () =>{
+    it('logged out user', () => {
 
         const { getByText } = renderWithProviders(<Profile />, { ...comunRenderProps })
 
@@ -155,6 +155,30 @@ describe('Profile', () => {
 
             expect(pickImageSpy).not.toHaveBeenCalled()
 
+        })
+        it('updated blood type', async () => {
+            jest.useFakeTimers()
+            const mockUpdateUser = jest.spyOn(apiService, 'updateUserCredencials').mockResolvedValueOnce({
+                ...mocks.fakeUser,
+                donors: {
+                    ...mocks.fakeBloodCollectorsUser.user,
+                    bloodType: 'O-'
+                }
+            })
+
+            const { getByText } = renderWithProviders(<Profile />, { ...comunRenderProps })
+
+            const updateBloodTypeOption = getByText(/Tipo sanguíneo/i)
+            fireEvent.press(updateBloodTypeOption)
+
+            const abPositive = getByText('O-')
+            fireEvent.press(abPositive)
+
+            const saveBtn = getByText(/salvar/i)
+            await act(() => {
+                fireEvent.press(saveBtn)
+            })
+            expect(mockUpdateUser).toHaveBeenCalled()
         })
     })
     describe('user type is "bloodCollectors"', () => {

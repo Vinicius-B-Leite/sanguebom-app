@@ -42,7 +42,6 @@ const Profile: React.FC = () => {
     (props: UpdateUserCredencialsProps) => updateUserCredencials(props),
     {
       onSuccess: (res) => {
-        console.log(res)
         const isBloodCollector = res.type == 'bloodCollectors'
 
         const userUpdated: UserType = {
@@ -145,13 +144,13 @@ const Profile: React.FC = () => {
 
       <ModalUpdateUser
         closeModal={() => setIsModalVisible(false)}
-        visible={isModalVisible && modalProps.title ? true : false}
+        visible={isModalVisible && modalProps.title.length > 0}
         submit={(txt) => modalProps.callback(txt)}
         title={modalProps.title}
       />
 
       <ModalUpdateBloodType
-        visible={isModalVisible && !modalProps.title ? true : false}
+        visible={isModalVisible && !modalProps.title}
         onRequestClose={() => setIsModalVisible(false)}
         onSubmit={(btSelected) => mutate({ ...user, bloodType: btSelected } as UpdateUserCredencialsProps)}
       />

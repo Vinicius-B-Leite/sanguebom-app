@@ -32,7 +32,7 @@ const ModalUpdateBloodType: React.FC<Props> = ({ onRequestClose, visible, onSubm
     if (user?.type == 'bloodCollectors') return null
 
     return (
-        <ModalBase modalProps={{ animationType: 'fade', visible, onRequestClose, transparent: true }}>
+        <ModalBase modalProps={{ animationType: 'fade', visible, onRequestClose, transparent: true, testID:'ModalUpdateBloodType' }}>
             <S.Container>
                 <S.Title>Selecione seu tipo sanguíeno</S.Title>
                 <S.BloodTypesContainer>
