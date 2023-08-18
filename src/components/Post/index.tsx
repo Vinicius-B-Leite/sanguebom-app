@@ -14,17 +14,27 @@ type PostProps = {
     enableMaxLenght?: boolean
 }
 
+const WIDTH = Dimensions.get('screen').width
+
 
 const PostDetails: React.FC<PostProps> = ({ info, enableMaxLenght }) => {
     const { bloodCollectors, createdAt, description } = info
+    const [imageHeight, setImageHeight] = useState(0)
 
+    Image.getSize(baseURL + info.bannerURL, (width1, height1) => {
+        setImageHeight(height1 * (WIDTH / width1))
+    }, (error) => {
+        console.log("ScaledImage,Image.getSize failed with error: ", error)
+    })
+
+    
     return (
         <S.Container>
 
             <HeaderPost avatarUrl={bloodCollectors?.imageURL} username={bloodCollectors?.username} />
 
             <Image
-                style={{ width: Dimensions.get('screen').width, height: Dimensions.get('screen').width }}
+                style={{ width: WIDTH, height: imageHeight }}
                 source={{ uri: baseURL + info.bannerURL }}
             />
 

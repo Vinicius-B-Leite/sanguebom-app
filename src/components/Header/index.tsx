@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { useEffect }  from 'react';
 import { TouchableOpacity } from 'react-native';
 import * as S from './style'
 import EvilIcons from '@expo/vector-icons/EvilIcons';
@@ -28,10 +28,14 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
         queryKey: ['notificationLength'],
         enabled: notificationsLength >= 0 ,
         queryFn: () => getNotificationLength({ uid: user!.uid }),
-        onSuccess: (res: number) => {
+        onSuccess: (res: number) => {            
             dispatch(setNotificationLength(res))
         }
     })
+    
+    useEffect(() => {
+        dispatch(setNotificationLength(0))
+    }, [])
 
 
     return (
@@ -40,10 +44,12 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
             <S.Right>
                 <S.Notifications onPress={onClickBell} >
                     {
-                        (data && Number(data) > 0) &&
+                        (data && data > 0) ?
                         (<S.NotificationNumberArea testID='notificationLenght'>
                             <S.NotificationLabel>{Number(data) < 99 ? Number(data) : '99+'}</S.NotificationLabel>
                         </S.NotificationNumberArea>)
+                        :
+                        <></>
                     }
                     <EvilIcons
                         testID='bellIcon'
