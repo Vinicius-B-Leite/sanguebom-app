@@ -143,7 +143,6 @@ describe('Header', () => {
                 })
 
             const notificationNumberElement = await findByText('99+')
-            // console.log(notificationNumberElement.value)
             expect(notificationNumberElement).toBeDefined()
         })
 

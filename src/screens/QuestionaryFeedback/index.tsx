@@ -5,6 +5,7 @@ import { QuestionsParamsList } from '../../routes/models';
 import SuccesFeedback from '../../assets/succesQuestionary.png'
 import FailureFeedback from '../../assets/failureFeedback.png'
 import { AntDesign } from '@expo/vector-icons';
+import { useTheme } from 'styled-components/native';
 
 
 
@@ -15,10 +16,12 @@ const QuestionaryFeedback: React.FC = () => {
     const isSucces = useRoute<Params>().params.succes
     const navigation = useNavigation<Nav>()
 
+    const theme = useTheme()
+
     return (
         <S.Container>
             <S.GoBack onPress={() => navigation.navigate('Questions')}>
-                <AntDesign name="arrowright" size={24} color="black" />
+                <AntDesign name="arrowright" size={24} color={theme.colors.contrast_100} />
             </S.GoBack>
             <S.Title>
                 {

@@ -23,7 +23,7 @@ const DatePicker: React.FC<Props> = ({ dateSelected, selectDate }) => {
     }
     return (
         <S.DatePickerArea testID='openCalendarButton' onPress={() => setIsDateVisible(true)}>
-            <AntDesign name="calendar" size={icons.sm} color={colors.text_100} />
+            <AntDesign name="calendar" size={icons.sm} color={colors.text_200} />
             <S.Date>{`${dateSelected.getDate()}/${dateSelected.getMonth() + 1}/${dateSelected.getFullYear()}`}</S.Date>
 
             {

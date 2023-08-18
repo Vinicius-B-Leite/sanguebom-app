@@ -52,7 +52,7 @@ export const Input = styled.TextInput`
     width: 85%;
     padding: 0% 5%;
     border-radius: ${({ theme }) => theme.borderRadius.sm}px;
-    color: ${({ theme }) => theme.colors.background_100};
+    color: ${({ theme }) => theme.colors.oppositeContrast};
 `
 
 
@@ -62,7 +62,7 @@ export const SuggestContainer = styled.TouchableOpacity`
     flex-direction: row;
     border-top-width: 1px;
     border-top-color: ${({ theme }) => theme.colors.contrast_10};
-    background-color: ${({ theme }) => theme.colors.contrast_100};
+    background-color: ${({ theme }) => theme.type === 'light' ? theme.colors.contrast_100 : theme.colors.background_100};
     padding: 2% 5%;
     align-items: center;
 `
@@ -73,7 +73,7 @@ export const SuggestItemAvatar = styled.Image`
     height: ${({ theme }) => theme.vw * 0.1}px;
 `
 export const SuggestItemName = styled.Text`
-    color: ${({ theme }) => theme.colors.background_100};
+    color: ${({ theme }) => theme.colors.oppositeContrast};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
     margin-left: 5%;
 `

@@ -1,21 +1,20 @@
 import styled from 'styled-components/native';
 
 export const DonatesListTitle = styled.Text`
-    color: ${({ theme }) => theme.colors.text_100};
+    color: ${({ theme }) => theme.colors.text_200};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
     font-weight: 500;
 `
 
 export const DonateItemContainer = styled.View`
     background-color: ${({ theme }) => theme.type === 'dark' ? theme.colors.contrast_200 : theme.colors.contrast_10};
-    /* width: 100%; */
     margin-top: ${({ theme }) => theme.vh * 0.02}px;
     padding: ${({ theme }) => theme.vh * 0.02}px ${({ theme }) => theme.vh * 0.02}px;
     border-radius: ${({ theme }) => theme.borderRadius.xxsm}px;
 `
 
 export const DonateItemBloodCollectorName = styled.Text`
-    color: ${({ theme }) => theme.colors.text_100};
+    color: ${({ theme }) => theme.colors.text_200};
     font-size: ${({ theme }) => theme.fontSize.xxsm}px;   
 `
 

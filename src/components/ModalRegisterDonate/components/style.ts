@@ -31,7 +31,7 @@ export const DatePickerArea = styled.TouchableOpacity`
 `
 export const Date = styled.Text`
     ${({theme}) => css`
-        color: ${theme.colors.text_100};
+        color: ${theme.colors.text_200};
         font-size: ${theme.fontSize.xxsm}px;
         margin-left: 3%;
     `}

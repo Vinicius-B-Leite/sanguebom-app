@@ -16,7 +16,6 @@ api.registerInterceptorTokenMenager = (logout) => {
         if (errorRquest.response && ['11', '14'].includes(errorRquest.response.data.code)) {
             logout()
         }
-        console.log(errorRquest.response.data)
         return Promise.reject(errorRquest)
     })
 

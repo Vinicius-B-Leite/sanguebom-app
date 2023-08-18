@@ -17,14 +17,14 @@ import Header from './components/Header';
 import SearchList from './components/SearchList';
 import UserMarker from './components/UserMarker';
 
-
+export type Coords = { lat: number, lng: number }
 
 const Search: React.FC = () => {
 
   const user = useSelector((state: RootState) => state.user.user)
 
-  const [location, setLocation] = useState<{ lat: number, lng: number } | null>(null)
-  const [userLocation, setUserLocation] = useState<{ lat: number, lng: number } | null>(null)
+  const [location, setLocation] = useState<Coords | null>(null)
+  const [userLocation, setUserLocation] = useState<Coords | undefined>()
   const [searchInput, setSeatchInput] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const [currentBloodCollector, setCurrentBloodCollector] = useState<MarkerType>()
@@ -45,7 +45,7 @@ const Search: React.FC = () => {
 
 
   useEffect(() => {
-    getLocation().then(res => res && setUserLocation(res))
+    getLocation().then(setUserLocation)
   }, [])
 
 

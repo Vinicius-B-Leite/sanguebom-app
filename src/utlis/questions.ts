@@ -71,7 +71,7 @@ export var questions: Questionary[] = [
             'Sim',
             'Não'
         ],
-        correctAnswareIndex: [0]
+        correctAnswareIndex: [1]
     },
     {
         question: 'Tem menos de 50 quilos?',
@@ -79,7 +79,7 @@ export var questions: Questionary[] = [
             'Sim',
             'Não'
         ],
-        correctAnswareIndex: [0]
+        correctAnswareIndex: [1]
     },
     {
         question: 'Está gravida ou amamentando?',
@@ -87,6 +87,6 @@ export var questions: Questionary[] = [
             'Sim',
             'Não'
         ],
-        correctAnswareIndex: [0]
+        correctAnswareIndex: [1]
     },
 ]

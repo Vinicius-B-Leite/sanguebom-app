@@ -32,7 +32,6 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
 
     const onError = (error: AxiosError<ErrorResponse>) => {
         if (error.response && !(['02', '03', '13', '20'].includes(error.response?.data.code))) {
-            console.log(error.response.data)
             Alert.alert(
                 'Ops',
                 'Ocorreu um erro. Volte mais tarde'
