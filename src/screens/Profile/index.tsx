@@ -143,7 +143,10 @@ const Profile: React.FC = () => {
 
 
       <ModalUpdateUser
-        closeModal={() => setIsModalVisible(false)}
+        closeModal={() => {
+          setIsModalVisible(false)
+          setModalProps({callback: ()=>{}, title: ''})
+        }}
         visible={isModalVisible && modalProps.title.length > 0}
         submit={(txt) => modalProps.callback(txt)}
         title={modalProps.title}

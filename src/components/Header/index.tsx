@@ -1,4 +1,4 @@
-import React, { useEffect }  from 'react';
+import React, { useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
 import * as S from './style'
 import EvilIcons from '@expo/vector-icons/EvilIcons';
@@ -26,13 +26,13 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
 
     const { data } = useQuery({
         queryKey: ['notificationLength'],
-        enabled: notificationsLength >= 0 ,
+        enabled: notificationsLength >= 0,
         queryFn: () => getNotificationLength({ uid: user!.uid }),
-        onSuccess: (res: number) => {            
+        onSuccess: (res: number) => {
             dispatch(setNotificationLength(res))
         }
     })
-    
+
     useEffect(() => {
         dispatch(setNotificationLength(0))
     }, [])
@@ -41,28 +41,31 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
     return (
         <S.Container>
             <S.Logo>Sangue Bom</S.Logo>
-            <S.Right>
-                <S.Notifications onPress={onClickBell} >
-                    {
-                        (data && data > 0) ?
-                        (<S.NotificationNumberArea testID='notificationLenght'>
-                            <S.NotificationLabel>{Number(data) < 99 ? Number(data) : '99+'}</S.NotificationLabel>
-                        </S.NotificationNumberArea>)
-                        :
-                        <></>
-                    }
-                    <EvilIcons
-                        testID='bellIcon'
-                        name='bell'
-                        color={type === 'dark' ? colors.text_200 : colors.background_100}
-                        size={icons.sm}
-                    />
-                </S.Notifications>
+            {
+                user!.type === 'donors' &&
+                <S.Right>
+                    <S.Notifications onPress={onClickBell} >
+                        {
+                            (data && data > 0) ?
+                                (<S.NotificationNumberArea testID='notificationLenght'>
+                                    <S.NotificationLabel>{Number(data) < 99 ? Number(data) : '99+'}</S.NotificationLabel>
+                                </S.NotificationNumberArea>)
+                                :
+                                <></>
+                        }
+                        <EvilIcons
+                            testID='bellIcon'
+                            name='bell'
+                            color={type === 'dark' ? colors.text_200 : colors.background_100}
+                            size={icons.sm}
+                        />
+                    </S.Notifications>
 
-                <TouchableOpacity onPress={onClickBloodDonate}>
-                    <BloodDonateIcon testID='bloodDonateIcon' width={icons.sm} height={icons.sm} />
-                </TouchableOpacity>
-            </S.Right>
+                    <TouchableOpacity onPress={onClickBloodDonate}>
+                        <BloodDonateIcon testID='bloodDonateIcon' width={icons.sm} height={icons.sm} />
+                    </TouchableOpacity>
+                </S.Right>
+            }
         </S.Container>
     )
 }

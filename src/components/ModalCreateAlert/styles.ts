@@ -16,7 +16,7 @@ export const Main = styled.View`
     `
 
 export const Title = styled.Text`
-    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text_100 : theme.colors.contrast_100};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text_200 : theme.colors.contrast_100};
     font-size: ${({ theme }) => theme.fontSize.md}px;
     font-weight: 700;
     `
@@ -29,7 +29,7 @@ export const Row = styled.View`
 
 export const SectionTitle = styled.Text`
     margin: 2% 0%;
-    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text_100 : theme.colors.contrast_100};
+    color: ${({ theme }) => theme.type === 'dark' ? theme.colors.text_200 : theme.colors.contrast_100};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
 `
 
