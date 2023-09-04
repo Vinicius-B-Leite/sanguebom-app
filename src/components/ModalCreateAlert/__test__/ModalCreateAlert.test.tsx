@@ -54,8 +54,8 @@ describe('ModalCreateAlert', () => {
         const submitLabel = getByText(/Criar/i)
 
 
-        expect(title.props.style[0].color).toBe(darkMode.colors.text_100)
-        expect(sectionTitle.props.style[0].color).toBe(darkMode.colors.text_100)
+        expect(title.props.style[0].color).toBe(darkMode.colors.text_200)
+        expect(sectionTitle.props.style[0].color).toBe(darkMode.colors.text_200)
         expect(submitLabel.props.style[0].color).toBe(darkMode.colors.oppositeContrast)
     })
 

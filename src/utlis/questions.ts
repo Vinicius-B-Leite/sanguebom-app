@@ -15,15 +15,17 @@ export var questions: Questionary[] = [
             'Há três meses',
             'Há quatro meses',
         ],
-        correctAnswareIndex: userGender === 'male' ? [2, 3, 4] : [3, 4]
+        correctAnswareIndex: userGender == 'male' ? [2, 3, 4] : [3, 4]
     },
     {
         question: 'Já fez transfusão de sangue anteriormente?',
         answares: [
-            'Sim',
+            'Sim, há um ano',
+            'Sim, há menos de um ano',
+            'Sim, há mais de um ano',
             'Não'
         ],
-        correctAnswareIndex: [1]
+        correctAnswareIndex: [0, 2, 3]
     },
     {
         question: 'Teve alguma cirurgia nos últimos 6 meses?',

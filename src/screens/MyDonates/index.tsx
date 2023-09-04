@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import * as S from './styles'
 import HeaderGoBack from '../../components/HeaderGoBack';
-import { StackScreenProps } from '@react-navigation/stack';
-import { StackHomeParamsList } from '../../routes/models';
 import { useQuery } from '@tanstack/react-query';
 import { getMyDonates } from '../../api/getMyDonates';
 import { useSelector } from 'react-redux';

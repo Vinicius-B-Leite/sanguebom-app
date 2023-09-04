@@ -95,6 +95,7 @@ const Login: React.FC = () => {
                     placeholderTextColor={theme.colors.text_100}
                     value={password}
                     onChangeText={setPassword}
+                    autoCapitalize='none'
                     errorMessage={['03', '04', '06'].includes(error?.response?.data?.code || '') ? error?.response?.data.message : undefined}
                 />
             </S.InputArea>

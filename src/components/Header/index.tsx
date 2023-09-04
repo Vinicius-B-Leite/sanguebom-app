@@ -42,7 +42,7 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
         <S.Container>
             <S.Logo>Sangue Bom</S.Logo>
             {
-                user!.type === 'donors' &&
+                user?.type !== 'bloodCollectors' &&
                 <S.Right>
                     <S.Notifications onPress={onClickBell} >
                         {
