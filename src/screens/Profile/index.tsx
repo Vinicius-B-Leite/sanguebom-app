@@ -65,7 +65,7 @@ const Profile: React.FC = () => {
 
 
   const handleImagePicker = async () => {
-    if (user?.type === 'donors') return
+    if (user!.type == 'donors') return
 
     try {
       const file = await pickImage()
@@ -144,8 +144,8 @@ const Profile: React.FC = () => {
 
       <ModalUpdateUser
         closeModal={() => {
-          setIsModalVisible(false)
           setModalProps({callback: ()=>{}, title: ''})
+          setIsModalVisible(false)
         }}
         visible={isModalVisible && modalProps.title.length > 0}
         submit={(txt) => modalProps.callback(txt)}

@@ -27,6 +27,9 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
     const handleSubmit = () => {
         if (confirmPassword === user?.password && value.length > 0) {
             submit(value)
+            setConfirmPassword('')
+            setValue('')
+            closeModal()
         }
     }
 
@@ -35,8 +38,9 @@ const ModalUpdateUser: React.FC<Props> = ({ closeModal, visible, submit, title }
         setConfirmPassword('')
         closeModal()
     }
+
     return (
-        <ModalBase modalProps={{ transparent: true, visible, animationType: 'slide', onRequestClose:  handleCloseModal}}>
+        <ModalBase modalProps={{ transparent: true, visible, animationType: 'slide', onRequestClose: handleCloseModal }}>
             <S.Main>
                 <S.Title>Atualizar {title}</S.Title>
 
