@@ -39,9 +39,11 @@ const Notification: React.FC = () => {
                 }
             },
             onSuccess: (res) => {
-                setLastNotificationRead(res[0].id)
-                setNotificationsStorage(res)
-                dispatch(setNotificationLength(0))
+                if (res.length > 0){
+                    setLastNotificationRead(res[0].id)
+                    setNotificationsStorage(res)
+                    dispatch(setNotificationLength(0))
+                }
             }
         }
     )
@@ -61,6 +63,7 @@ const Notification: React.FC = () => {
                         contentContainerStyle={{ padding: '5%' }}
                         data={data || offlineNotifications}
                         renderItem={({ item }) => <NotificationItem notification={item} />}
+                        ListEmptyComponent={<S.ListEmptyText>Não há nenhuma notificação por enquanto</S.ListEmptyText>}
                     />
             }
         </S.Container>
