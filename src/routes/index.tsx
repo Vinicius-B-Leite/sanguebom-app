@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
-import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
+import { LinkingOptions, NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import Tab from './tab';
 import { useTheme } from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux'
@@ -36,10 +36,15 @@ const linking = {
 
 const Routes: React.FC = () => {
     const { colors, type } = useTheme()
-    const dispatch = useDispatch<AppDispatch>()
-    const user = useSelector((state: RootState) => state.user.user)
-    const [isLoading, setIsLoading] = useState(true)
     const netInfo = useNetInfo()
+
+    const user = useSelector((state: RootState) => state.user.user)
+    const dispatch = useDispatch<AppDispatch>()
+
+    const [isLoading, setIsLoading] = useState(true)
+    
+    const navigationTheme = DefaultTheme
+    navigationTheme.colors.background = colors.background_100
 
     useEffect(() => {
         getUser()
