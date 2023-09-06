@@ -21,7 +21,7 @@ export const Form = styled.View`
 `
 export const InputArea = styled.View`
     width: 100%;
-    height: ${({ theme }) => theme.vh * 0.07}px;
+    height: ${({ theme }) => theme.vh * 0.08}px;
     margin-bottom: 5% ;
     align-self: center;
 `

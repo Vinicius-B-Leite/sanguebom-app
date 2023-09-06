@@ -97,6 +97,7 @@ const SingUp: React.FC<Nav> = ({ navigation, route }) => {
                     <Input
                         leftIcon='mail'
                         autoCapitalize='none'
+                        keyboardType='email-address'
                         value={email}
                         onChangeText={setEmail}
                         placeholder={'Email'}

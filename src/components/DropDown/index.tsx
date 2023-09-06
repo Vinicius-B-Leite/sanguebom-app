@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { FlatList, TouchableOpacity } from 'react-native';
+import { FlatList, TouchableOpacity , StyleProp, ViewStyle} from 'react-native';
 import * as S from './styled'
 import { AntDesign } from '@expo/vector-icons';
 import { useTheme } from 'styled-components/native';
 
-interface Props<T> {
+interface Props<T> extends ViewStyle{
     placeholder: string,
     data: T[] | undefined,
     renderItem: React.FC<{ item: T }>,
     onSelect: (item: T) => void,
     value: string | undefined
-}
+} 
 
-function DropDown<T>({ data, placeholder, renderItem, onSelect, value }: Props<T>) {
+function DropDown<T>({ data, placeholder, renderItem, onSelect, value , ...rest}: Props<T>) {
 
     const { colors, icons } = useTheme()
     const [showData, setShowData] = useState(false)
@@ -23,7 +23,7 @@ function DropDown<T>({ data, placeholder, renderItem, onSelect, value }: Props<T
     }
 
     return (
-        <S.Container>
+        <S.Container style={rest}>
             <S.SelectBtn onPress={() => setShowData(old => !old)} isSelecting={showData}>
                 <S.SelectTxt numberOfLines={1}>{value || placeholder}</S.SelectTxt>
                 <AntDesign

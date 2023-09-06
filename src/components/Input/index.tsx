@@ -24,7 +24,7 @@ const Input: React.FC<Props> = ({ leftIcon, errorMessage, h, ...rest }) => {
                     <TouchableOpacity onPress={() => setsecureTextEntry(!secureTextEntry)}>
                         <AntDesign
                             testID='leftIcon'
-                            name={secureTextEntry ? leftIcon : 'unlock'}
+                            name={!secureTextEntry && leftIcon == 'lock' ? 'unlock' :leftIcon }
                             size={theme.icons.vsm}
                             color={isFocused ? theme.colors.contrast_100 : rest.value ? theme.colors.text_200 : theme.colors.text_100}
                         />
