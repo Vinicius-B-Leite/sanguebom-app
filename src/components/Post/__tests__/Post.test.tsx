@@ -1,4 +1,5 @@
 import React from 'react'
+import { Image } from 'react-native'
 import { renderWithProviders } from '../../../utlis/test-utils/customRender'
 import PostDetails from '../index'
 import { PostType } from '../../../types/PostType'
@@ -25,7 +26,14 @@ const fakePost: PostType = {
     id: '321321'
 }
 
+
+
 describe('PostDeatils', () => {
+
+    beforeAll(() => {
+        const getSizeMock = jest.spyOn(Image, 'getSize');
+        getSizeMock.mockImplementation(() => { /* do nothing */ });
+    })
     it('rendered with enableMaxLenght == true ', () => {
         const { getByText } = renderWithProviders(
             <PostDetails

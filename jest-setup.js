@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler/jestSetup';
-
+import {Image} from 'react-native'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);

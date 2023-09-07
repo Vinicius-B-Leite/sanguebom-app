@@ -66,7 +66,7 @@ describe('Home', () => {
 
             const { findByTestId, getByTestId } = renderWithProviders(<Home />, {
                 preloadedState: {
-                    user: mocks.fakeUser,
+                    user: mocks.fakeUser ,
                     notification: { length: 1 }
                 }
             })
@@ -113,7 +113,7 @@ describe('Home', () => {
             expect(firstPostDescription).toBeTruthy()
         })
 
-        it('refresed list when pull up post list', async () => {
+        it('refreshed list when pull up post list', async () => {
 
             const { findByTestId } = renderWithProviders(<Home />, {
                 preloadedState: {
@@ -123,6 +123,7 @@ describe('Home', () => {
             })
 
             const postList = await findByTestId('postList')
+            console.log("🚀 ~ file: Home.test.tsx:126 ~ it ~ postList:", postList)
             const { refreshControl } = postList.props;
 
             await act(() => {

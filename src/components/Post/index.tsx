@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Dimensions, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Dimensions, View, Image } from 'react-native';
 import { PostType } from '../../types/PostType';
 import * as S from './style';
 import { baseURL } from '../../api';
@@ -7,6 +7,7 @@ import { formatDistance } from 'date-fns';
 import { ptBR } from 'date-fns/locale'
 import HeaderPost from './components/HeaderPost';
 import FooterPost from './components/FooterPost';
+import { useResponsiveImageView } from 'react-native-responsive-image-view';
 
 
 type PostProps = {
@@ -14,29 +15,22 @@ type PostProps = {
     enableMaxLenght?: boolean
 }
 
-const WIDTH = Dimensions.get('screen').width
 
 
 const PostDetails: React.FC<PostProps> = ({ info, enableMaxLenght }) => {
     const { bloodCollectors, createdAt, description } = info
-    const [imageHeight, setImageHeight] = useState(0)
+    const { getViewProps, getImageProps } = useResponsiveImageView({
+        source: { uri: baseURL + info.bannerURL },
+    });
 
-    Image.getSize(baseURL + info.bannerURL, (width1, height1) => {
-        setImageHeight(height1 * (WIDTH / width1))
-    }, (error) => {
-        console.log("ScaledImage,Image.getSize failed with error: ", error)
-    })
-
-    
     return (
         <S.Container>
 
             <HeaderPost avatarUrl={bloodCollectors?.imageURL} username={bloodCollectors?.username} />
 
-            <Image
-                style={{ width: WIDTH, height: imageHeight }}
-                source={{ uri: baseURL + info.bannerURL }}
-            />
+            <View {...getViewProps()}>
+                <Image {...getImageProps()} />
+            </View>
 
             <FooterPost
                 adress={bloodCollectors?.adress}

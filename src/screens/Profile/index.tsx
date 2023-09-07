@@ -74,6 +74,7 @@ const Profile: React.FC = () => {
         mutate({ ...user, avatar: { name: 'userPhoto-' + user?.uid, type, uri } } as UpdateUserCredencialsProps)
       }
     } catch (error) {
+    console.log("🚀 ~ file: index.tsx:77 ~ handleImagePicker ~ error:", error)
 
     }
   }

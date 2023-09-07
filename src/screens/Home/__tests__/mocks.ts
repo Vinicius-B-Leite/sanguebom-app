@@ -1,5 +1,6 @@
 import { InfinetePosts } from "../../../api/getPosts";
 import { GenderType } from "../../../types/GenderType";
+import { UserType } from "../../../types/UserType";
 
 const fakeUser = {
     user: {
@@ -11,7 +12,7 @@ const fakeUser = {
         username: 'username',
         bloodType: 'A+',
         gender: 'male' as GenderType
-    }
+    } as UserType
 }
 
 
