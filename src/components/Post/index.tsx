@@ -19,7 +19,7 @@ type PostProps = {
 
 const PostDetails: React.FC<PostProps> = ({ info, enableMaxLenght }) => {
     const { bloodCollectors, createdAt, description } = info
-    const { getViewProps, getImageProps } = useResponsiveImageView({
+    const { getViewProps, getImageProps, error } = useResponsiveImageView({
         source: { uri: baseURL + info.bannerURL },
     });
 
@@ -28,9 +28,12 @@ const PostDetails: React.FC<PostProps> = ({ info, enableMaxLenght }) => {
 
             <HeaderPost avatarUrl={bloodCollectors?.imageURL} username={bloodCollectors?.username} />
 
-            <View {...getViewProps()}>
-                <Image {...getImageProps()} />
-            </View>
+            {
+                !error &&
+                <View {...getViewProps()}>
+                    <Image {...getImageProps()} />
+                </View>
+            }
 
             <FooterPost
                 adress={bloodCollectors?.adress}
