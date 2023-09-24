@@ -18,7 +18,7 @@ const LoginOptions: React.FC<NavProps> = ({ navigation }) => {
             </S.ImageCircle>
 
             <S.ButtonContainer>
-                <ComunButton onClick={() => navigation.navigate('SelectBloodType')} bg='white'>Criar Conta</ComunButton>
+                <ComunButton onClick={() => navigation.navigate('SelectBloodType')} bg='white'>Criar uma conta</ComunButton>
             </S.ButtonContainer>
             <S.ButtonContainer>
                 <ComunButton onClick={() => navigation.navigate('Login')} bg='darkContrast'>Fazer Login</ComunButton>

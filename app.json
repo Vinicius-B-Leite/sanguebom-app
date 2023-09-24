@@ -6,6 +6,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "runtimeVersion": "1.0.0",
     "plugins": [
       [
         "expo-location",
@@ -23,7 +24,9 @@
         "onesignal-expo-plugin",
         {
           "mode": "development",
-          "smallIcons": ["./assets/ic_stat_onesignal_default.png"]
+          "smallIcons": [
+            "./assets/ic_stat_onesignal_default.png"
+          ]
         }
       ]
     ],
@@ -38,10 +41,9 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.viniciusbl21.sanguebom",
-      "config":{
+      "config": {
         "googleMapsApiKey": "AIzaSyCbSFJtYi05Ucktey6kodlFQ5lE2idPX1A"
       }
-
     },
     "android": {
       "adaptiveIcon": {
@@ -55,8 +57,8 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.viniciusbl21.sanguebom",
-      "config":{
-        "googleMaps":{
+      "config": {
+        "googleMaps": {
           "apiKey": "AIzaSyCbSFJtYi05Ucktey6kodlFQ5lE2idPX1A"
         }
       }
@@ -65,6 +67,9 @@
       "eas": {
         "projectId": "4946d2f0-d0f3-4874-86b3-1cc0b6a16796"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/4946d2f0-d0f3-4874-86b3-1cc0b6a16796"
     }
   }
 }
