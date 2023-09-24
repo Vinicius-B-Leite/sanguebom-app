@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import * as S from './styles'
 import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSequence, withTiming } from 'react-native-reanimated';
 
@@ -10,13 +10,18 @@ type Props = {
 }
 
 export type ToastRef = {
-    startAnimation: () => void
+    startAnimation: (props: Props) => void
 }
-const Toast = forwardRef<ToastRef, Props>(({ text, type, LeftIcon }, ref) => {
+const Toast = forwardRef<ToastRef>((props, ref) => {
 
     const opacityAnimated = useSharedValue(0)
+    const [toastConfig, setToastConfig] = useState<Props>({ text: '', type: 'sucess' })
 
-    const startAnimation = () => {
+    const startAnimation = ({ text, type, LeftIcon }: Props) => {
+        console.log(text);
+
+        setToastConfig({ text, type, LeftIcon })
+
         opacityAnimated.value = withSequence(
             withTiming(1, { duration: 1000 }),
             withDelay(1000, withTiming(0, { duration: 1000 }))
@@ -42,11 +47,11 @@ const Toast = forwardRef<ToastRef, Props>(({ text, type, LeftIcon }, ref) => {
                 animatedStyles
             ]}
         >
-            <S.Container type={type}>
+            <S.Container type={toastConfig.type}>
                 {
-                    LeftIcon && <LeftIcon />
+                    toastConfig.LeftIcon && <toastConfig.LeftIcon />
                 }
-                <S.Label>{text}</S.Label>
+                <S.Label>{toastConfig.text}</S.Label>
             </S.Container>
         </Animated.View >
     )

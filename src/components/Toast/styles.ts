@@ -1,12 +1,12 @@
 import styled from 'styled-components/native';
 
 
-type ContinarProps = {
+type StyledProps = {
     type: 'sucess' | 'error' | 'warning'
 }
 
 
-export const Container = styled.View<ContinarProps>`
+export const Container = styled.View<StyledProps>`
     background-color: ${({ theme, type }) => theme.colors.toast[type]};
     justify-content: center;
     align-items: center;
@@ -17,7 +17,7 @@ export const Container = styled.View<ContinarProps>`
 `
 
 export const Label = styled.Text`
-    color: ${({ theme }) => theme.colors.text_200};
+    color: ${({ theme }) => theme.colors.oppositeContrast};
     font-size: ${({ theme }) => theme.fontSize.xxxsm}px;
     font-weight: 500;
 `

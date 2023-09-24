@@ -29,9 +29,9 @@ const CreatePost: React.FC = () => {
         setFile({ name: 'post-' + user!.uid, type: res.assets[0].type, uri: res.assets[0].uri })
       }
 
-    } catch (error) {      
+    } catch (error) {
     }
-    
+
   }
 
   const cleanInputs = () => {
