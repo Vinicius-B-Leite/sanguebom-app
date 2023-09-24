@@ -20,7 +20,13 @@ export const lightMode: ThemeType = {
         text_50: '#A7A7A7',
 
         communHeaderColor: '#BB1B1B',
-        oppositeContrast: '#fff'
+        oppositeContrast: '#fff',
+
+        toast: {
+            sucess: '#75f547',
+            warning: '#ffd500',
+            error: '#ff0000'
+        }
     },
     icons: defaultTheme.icons,
     fontSize: defaultTheme.fontSize,

@@ -14,7 +14,13 @@ export type ThemeType = {
         background_100: string,
 
         communHeaderColor: string,
-        oppositeContrast: string
+        oppositeContrast: string,
+
+        toast: {
+            sucess: string,
+            warning: string,
+            error: string,
+        }
     },
     icons: {
         big: number,

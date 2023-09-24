@@ -20,7 +20,13 @@ export const darkMode: ThemeType = {
         text_50: '#A7A7A7',
 
         communHeaderColor: '#1F1F1F',
-        oppositeContrast: '#fff'
+        oppositeContrast: '#fff',
+
+        toast: {
+            sucess: '#75f547',
+            warning: '#ffd500',
+            error: '#ff0000'
+        }
     },
     icons: {
         big: width * 0.3,

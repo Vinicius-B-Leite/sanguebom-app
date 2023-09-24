@@ -34,7 +34,7 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
     })
 
     useEffect(() => {
-        dispatch(setNotificationLength(0))
+        dispatch(setNotificationLength(-1))
     }, [])
 
 

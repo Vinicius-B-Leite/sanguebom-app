@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../../components/Header';
 import * as S from './styles'
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../feature/store';
+
+
 import { getPosts } from '../../api/getPosts';
-import { StackScreenProps } from '@react-navigation/stack';
+
 import { StackHomeParamsList } from '../../routes/models';
 import SkeletonPost from './components/SkeletonPost';
 import PostList from './components/PostList';
@@ -21,6 +21,7 @@ type Nav = NavigationProp<StackHomeParamsList, 'Home'>
 const Home: React.FC = () => {
   const netinfo = useNetInfo()
   const navigation = useNavigation<Nav>()
+
 
 
   const offlineData = useMemo(() => {
@@ -42,7 +43,7 @@ const Home: React.FC = () => {
         onClickBell={() => navigation.navigate('Notification')}
         onClickBloodDonate={() => navigation.navigate('MyDonates')}
       />
-      
+
       {
         isLoading ?
           [1, 2, 3, 4, 5].map(i => <SkeletonPost key={i} />)
