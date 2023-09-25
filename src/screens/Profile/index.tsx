@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import Header from '../../components/Header';
 import * as S from './styles'
@@ -19,6 +19,7 @@ import Options from './components/Options';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { UserType } from '../../types/UserType';
 import ModalUpdateBloodType from '../../components/ModalUpdateBloodType';
+import Toast, { ToastRef } from '../../components/Toast';
 
 
 
@@ -32,6 +33,8 @@ const Profile: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user)
   const themeIsDark = useSelector((state: RootState) => state.theme.isDark)
 
+  const toastRef = useRef<ToastRef>(null)
+
   const navigation = useNavigation<Nav>()
 
 
@@ -42,6 +45,10 @@ const Profile: React.FC = () => {
     (props: UpdateUserCredencialsProps) => updateUserCredencials(props),
     {
       onSuccess: (res) => {
+        toastRef.current?.startAnimation({
+          type: 'sucess',
+          text: 'Dados atualizados'
+        })
         const isBloodCollector = res.type == 'bloodCollectors'
 
         const userUpdated: UserType = {
@@ -60,6 +67,12 @@ const Profile: React.FC = () => {
         dispatch(setUser(userUpdated))
         updateStorageUser(userUpdated)
         setIsModalVisible(false)
+      },
+      onError: (err) => {
+        toastRef.current?.startAnimation({
+          type: 'error',
+          text: 'Ocorreu um erro inesperado'
+        })
       }
     })
 
@@ -74,8 +87,10 @@ const Profile: React.FC = () => {
         mutate({ ...user, avatar: { name: 'userPhoto-' + user?.uid, type, uri } } as UpdateUserCredencialsProps)
       }
     } catch (error) {
-    console.log("🚀 ~ file: index.tsx:77 ~ handleImagePicker ~ error:", error)
-
+      toastRef.current?.startAnimation({
+        type: 'error',
+        text: 'Não foi possível carregar a imagem'
+      })
     }
   }
 
@@ -91,6 +106,7 @@ const Profile: React.FC = () => {
   }
   return (
     <S.Container>
+      <Toast ref={toastRef} />
 
       <Header
         onClickBell={() => navigation.navigate('HomeStack', { screen: 'Notification' })}
@@ -108,7 +124,10 @@ const Profile: React.FC = () => {
 
       <Options
         iconName='user'
-        onPress={() => openModal((txt) => mutate({ ...user, username: txt } as UpdateUserCredencialsProps), 'nome')}
+        onPress={() => openModal(
+          (txt) => mutate({ ...user, username: txt } as UpdateUserCredencialsProps),
+          'nome'
+        )}
         title='Nome de usuário' />
 
       <Options
@@ -145,7 +164,7 @@ const Profile: React.FC = () => {
 
       <ModalUpdateUser
         closeModal={() => {
-          setModalProps({callback: ()=>{}, title: ''})
+          setModalProps({ callback: () => { }, title: '' })
           setIsModalVisible(false)
         }}
         visible={isModalVisible && modalProps.title.length > 0}
