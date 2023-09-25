@@ -18,7 +18,6 @@ const Toast = forwardRef<ToastRef>((props, ref) => {
     const [toastConfig, setToastConfig] = useState<Props>({ text: '', type: 'sucess' })
 
     const startAnimation = ({ text, type, LeftIcon }: Props) => {
-        console.log(text);
 
         setToastConfig({ text, type, LeftIcon })
 
