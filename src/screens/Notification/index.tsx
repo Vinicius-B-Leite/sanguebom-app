@@ -39,10 +39,10 @@ const Notification: React.FC = () => {
                 }
             },
             onSuccess: (res) => {
-                if (res.length > 0){
+                if (res.length > 0) {
                     setLastNotificationRead(res[0].id)
                     setNotificationsStorage(res)
-                    dispatch(setNotificationLength(0))
+                    dispatch(setNotificationLength(-1))
                 }
             }
         }

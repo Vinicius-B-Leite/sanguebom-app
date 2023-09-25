@@ -24,7 +24,7 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
     const user = useSelector((rootState: RootState) => rootState.user.user)
 
 
-    const { data } = useQuery({
+    useQuery({
         queryKey: ['notificationLength'],
         enabled: notificationsLength >= 0,
         queryFn: () => getNotificationLength({ uid: user!.uid }),
@@ -33,9 +33,6 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
         }
     })
 
-    useEffect(() => {
-        dispatch(setNotificationLength(-1))
-    }, [])
 
 
     return (
@@ -46,9 +43,9 @@ const Header: React.FC<Props> = ({ onClickBell, onClickBloodDonate }) => {
                 <S.Right>
                     <S.Notifications onPress={onClickBell} >
                         {
-                            (data && data > 0) ?
+                            notificationsLength > 0 ?
                                 (<S.NotificationNumberArea testID='notificationLenght'>
-                                    <S.NotificationLabel>{Number(data) < 99 ? Number(data) : '99+'}</S.NotificationLabel>
+                                    <S.NotificationLabel>{Number(notificationsLength) < 99 ? Number(notificationsLength) : '99+'}</S.NotificationLabel>
                                 </S.NotificationNumberArea>)
                                 :
                                 <></>
