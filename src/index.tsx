@@ -9,6 +9,7 @@ import Routes from './routes';
 import { RootState } from './feature/store';
 import { getStorageTheme } from './storage/themeStorage';
 import NetInfo from '@react-native-community/netinfo'
+import OneboardingProvider from './context/OneboardingContext';
 
 
 const Index: React.FC = () => {
@@ -33,6 +34,7 @@ const Index: React.FC = () => {
             })
         })
     }
+
     useEffect(() => {
         getTheme()
         configureOfflineReactQuery()
@@ -43,7 +45,9 @@ const Index: React.FC = () => {
     return (
         <QueryClientProvider client={new QueryClient()}>
             <ThemeProvider theme={theme ? darkMode : lightMode}>
-                <Routes />
+                <OneboardingProvider>
+                    <Routes />
+                </OneboardingProvider>
             </ThemeProvider>
         </QueryClientProvider>
     )

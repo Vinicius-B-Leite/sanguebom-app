@@ -6,6 +6,7 @@ export const POSTS_KEY = '@posts'
 export const LAST_NOTIFICATION_KEY = '@lastNotificationReade'
 export const NOTIFICATIONS_KEY = '@notifications'
 export const QUESTIONS_KEY = '@questions'
+export const ONEBOARDING_KEY = '@oneboarding'
 
 
 export const storage = new MMKV()
