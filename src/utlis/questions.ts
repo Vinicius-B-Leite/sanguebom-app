@@ -9,13 +9,13 @@ export var questions: Questionary[] = [
     {
         question: 'Qual foi a última vez que você doou sangue?',
         answares: [
+            'Nunca doei',
             'Menos de um mês',
             'Último mês',
             'Há dois meses',
             'Há três meses',
-            'Há quatro meses',
         ],
-        correctAnswareIndex: userGender == 'male' ? [2, 3, 4] : [3, 4]
+        correctAnswareIndex: userGender == 'male' ? [0, 3, 4] : [0, 4]
     },
     {
         question: 'Já fez transfusão de sangue anteriormente?',
@@ -52,7 +52,7 @@ export var questions: Questionary[] = [
         correctAnswareIndex: [1]
     },
     {
-        question: 'Fez sexo ou álcool nas últimas 12h?',
+        question: 'Fez sexo ou ingeriu álcool nas últimas 12h?',
         answares: [
             'Sim',
             'Não'
