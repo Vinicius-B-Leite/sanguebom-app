@@ -9,7 +9,6 @@ import HeaderPost from './components/HeaderPost';
 import FooterPost from './components/FooterPost';
 import { useResponsiveImageView } from 'react-native-responsive-image-view';
 
-
 type PostProps = {
     info: PostType,
     enableMaxLenght?: boolean
@@ -23,10 +22,15 @@ const PostDetails: React.FC<PostProps> = ({ info, enableMaxLenght }) => {
         source: { uri: baseURL + info.bannerURL },
     });
 
+
     return (
         <S.Container>
 
-            <HeaderPost avatarUrl={bloodCollectors?.imageURL} username={bloodCollectors?.username} />
+            <HeaderPost
+                avatarUrl={bloodCollectors?.imageURL}
+                username={bloodCollectors?.username}
+                postId={info.id}
+            />
 
             {
                 !error &&
@@ -41,6 +45,7 @@ const PostDetails: React.FC<PostProps> = ({ info, enableMaxLenght }) => {
                 description={description}
                 enableMaxLength={enableMaxLenght || false}
             />
+
 
         </S.Container>
     )

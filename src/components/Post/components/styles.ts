@@ -6,7 +6,9 @@ export const Header = styled.View`
     padding: 0% 5%;
     height: ${({ theme }) => theme.vh * 0.05}px;
     align-items: center;
-    margin: 2% 0%
+    margin: 2% 0%;
+    position: relative;
+
 `
 export const Avatar = styled.Image`
     width: 12%;
@@ -17,8 +19,8 @@ export const Username = styled.Text`
     color: ${({ theme }) => theme.colors.text_200};
     font-size: ${({ theme }) => theme.fontSize.xsm}px;
     margin-left: 3%;
-    `
-
+    flex: 1;
+`
 
 export const Footer = styled.View`
     padding: 0% 5%;
@@ -35,9 +37,30 @@ export const ComunText = styled.Text`
 `
 export const Description = styled(ComunText)``
 
-export const ReadMoreBTN = styled.TouchableOpacity`
-    
+export const ReadMoreBTN = styled.TouchableOpacity` 
 `
 export const ReadMore = styled(ComunText)`
     text-decoration-line: underline;
+`
+
+export const OptionButton = styled.TouchableOpacity`
+`
+export const OptionsWrapper = styled.View`
+    background-color: ${({ theme }) => theme.colors.text_50};
+    z-index: 2;
+    position: absolute;
+    top: -${({ theme }) => theme.vw * 0.08}px;
+    right: ${({ theme }) => theme.vh * 0.05}px;
+    padding: ${10}px;
+    border-radius: ${({ theme }) => theme.borderRadius.xxsm}px;
+    border-bottom-right-radius: 0;
+`
+
+type OptionVariant = {
+    variant: 'delete'
+}
+export const Option = styled.Text<OptionVariant>`
+    color: ${({ theme, variant }) => variant === 'delete' ? theme.colors.toast.error : theme.colors.text_200};
+    font-size: ${({ theme }) => theme.fontSize.xsm}px;
+    font-weight: bold;
 `
