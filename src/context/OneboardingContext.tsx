@@ -1,4 +1,4 @@
-import { createContext, useContext, useLayoutEffect, useState } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useState } from "react";
 import Oneboarding from "../components/Oneboarding";
 import { hasOneboardingStorage, setOneboardingStorage } from "../storage/oneBoarding";
 
@@ -17,7 +17,7 @@ type OneboardingProviderProps = {
 export default function OneboardingProvider({ children }: OneboardingProviderProps) {
     const [showOneboarding, setShowOneboarding] = useState(false)
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const hasOneboarding = hasOneboardingStorage()
 
         if (!hasOneboarding) {

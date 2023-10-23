@@ -4,10 +4,11 @@ export const Container = styled.View`
     flex: 1;
     padding-vertical: 5%;
     padding-horizontal: 10%;
-    background-color: ${({ theme }) => theme.colors.background_100};
 `
 export const GoBack = styled.TouchableOpacity``
 
+export const Top = styled.View`
+`
 export const Title = styled.Text`
     padding-top: 10%;
     font-size: ${({ theme }) => theme.fontSize.lg}px;
@@ -22,8 +23,9 @@ export const Subtitle = styled.Text`
 `
 export const Image = styled.Image`
     width: 100%;
-    height: 40%;
-    margin-top: 20%;
+    height: ${({ theme }) => theme.vh / 2}px;
+    align-self: center;
+    margin-top: 10%;
 `
 
 
@@ -32,6 +34,7 @@ export const Bottom = styled.View`
     justify-content: space-between;
     margin-top: auto;
     align-items: center;
+    background-color: ${({ theme }) => theme.colors.background_200};
 `
 export const IndexWrapper = styled.View`
     flex-direction: row;
@@ -44,8 +47,8 @@ type IndexProps = {
     isSelected: boolean
 }
 export const Index = styled.View<IndexProps>`
-    width: ${({ theme }) => theme.vw / 20}px;
-    height: ${({ theme }) => theme.vw / 20}px;
+    width: ${({ theme }) => theme.vw / 30}px;
+    height: ${({ theme }) => theme.vw / 30}px;
     border-radius: ${({ theme }) => theme.borderRadius.full}px;
     background-color: ${({ theme, isSelected }) => isSelected ? theme.colors.contrast_100 : theme.colors.text_100};
 `

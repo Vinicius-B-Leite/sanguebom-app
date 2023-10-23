@@ -32,15 +32,17 @@ const Oneboarding: React.FC = () => {
 
     return (
         <S.Container>
-            {
-                page > 0 &&
-                <S.GoBack onPress={handlePrevPage}>
-                    <AntDesign name="arrowleft" size={icons.sm} color={colors.text_100} />
-                </S.GoBack>
-            }
-            <S.Title>{title}</S.Title>
-            <S.Subtitle>{subtitle}</S.Subtitle>
-            <S.Image source={image} />
+            <S.Top>
+                {
+                    page > 0 &&
+                    <S.GoBack onPress={handlePrevPage}>
+                        <AntDesign name="arrowleft" size={icons.sm} color={colors.text_100} />
+                    </S.GoBack>
+                }
+                <S.Title>{title}</S.Title>
+                <S.Subtitle>{subtitle}</S.Subtitle>
+            </S.Top>
+            <S.Image source={image} resizeMode='contain' />
 
             <S.Bottom>
                 <S.IndexWrapper>
