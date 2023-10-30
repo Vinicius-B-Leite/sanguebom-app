@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import * as S from './styles'
 import HeaderGoBack from '../../components/HeaderGoBack';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import Progressbar from './components/Progessbar'
 import Question from './components/Question';
 import NextQuestion from './components/NextQuestion';
-import { questions } from '../../utlis/questions';
+import { getQuestions } from '../../utlis/questions';
 import { QuestionsParamsList } from '../../routes/models';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/feature/store';
 
 
 
@@ -16,6 +18,11 @@ const Questionary: React.FC = () => {
     const navigation = useNavigation<Nav>()
     const [answareSelected, setAnswareSelected] = useState('')
     const [currentQuestion, setCurrentQuestion] = useState(0)
+    const userGender = useSelector((state: RootState) => state.user.user?.gender)
+
+    const questions = useMemo(() => {
+        return getQuestions(userGender!)
+    }, [userGender])
 
     const handleSelectAnsware = (answare: string) => {
         setAnswareSelected(answare)

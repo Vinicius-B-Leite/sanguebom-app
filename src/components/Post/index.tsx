@@ -30,6 +30,7 @@ const PostDetails: React.FC<PostProps> = ({ info, enableMaxLenght }) => {
                 avatarUrl={bloodCollectors?.imageURL}
                 username={bloodCollectors?.username}
                 postId={info.id}
+                postOwnerId={info.bloodCollectorsID}
             />
 
             {

@@ -7,15 +7,21 @@ import { useTheme } from 'styled-components/native';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deletePost } from '../../../api/deletePost';
 import Toast, { ToastRef } from '../../../components/Toast';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../feature/store';
 
 
 type Props = {
     avatarUrl: string,
     username: string,
     postId: string,
+    postOwnerId: string
 }
-const HeaderPost: React.FC<Props> = ({ avatarUrl, username, postId }) => {
+const HeaderPost: React.FC<Props> = ({ avatarUrl, username, postId, postOwnerId }) => {
     const theme = useTheme()
+
+    const userId = useSelector((state: RootState) => state.user.user?.uid)
+
     const [showOptions, setShowOptions] = useState(false)
     const client = useQueryClient()
     const toastRef = useRef<ToastRef>(null)
@@ -41,6 +47,8 @@ const HeaderPost: React.FC<Props> = ({ avatarUrl, username, postId }) => {
         mutate(postId)
     }
 
+    const isOwner = userId === postOwnerId
+
     return (
         <>
             <S.Header>
@@ -49,7 +57,7 @@ const HeaderPost: React.FC<Props> = ({ avatarUrl, username, postId }) => {
                 <S.Username numberOfLines={1}>{username}</S.Username>
 
                 {
-                    showOptions &&
+                    showOptions && isOwner &&
                     <S.OptionsWrapper>
                         <TouchableOpacity onPress={() => handleDelete()}>
                             {
