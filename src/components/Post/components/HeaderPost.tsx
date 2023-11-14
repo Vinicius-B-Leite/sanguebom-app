@@ -52,7 +52,6 @@ const HeaderPost: React.FC<Props> = ({ avatarUrl, username, postId, postOwnerId 
     return (
         <>
             <S.Header>
-                <Toast ref={toastRef} />
                 <S.Avatar source={{ uri: baseURL + avatarUrl }} />
                 <S.Username numberOfLines={1}>{username}</S.Username>
 
@@ -69,15 +68,18 @@ const HeaderPost: React.FC<Props> = ({ avatarUrl, username, postId, postOwnerId 
                         </TouchableOpacity>
                     </S.OptionsWrapper>
                 }
-                <S.OptionButton onPress={() => setShowOptions(old => !old)}>
-                    <SimpleLineIcons
-                        name="options-vertical"
-                        size={theme.icons.vvsm}
-                        color={theme.colors.text_200}
-                    />
+                {
+                    isOwner &&
+                    <S.OptionButton onPress={() => setShowOptions(old => !old)}>
+                        <SimpleLineIcons
+                            name="options-vertical"
+                            size={theme.icons.vvsm}
+                            color={theme.colors.text_200}
+                        />
 
 
-                </S.OptionButton>
+                    </S.OptionButton>
+                }
 
 
 

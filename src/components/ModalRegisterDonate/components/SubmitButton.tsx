@@ -6,6 +6,8 @@ import { createDonate } from '../../../api/createDonate';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../feature/store';
 import Toast, { ToastRef } from '../../../components/Toast';
+import { ActivityIndicator } from 'react-native';
+import { useTheme } from 'styled-components/native';
 
 
 
@@ -16,13 +18,14 @@ type Props = {
     closeModal: () => void
 }
 const SubmitButton: React.FC<Props> = ({ bloodCollectorID, date, closeModal }) => {
+    const theme = useTheme()
 
     const user = useSelector((state: RootState) => state.user.user)
     const queryClient = useQueryClient()
 
     const toastRef = useRef<ToastRef>(null)
 
-    const { mutate } = useMutation({
+    const { mutate, isLoading } = useMutation({
         mutationFn: ({ bcID }: { bcID: string }) => createDonate({
             bloodCollectorID: bcID,
             date,
@@ -54,7 +57,15 @@ const SubmitButton: React.FC<Props> = ({ bloodCollectorID, date, closeModal }) =
             <Toast ref={toastRef} />
             <S.SubmitArea>
                 <ComunButton bg='darkContrast' onClick={handleSubmit}>
-                    Cadastrar
+                    {
+                        isLoading ?
+                            <ActivityIndicator
+                                size={theme.icons.vvsm}
+                                color='#fff' />
+                            :
+                            'Cadastrar'
+                    }
+
                 </ComunButton>
             </S.SubmitArea>
         </>

@@ -6,13 +6,15 @@ import { useQuery } from '@tanstack/react-query';
 import { getOnePost } from '../../api/getOnePost';
 import PostDetails from '../../components/Post';
 import HeaderGoBack from '../../components/HeaderGoBack';
+import { useTheme } from 'styled-components/native';
+import { ActivityIndicator, Text } from 'react-native';
 
 
 type NavProp = StackScreenProps<StackHomeParamsList, 'Post'>
 
 const Post: React.FC<NavProp> = ({ navigation, route }) => {
-
-    const { data } = useQuery({
+    const theme = useTheme()
+    const { data, isLoading } = useQuery({
         queryKey: ['singlePost'],
         queryFn: () => getOnePost({ postID: route.params.postID })
     })
@@ -22,7 +24,13 @@ const Post: React.FC<NavProp> = ({ navigation, route }) => {
         <S.Container>
             <HeaderGoBack goBack={() => navigation.navigate('Home')} theme='contrast' title='Campanhas' />
             {
-                data && <PostDetails info={data} /> 
+                isLoading ?
+                    <ActivityIndicator style={{ marginTop: '5%' }} color={theme.colors.contrast_100} size={theme.icons.sm} />
+                    :
+                    data ?
+                        <PostDetails info={data} />
+                        :
+                        <Text style={{ color: theme.colors.contrast_100, fontWeight: 'bold', fontSize: theme.fontSize.xxsm, margin: 20 }} >Esta campanha não está mais disponível</Text>
             }
         </S.Container>
     )

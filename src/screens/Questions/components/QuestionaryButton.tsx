@@ -17,7 +17,7 @@ const QuestionaryButton: React.FC = () => {
     return (
         <S.ButtonArea onPress={() => navigation.navigate('Questionary')}>
             <Octicons name="tasklist" size={icons.sm} color={colors.oppositeContrast} />
-            <S.Label>Questionário de aptdão</S.Label>
+            <S.Label>Questionário de aptidão</S.Label>
         </S.ButtonArea>
     )
 }

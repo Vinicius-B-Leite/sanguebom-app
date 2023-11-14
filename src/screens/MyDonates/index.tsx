@@ -10,18 +10,19 @@ import BlockDonate from './components/BlockDonate';
 import { useTheme } from 'styled-components/native';
 import ModalRegisterDonate from '../../components/ModalRegisterDonate';
 import { useNavigation } from '@react-navigation/native';
+import { ActivityIndicator } from 'react-native';
 
 
 
 const MyDonates: React.FC = () => {
 
     const navigation = useNavigation()
-
+    const theme = useTheme()
     const user = useSelector((state: RootState) => state.user.user)
     const { type } = useTheme()
     const [isModalVisible, setIsModalVisible] = useState(false)
 
-    const { data } = useQuery(
+    const { data, isLoading } = useQuery(
         ['donates'],
         () => getMyDonates({ uid: user!.uid }),
     )
@@ -43,6 +44,7 @@ const MyDonates: React.FC = () => {
                     donates={data}
                 />
 
+                {isLoading && <ActivityIndicator style={{ marginTop: '5%' }} color={theme.colors.contrast_100} size={theme.icons.sm} />}
                 {
                     data && (data.waitDaysToDonate <= 0) &&
 

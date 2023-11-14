@@ -34,7 +34,7 @@ export const Bottom = styled.View`
     justify-content: space-between;
     margin-top: auto;
     align-items: center;
-    background-color: ${({ theme }) => theme.colors.background_200};
+    background-color:#fff;
 `
 export const IndexWrapper = styled.View`
     flex-direction: row;

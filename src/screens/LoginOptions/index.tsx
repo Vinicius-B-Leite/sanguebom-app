@@ -14,7 +14,7 @@ const LoginOptions: React.FC<NavProps> = ({ navigation }) => {
     return (
         <S.Container>
             <S.ImageCircle>
-                <Logo width={width * 0.5} height={width * 0.5} />
+                <Logo />
             </S.ImageCircle>
 
             <S.ButtonContainer>

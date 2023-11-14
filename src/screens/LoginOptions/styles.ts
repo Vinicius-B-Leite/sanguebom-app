@@ -1,17 +1,19 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-    background-color: ${({theme}) => theme.colors.communHeaderColor};
+    background-color: ${({ theme }) => theme.colors.communHeaderColor};
     flex: 1;
     align-items: center;
     padding-top: 30%;
 `;
 
 export const ImageCircle = styled.View`
-    width: ${({theme}) => theme.vw * 0.5}px;
-    height: ${({theme}) => theme.vw * 0.5}px;
-    border-radius: ${({theme}) => theme.borderRadius.full}px;
-    background-color: ${({theme}) => theme.type === 'dark' ? theme.colors.contrast_100 : theme.colors.contrast_200};
+    width: ${({ theme }) => theme.vw * 0.5}px;
+    height: ${({ theme }) => theme.vw * 0.5}px;
+    justify-content: center;
+    align-items: center;
+    border-radius: ${({ theme }) => theme.borderRadius.full}px;
+    background-color: ${({ theme }) => theme.type === 'dark' ? theme.colors.contrast_100 : theme.colors.contrast_200};
     margin: 5% 0%;
 `
 

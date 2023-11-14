@@ -86,16 +86,6 @@ const CreatePost: React.FC = () => {
             />
           </S.InputArea>
 
-          <S.InputTitle>Link para agendar a doação (opcinal) </S.InputTitle>
-          <S.InputArea>
-            <Input
-              placeholder={'https:'}
-              placeholderTextColor={theme.colors.text_100}
-              value={link}
-              onChangeText={setLink}
-
-            />
-          </S.InputArea>
 
           <S.InputTitle>Descrição</S.InputTitle>
           <S.DescriptionArea>

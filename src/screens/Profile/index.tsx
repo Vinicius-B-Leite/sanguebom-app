@@ -113,7 +113,7 @@ const Profile: React.FC = () => {
         onClickBloodDonate={() => navigation.navigate('HomeStack', { screen: 'MyDonates' })}
       />
 
-      <TouchableOpacity onPress={handleImagePicker}>
+      <TouchableOpacity onPress={handleImagePicker} activeOpacity={user!.type == 'donors' ? 1 : 0.5}>
         <S.Avatar
           testID='avatarImage'
           source={user?.imageURL ? { uri: baseURL + user.imageURL } : require('../../assets/no_image_user.png')}
