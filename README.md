@@ -19,9 +19,19 @@ Este é o meu projeto de TCC em React Native e Expo, que visa promover a doaçã
 - Criar campanhas por meio de postagens
 - Criar alertas de sangue para notificador doadores com tipo sanguíneo especifico
 
-<!-- ## Screenshots
+### App Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here) -->
+|                |              Android (Light)               |              Android (Dark)               |
+| :------------: | :----------------------------------------: | :---------------------------------------: |
+| Home           | ![](github/screens/home.png)               | ![](github/screens/homeDark.png)          |
+| Procurar       | ![](github/screens/procurar.png)           | ![](github/screens/procurarDark.png)      |
+| Dúvidas        | ![](github/screens/duvidas.png)            | ![](github/screens/duvidasDark.png)       |
+| Questionário   | ![](github/screens/questionario.png)       | ![](github/screens/questionarioDark.png)  |
+| Perfil         | ![](github/screens/perfil.png)             | ![](github/screens/perfilDark.png)        |
+| Notificações   | ![](github/screens/notificacoes.png)       | ![](github/screens/notificacoesDark.png)  |
+| Minhas doações | ![](github/screens/minhasDoacoes.png)      | ![](github/screens/minhasDoacoesDark.png) |
+| Criar campanha | ![](github/screens/criarCampanha.png)      | ![](github/screens/criarCampanhaDark.png) |
+
 
 
 ## Stack utilizada
@@ -38,10 +48,8 @@ Este é o meu projeto de TCC em React Native e Expo, que visa promover a doaçã
 
 ## Instalação
 
-Para instalar o projeto basta entrarpasta github, fazer o download do ```sanguebom.apk```  e fazer a instalação no seu dispositivo
+Para instalar o projeto basta entrar na pasta github, fazer o download do ```sanguebom.apk```  e fazer a instalação no seu dispositivo
 
-## Status
-  Fase de teste
   
 ## Versão
   1.0.0
